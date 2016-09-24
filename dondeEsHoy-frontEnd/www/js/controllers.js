@@ -44,7 +44,6 @@ angular.module('starter.controllers', [])
 
 .controller('PlaylistsCtrl', function($scope) {
     
-    $scope.minombre = "Cris";
   $scope.playlists = [
     { title: 'Reggae', id: 1 },
     { title: 'Chill', id: 2 },
@@ -55,5 +54,17 @@ angular.module('starter.controllers', [])
   ];
 })
 
-.controller('PlaylistCtrl', function($scope, $stateParams) {
+.controller('PlaylistCtrl', function($scope, $stateParams, $http,$httpBackend) {
+    
+    //$httpBackend.whenGET("http://miservicio").respond({minombre: "Cris"});
+    $scope.playlistId = $stateParams.playlistId;
+//    $http.get("http://miservicio").then(function(data){
+//        $scope.minombre = data;
+//    }).error(function(error){
+//        
+//    }).finally(function(){
+//        
+//    });
+    
+     //$httpBackend.flush();
 });
