@@ -1,0 +1,14 @@
+<ion-view view-title="lista">
+    <ion-content>
+  <ion-header-bar>
+    <h1 class="title">Lugares</h1>
+  </ion-header-bar>
+      <ion-list>
+      <ion-item ng-repeat="list in lista" href="#/app/lista/{{list.id}}">
+         <h3>{{list.title}}</h3>
+        <p>ID: {{playlist.id}}<p>
+      </ion-item>
+      </ion-list>
+        
+    </ion-content>
+</ion-view>
