@@ -67,4 +67,38 @@ angular.module('starter.controllers', [])
   });
   
 
-});
+})
+
+
+.controller('ListaCtrl', function($scope) {
+    
+  $scope.lista = [
+    { title: 'Tribu', id: 1 },
+    { title: 'Belle', id: 2 },
+    { title: 'Rumba', id: 3 },
+    { title: 'Antik', id: 4 },
+    { title: 'O Clock', id: 5 },
+    { title: 'Cowbell', id: 6 },
+    { title: 'Hooters', id: 7 },
+    { title: 'Chichis', id: 8 },
+    { title: 'Vertigo', id: 9 },
+    { title: 'Ozzys', id: 10 },
+    { title: 'Cowbell', id: 11 }
+  ];
+})
+
+.controller('SpecificInfoCtrl', function($scope, $stateParams, $http,$httpBackend) {
+    
+    //$httpBackend.whenGET("http://miservicio").respond({minombre: "Cris"});
+    $scope.specificInfo = $stateParams.listaTitle;
+//    $http.get("http://miservicio").then(function(data){
+//        $scope.minombre = data;
+//    }).error(function(error){
+//        
+//    }).finally(function(){
+//        
+//    });
+    
+     //$httpBackend.flush();
+})
+;

@@ -84,11 +84,25 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
   .state('app.lista',{
      url:'/lista',
      views:{
-         
+         'menuContent': {
+        templateUrl: 'templates/lista.html',
+        controller: 'ListaCtrl'
+      }
      }   
-   });
+   })
+   
+      .state('app.specificInfo',{
+     url:'/lista/:specificInfo',
+     views:{
+         'menuContent': {
+        templateUrl: 'templates/specificInfo.html',
+        controller: 'SpecificInfoCtrl'
+      }
+     }   
+   })
+    ;
   
   
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/app/playlists');
+  $urlRouterProvider.otherwise('/app/map');
 });
