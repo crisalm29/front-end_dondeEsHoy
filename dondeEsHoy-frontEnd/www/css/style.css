@@ -18,3 +18,12 @@
 .logoutIcon {
     color: #999;
 }
+
+.scroll {
+    height: 100%;
+}
+ 
+#map {
+    width: 100%;
+    height: 70%;
+}
