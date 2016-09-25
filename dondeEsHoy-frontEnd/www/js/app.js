@@ -78,7 +78,15 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
         controller: 'PlaylistCtrl'
       }
     }
-  });
+  })
+  
+           
+  .state('app.lista',{
+     url:'/lista',
+     views:{
+         
+     }   
+   });
   
   
   // if none of the above states are matched, use this as the fallback
