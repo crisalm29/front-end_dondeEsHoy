@@ -3,33 +3,6 @@ angular.module('starter.controllers', [])
 .controller('AppCtrl', function($scope) {
 })
 
-.controller('PlaylistsCtrl', function($scope) {
-    
-  $scope.playlists = [
-    { title: 'Reggae', id: 1 },
-    { title: 'Chill', id: 2 },
-    { title: 'Dubstep', id: 3 },
-    { title: 'Indie', id: 4 },
-    { title: 'Rap', id: 5 },
-    { title: 'Cowbell', id: 6 }
-  ];
-})
-
-.controller('PlaylistCtrl', function($scope, $stateParams, $http,$httpBackend) {
-    
-    //$httpBackend.whenGET("http://miservicio").respond({minombre: "Cris"});
-    $scope.playlistId = $stateParams.playlistId;
-//    $http.get("http://miservicio").then(function(data){
-//        $scope.minombre = data;
-//    }).error(function(error){
-//        
-//    }).finally(function(){
-//        
-//    });
-    
-     //$httpBackend.flush();
-})
-
 .controller('MapCtrl', function($scope, $state, $cordovaGeolocation) {
   var options = {timeout: 10000, enableHighAccuracy: true};
  
@@ -90,7 +63,7 @@ angular.module('starter.controllers', [])
 .controller('SpecificInfoCtrl', function($scope, $stateParams, $http,$httpBackend) {
     
     //$httpBackend.whenGET("http://miservicio").respond({minombre: "Cris"});
-    $scope.specificInfo = $stateParams.listTitle;
+    $scope.specificInfo = $stateParams.specificInfo;
 //    $http.get("http://miservicio").then(function(data){
 //        $scope.minombre = data;
 //    }).error(function(error){

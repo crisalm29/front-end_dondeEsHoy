@@ -1,1 +1,20 @@
 /* Empty. Add your own CSS if you like */
+.heartIcon {
+    color: #ff3b30;
+}
+
+.mapIcon {
+    color: #0c60ee;
+}
+
+.starIcon {
+    color: #cccc00;
+}
+
+.personIcon {
+    color: #33cd5f;
+}
+
+.logoutIcon {
+    color: #999;
+}
