@@ -90,7 +90,7 @@ angular.module('starter.controllers', [])
 .controller('SpecificInfoCtrl', function($scope, $stateParams, $http,$httpBackend) {
     
     //$httpBackend.whenGET("http://miservicio").respond({minombre: "Cris"});
-    $scope.specificInfo = $stateParams.listaTitle;
+    $scope.specificInfo = $stateParams.listTitle;
 //    $http.get("http://miservicio").then(function(data){
 //        $scope.minombre = data;
 //    }).error(function(error){
