@@ -3,6 +3,15 @@ angular.module('starter.controllers', [])
 .controller('AppCtrl', function($scope) {
 })
 
+.controller('LoginCtrl', function($scope, $window) {
+    $scope.data = {};
+ 
+    $scope.doLogin = function() {
+        console.log("LOGIN user: " + $scope.data.username + " - PW: " + $scope.data.password);
+        $window.location.href = '/dondeEsHoy-frontEnd/www/main.html#/app/map';
+    }
+})
+
 .controller('MapCtrl', function($scope, $state, $cordovaGeolocation) {
   var options = {timeout: 10000, enableHighAccuracy: true};
  
