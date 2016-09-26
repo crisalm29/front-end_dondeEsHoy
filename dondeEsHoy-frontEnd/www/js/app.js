@@ -53,12 +53,22 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
      }   
    })
    
-      .state('app.specificInfo',{
+   .state('app.specificInfo',{
      url:'/lista/:specificInfo',
      views:{
          'menuContent': {
         templateUrl: 'templates/specificInfo.html',
         controller: 'SpecificInfoCtrl'
+      }
+     }   
+   })
+   
+   .state('app.profile',{
+     url:'/profile',
+     views:{
+         'menuContent': {
+        templateUrl: 'templates/profile.html',
+        //controller: 'SpecificInfoCtrl'
       }
      }   
    })

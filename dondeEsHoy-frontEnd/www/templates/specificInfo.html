@@ -1,6 +1,19 @@
 <ion-view view-title="Specific Place">
-  <ion-content>
-    <h1>Location</h1>
-    <h2> {{specificInfo}}</h2>
-  </ion-content>
+    <ion-content>
+        <div class="list card">
+
+            <div class="item item-avatar"> 
+                <h2>{{specificInfo}}</h2>
+            </div>
+
+            <div class="item item-body">
+                <img class="full-image" src="{{specificImg}}">
+                <p>
+                    {{specificDescription}}
+                </p>
+                
+            </div>
+
+        </div>
+    </ion-content>
 </ion-view>
