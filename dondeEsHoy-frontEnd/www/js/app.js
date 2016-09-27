@@ -52,7 +52,15 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
                             }
                         }
                     })
-
+                    .state('app.promos', {
+                        url: '/promos',
+                        views: {
+                            'menuContent': {
+                                templateUrl: 'templates/promos.html',
+                                //controller: 'ListaCtrl'
+                            }
+                        }
+                    })
                     .state('app.specificInfo', {
                         url: '/lista/:specificInfo',
                         views: {
