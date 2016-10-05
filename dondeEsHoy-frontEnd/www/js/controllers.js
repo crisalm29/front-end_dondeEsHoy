@@ -4,7 +4,7 @@ angular.module('starter.controllers', [])
 
         })
 
-        .controller('LoginCtrl', function ($scope, $state,$ionicHistory) {
+        .controller('LoginCtrl', function ($scope, $state, $ionicHistory) {
             $scope.data = {};
             $ionicHistory.nextViewOptions({
                 disableBack: true
@@ -15,11 +15,11 @@ angular.module('starter.controllers', [])
             }
         })
 
-        .controller('MapCtrl', function ($scope, $state, $cordovaGeolocation) {
+        .controller('MapCtrl', function ($scope, $state, $cordovaGeolocation, $ionicPopup, $ionicLoading, googlePlacesService) {
             var options = {timeout: 10000, enableHighAccuracy: true};
 
             $cordovaGeolocation.getCurrentPosition(options).then(function (position) {
-
+                var resultados = {};
                 var latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
 
                 var mapOptions = {
@@ -38,9 +38,53 @@ angular.module('starter.controllers', [])
                         position: latLng
                     });
                     var infoWindow = new google.maps.InfoWindow({
-                        content: "Here I am!"
+                        content: "Esta es mi ubicacion"
                     });
+                    googlePlacesService.obtenerLocales(position.coords.latitude, position.coords.longitude).then(function (data) {
+                        resultados = data.data.result;
+                        for (var i = 0; i < resultados.length; i++) {
+                            var lat = parseFloat(resultados[i].geometry.location.lat);
+                            var lon = parseFloat(resultados[i].geometry.location.lng);
 
+
+                            var coord = {lat: lat, lng: lon};
+                            var m4 = new google.maps.Marker({
+                                position: coord,
+                                flat: true,
+                                map: $scope.map
+                            });
+
+                            m4.local = resultados[i];
+                            m4.map = $scope.map;
+                            m4.addListener('click', function () {
+                                var infowindow = new google.maps.InfoWindow({
+                                    content: this.local.name
+                                });
+                                infowindow.open(this.map, this);
+//                                var popup = $ionicPopup.alert({
+//                                    //template: this.reporte.descripcion,
+//                                    title: this.local.name,
+//                                    scope: $scope
+//
+//                                });
+
+                                $ionicLoading.hide();
+                                $state.go($state.current, {}, {reload: true});
+                            });
+
+                            m4.setMap($scope.map);
+
+                        }
+
+
+                    }, function (err) {
+                        var alertPopup = $ionicPopup.alert({
+                            title: 'Error al iniciar sesion!',
+                            template: 'Por favor veirifica tu conexion.'
+                        });
+
+                    });
+                    ;
                     google.maps.event.addListener(marker, 'click', function () {
                         infoWindow.open($scope.map, marker);
                     });

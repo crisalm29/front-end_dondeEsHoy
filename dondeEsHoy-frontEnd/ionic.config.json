@@ -1,6 +1,6 @@
 {
-  "name": "dondeEsHoy-frontEnd",
-  "app_id": "870cf434",
+  "name": "dondeEsHoy",
+  "app_id": "7b943072",
   "gulpStartupTasks": [
     "sass",
     "watch"
