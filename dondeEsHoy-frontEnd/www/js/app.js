@@ -95,7 +95,17 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
                                 templateUrl: 'templates/login.html',
                                 controller: 'LoginCtrl'
                             }}
-                    });
+                    })
+                  
+                    .state('app.register', {
+                        url: '/register',
+                        views: {
+                            'menuContent': {
+                                templateUrl: 'templates/registrar.html',
+                                controller: 'RegisterCtrl'
+                            }}
+                    })
+            ;
 
 
 

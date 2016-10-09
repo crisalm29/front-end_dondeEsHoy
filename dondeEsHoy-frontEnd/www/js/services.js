@@ -4,7 +4,7 @@ angular.module('starter.services', [])
             var obtenerLocales = function (lat, long) {
                 var p = $http({
                     method: 'POST',
-                    url: "http://crisalm29-001-site1.dtempurl.com/googlePlaces",
+                    url: "http://kefon94-001-site1.etempurl.com/googlePlaces",
                     //url: "http://localhost:49986/googlePlaces",
                     data: {
                         lat: lat,
@@ -25,7 +25,7 @@ angular.module('starter.services', [])
             return {
                 obtenerLocales: obtenerLocales
             };
-        })
+        });
 //        .service('userServices', function ($http, $ionicLoading, $ionicPopup, $timeout) {
 //            
 //            var obtenerLocales = function (lat, long) {

@@ -2,20 +2,92 @@ angular.module('starter.controllers', [])
 
         .controller('AppCtrl', function ($scope) {
 
+        })        
+        .controller('RegisterCtrl', function($scope,$ionicHistory,$ionicSideMenuDelegate,$http,$state,$ionicPopup){
+            $scope.data = {};
+            
+            $ionicSideMenuDelegate.canDragContent(false);
+            $scope.register = function(){
+            if($scope.data.password === $scope.data.password2){
+                
+              var p = $http({
+                    method: 'POST',
+                    url: "http://kefon94-001-site1.etempurl.com/Users/addUser",
+                    //url: "http://localhost:49986/googlePlaces",
+                    data: {
+                        email: $scope.data.email,
+                        name: $scope.data.name,
+                        lastname: $scope.data.lastname,
+                        password: $scope.data.password
+                    }
+
+                });
+                return p.success(function (data) {
+                    if(data.result !== false){
+                        $ionicHistory.nextViewOptions({
+                        disableBack: true
+                        });
+                    console.log("Realizado correctamente");
+                    $state.go('app.map', {}, {reload: true});}
+                    
+                }).error(function (e) {
+                    console.log("Error al registrar");
+                });  
+                
+            }else{
+                var alertPopup = $ionicPopup.alert({
+                            title: 'The passwords must be the same',
+                            template: 'Please verify.'
+                        });
+                
+            }};
         })
 
-        .controller('LoginCtrl', function ($scope, $state, $ionicHistory) {
+        .controller('LoginCtrl', function ($scope, $state, $ionicHistory, $ionicSideMenuDelegate, $http, $ionicPopup) {
             $scope.data = {};
-            $ionicHistory.nextViewOptions({
-                disableBack: true
-            });
+            
+            $scope.goRegister = function(){
+                $state.go('app.register', {}, {reload: true});
+                
+            };
             $scope.doLogin = function () {
                 console.log("LOGIN user: " + $scope.data.username + " - PW: " + $scope.data.password);
-                $state.go('app.map', {}, {reload: true});
-            }
+                var p = $http({
+                    method: 'POST',
+                    url: "http://kefon94-001-site1.etempurl.com/Users/login",
+                    //url: "http://localhost:49986/googlePlaces",
+                    data: {
+                        email: $scope.data.username,
+                        password: $scope.data.password
+                    }
+
+                });
+                
+                return p.success(function (data) {
+                    if(data.result !== false){
+                        $ionicHistory.nextViewOptions({
+                        disableBack: true
+                         });
+                        console.log("Realizado correctamente");
+                    $state.go('app.map', {}, {reload: true});}else{
+                    var alertPopup = $ionicPopup.alert({
+                            title: 'Checkout your email or password',
+                            template: 'Please verify.'
+                        });
+                    
+                    }
+                    
+                }).error(function (e) {
+                    
+                });
+                
+                
+            };
+            $ionicSideMenuDelegate.canDragContent(false);
         })
 
-        .controller('MapCtrl', function ($scope, $state, $cordovaGeolocation, $ionicPopup, $ionicLoading, googlePlacesService) {
+        .controller('MapCtrl', function ($scope, $state ,$cordovaGeolocation, $ionicPopup, $ionicLoading, googlePlacesService) {
+           
             var options = {timeout: 10000, enableHighAccuracy: true};
 
             $cordovaGeolocation.getCurrentPosition(options).then(function (position) {
