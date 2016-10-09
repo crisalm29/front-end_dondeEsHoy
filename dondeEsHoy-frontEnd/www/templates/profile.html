@@ -1,19 +1,45 @@
 <ion-view view-title="Profile">
     <ion-content>
-        <div class="list card">
 
-            <div class="item item-avatar">
-                <img src="img/scarleth.jpg">
-                <h2>Scarleth Johansson</h2>
-                <p>scarleth@gmail.com</p>
+        <div class="list">
+            <div class="list card">
+
+                <div class="item item-avatar">
+                    <img src="img/scarleth.jpg">
+                    <button class="button button-light" type="submit">Edit Photo</button>
+                </div>
+
             </div>
-              
-       </div>
-            <br/>
-            <button class="button button-assertive" style="margin-left:  35px;">
-            Edit Profile
-            </button>   
+            <form ng-submit="">
+                <label class="item item-input">
+                    <span class="input-label ">Email</span>
+                    <p>{{data.email}}</p>
+                </label>
+                <label class="item item-input">
+                    <span class="input-label ">Name</span>
+                    <p>{{data.name}} &nbsp; {{data.lastname}}</p>
+                </label>
+                <label class="item item-input">
+                    <span class="input-label ">Old Password</span>
+                    <input type="password" ng-model="data.Oldpassword">
+                </label>
+                <label class="item item-input">
+                    <span class="input-label">New Password</span>
+                    <input type="password" ng-model="data.Newpassword">
 
+                </label>
+                <label class="item item-input">
+                    <span class="input-label">Confirm New Password</span>
+                    <input type="password" ng-model="data.Newpassword2">
+
+                </label>
+                <label class="item">
+                    <button class="button button-block button-positive" type="submit">Send Changes</button>
+
+                </label>
+            </form>
+
+        </div>
 
     </ion-content>
 </ion-view>

@@ -2,8 +2,21 @@ angular.module('starter.controllers', [])
 
         .controller('AppCtrl', function ($scope) {
 
-        })        
-        .controller('RegisterCtrl', function($scope,$ionicHistory,$ionicSideMenuDelegate,$http,$state,$ionicPopup){
+        })
+        
+        .controller('ProfileCtrl',function($scope,$ionicHistory,$state,obtenerInfoPorEmail){
+            $scope.data = {};
+            $scope.data.email = usuario;
+            
+            obtenerInfoPorEmail.obtenerInfo($scope.data.email).then(function(data){
+                
+               $scope.data.name = data.data.result.name;
+               $scope.data.lastname = data.data.result.lastName;
+               $scope.data.Opassword = data.data.result.password;
+            });
+            
+        })
+        .controller('RegisterCtrl',function($scope,$ionicHistory,$ionicSideMenuDelegate,$http,$state,$ionicPopup){
             $scope.data = {};
             
             $ionicSideMenuDelegate.canDragContent(false);
@@ -28,6 +41,7 @@ angular.module('starter.controllers', [])
                         disableBack: true
                         });
                     console.log("Realizado correctamente");
+                    usuario = $scope.data.email;
                     $state.go('app.map', {}, {reload: true});}
                     
                 }).error(function (e) {
@@ -42,10 +56,9 @@ angular.module('starter.controllers', [])
                 
             }};
         })
-
-        .controller('LoginCtrl', function ($scope, $state, $ionicHistory, $ionicSideMenuDelegate, $http, $ionicPopup) {
+        .controller('LoginCtrl',function ($scope, $state, $ionicHistory, $ionicSideMenuDelegate, $http, $ionicPopup) {
             $scope.data = {};
-            
+            $ionicSideMenuDelegate.canDragContent(false);
             $scope.goRegister = function(){
                 $state.go('app.register', {}, {reload: true});
                 
@@ -69,6 +82,7 @@ angular.module('starter.controllers', [])
                         disableBack: true
                          });
                         console.log("Realizado correctamente");
+                       usuario = $scope.data.username;
                     $state.go('app.map', {}, {reload: true});}else{
                     var alertPopup = $ionicPopup.alert({
                             title: 'Checkout your email or password',
@@ -83,9 +97,8 @@ angular.module('starter.controllers', [])
                 
                 
             };
-            $ionicSideMenuDelegate.canDragContent(false);
+            
         })
-
         .controller('MapCtrl', function ($scope, $state ,$cordovaGeolocation, $ionicPopup, $ionicLoading, googlePlacesService) {
            
             var options = {timeout: 10000, enableHighAccuracy: true};

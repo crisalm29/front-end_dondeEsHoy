@@ -84,10 +84,11 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
                         views: {
                             'menuContent': {
                                 templateUrl: 'templates/profile.html',
-                                //controller: 'SpecificInfoCtrl'
+                                controller: 'ProfileCtrl'
                             }
                         }
                     })
+                    
                     .state('app.login', {
                         url: '/login',
                         views: {
