@@ -3,7 +3,14 @@ angular.module('starter.controllers', [])
         .controller('AppCtrl', function ($scope) {
 
         })
-        
+        .controller('PromosCtrl',function($scope){
+            $scope.today = function(){
+                var myEl = angular.element(document.querySelector('#infoPromo') );
+                myEl.append(""); 
+          
+            };
+            
+        })
         .controller('ProfileCtrl',function($scope,$ionicHistory,$state,obtenerInfoPorEmail){
             $scope.data = {};
             $scope.data.email = usuario;

@@ -28,3 +28,13 @@
     height: 70%;
 }
 
+.estatico{
+    position: fixed;
+    
+}
+
+
+.contenidoTab{
+    overflow-y: scroll;
+    
+}

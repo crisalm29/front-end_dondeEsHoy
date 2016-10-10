@@ -65,7 +65,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
                         views: {
                             'menuContent': {
                                 templateUrl: 'templates/promos.html',
-                                //controller: 'ListaCtrl'
+                                controller: 'PromosCtrl'
                             }
                         }
                     })
