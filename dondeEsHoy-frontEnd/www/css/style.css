@@ -36,5 +36,5 @@
 
 .contenidoTab{
     overflow-y: scroll;
-    
+    white-space: nowrap;
 }

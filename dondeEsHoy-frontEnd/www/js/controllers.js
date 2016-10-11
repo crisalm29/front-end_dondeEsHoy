@@ -3,12 +3,12 @@ angular.module('starter.controllers', [])
         .controller('AppCtrl', function ($scope) {
 
         })
-        .controller('PromosCtrl',function($scope){
+        .controller('PromosCtrl',function($scope,$ionicLoading){
             $scope.today = function(){
-                var myEl = angular.element(document.querySelector('#infoPromo') );
-                myEl.append(""); 
+                
           
             };
+            
             
         })
         .controller('ProfileCtrl',function($scope,$ionicHistory,$state,obtenerInfoPorEmail){
