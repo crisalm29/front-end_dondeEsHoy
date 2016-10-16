@@ -25,7 +25,6 @@ angular.module('starter.controllers', [])
         })
         .controller('RegisterCtrl',function($scope,$ionicHistory,$ionicSideMenuDelegate,$http,$state,$ionicPopup){
             $scope.data = {};
-            
             $ionicSideMenuDelegate.canDragContent(false);
             $scope.register = function(){
             if($scope.data.password === $scope.data.password2){
@@ -66,7 +65,11 @@ angular.module('starter.controllers', [])
         .controller('LoginCtrl',function ($scope, $state, $ionicHistory, $ionicSideMenuDelegate, $http, $ionicPopup) {
             $scope.data = {};
             $ionicSideMenuDelegate.canDragContent(false);
+            
             $scope.goRegister = function(){
+                $ionicHistory.nextViewOptions({
+                        disableBack: true
+                         });
                 $state.go('app.register', {}, {reload: true});
                 
             };
