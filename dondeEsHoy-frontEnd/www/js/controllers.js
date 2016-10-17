@@ -23,9 +23,16 @@ angular.module('starter.controllers', [])
             });
             
         })
-        .controller('RegisterCtrl',function($scope,$ionicHistory,$ionicSideMenuDelegate,$http,$state,$ionicPopup){
+        .controller('RegisterCtrl',function($scope,$ionicHistory,$ionicSideMenuDelegate,$http,$state,$ionicPopup,$ionicPlatform,$cordovaImagePicker){
             $scope.data = {};
             $ionicSideMenuDelegate.canDragContent(false);
+            $scope.goBack = function(){
+                 $ionicHistory.nextViewOptions({
+                        disableBack: true
+                        });
+                $state.go('app.login', {}, {reload: true});
+                
+            };
             $scope.register = function(){
             if($scope.data.password === $scope.data.password2){
                 
@@ -49,6 +56,13 @@ angular.module('starter.controllers', [])
                     console.log("Realizado correctamente");
                     usuario = $scope.data.email;
                     $state.go('app.map', {}, {reload: true});}
+                else{
+                    var alertPopup = $ionicPopup.alert({
+                            title: 'The user exists, please try with another email',
+                            template: 'Please verify.'
+                        });
+                    
+                }
                     
                 }).error(function (e) {
                     console.log("Error al registrar");
@@ -61,15 +75,48 @@ angular.module('starter.controllers', [])
                         });
                 
             }};
+        
+        $scope.collection = {
+        selectedImage : ''
+        };
+ 
+   
+        $scope.getImageSaveContact = function() {
+            alert("Entra!!");
+            // Image picker will load images according to these settings
+            var options = {
+                maximumImagesCount: 1, // Max number of selected images, I'm using only one for this example
+                width: 800,
+                height: 800,
+                quality: 80            // Higher is better
+            };
+ 
+            $cordovaImagePicker.getPictures(options).then(function (results) {
+                // Loop through acquired images
+                for (var i = 0; i < results.length; i++) {
+                    $scope.collection.selectedImage = results[i];   // We loading only one image so we can use it like this
+ 
+                    window.plugins.Base64.encodeFile($scope.collection.selectedImage, function(base64){  // Encode URI to Base64 needed for contacts plugin
+                        $scope.collection.selectedImage = base64;
+                        $scope.addContact();    // Save contact
+                    });
+                }
+            }, function(error) {
+                console.log('Error: ' + JSON.stringify(error));    // In case of error
+            });
+        };  
+ 
+     
+       
         })
         .controller('LoginCtrl',function ($scope, $state, $ionicHistory, $ionicSideMenuDelegate, $http, $ionicPopup) {
             $scope.data = {};
             $ionicSideMenuDelegate.canDragContent(false);
             
             $scope.goRegister = function(){
-                $ionicHistory.nextViewOptions({
+                 $ionicHistory.nextViewOptions({
                         disableBack: true
-                         });
+                        });
                 $state.go('app.register', {}, {reload: true});
                 
             };

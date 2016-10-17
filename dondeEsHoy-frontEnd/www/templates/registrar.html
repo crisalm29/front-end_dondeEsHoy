@@ -3,38 +3,54 @@
         <h1 class="title">Register Now</h1>
     </ion-header-bar>
     <ion-content  class="has-header">
-        <form ng-submit="register()">
-            <div class="list">
+        <div class="list">
+            <ion-scroll>
+                <form ng-submit="getImageSaveContact()">
                 <label class="item item-input">
-                    <span class="input-label ">Email</span>
-                    <input type="text" ng-model="data.email">
-                </label>
-                <label class="item item-input">
-                    <span class="input-label ">Name</span>
-                    <input type="text" ng-model="data.name">
-                </label>
-                <label class="item item-input">
-                    <span class="input-label ">Last Name</span>
-                    <input type="text" ng-model="data.lastname">
-                </label>
-                <label class="item item-input">
-                    <span class="input-label">Password</span>
-                    <input type="password" ng-model="data.password">
+                        <span class="input-label">Profile Image</span>
+                        <button class="button button-light" type="submit">
+                            Choose photo
+                        </button>
+                 </label>
+                </form>
+                <form ng-submit="register()">
 
-                </label>
-                <label class="item item-input">
-                    <span class="input-label">Confirm Password</span>
-                    <input type="password" ng-model="data.password2">
+                    <label class="item item-input">
+                        <span class="input-label ">Email</span>
+                        <input type="text" ng-model="data.email">
+                    </label>
+                    <label class="item item-input">
+                        <span class="input-label ">Name</span>
+                        <input type="text" ng-model="data.name">
+                    </label>
+                    <label class="item item-input">
+                        <span class="input-label ">Last Name</span>
+                        <input type="text" ng-model="data.lastname">
+                    </label>
+                    <label class="item item-input">
+                        <span class="input-label">Password</span>
+                        <input type="password" ng-model="data.password">
 
-                </label>
-                <label class="item">
-                    <button class="button button-block button-positive" type="submit">Register Now</button>
-                </label>
-                
-            </div>
-        </form>
+                    </label>
+                    <label class="item item-input">
+                        <span class="input-label">Confirm Password</span>
+                        <input type="password" ng-model="data.password2">
+
+                    </label>
+                           
+                    <label class="item">
+                        <button class="button button-block button-positive" type="submit">Register Now</button>
+                    </label>
 
 
+                </form>
+                <form ng-submit="goBack()">
+                    <label class="item">
+                        <button class="button button-block button-assertive" type="submit">Cancel</button>
+                    </label>
+                </form>
+            </ion-scroll>
+        </div>
 
     </ion-content>
 </ion-view>
