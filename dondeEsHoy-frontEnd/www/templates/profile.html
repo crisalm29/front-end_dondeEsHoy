@@ -3,12 +3,12 @@
 
         <div class="list">
             <div class="list card">
-
+                <form ng-submit="getImageSaveContact()">
                 <div class="item item-avatar">
                     <img src="img/scarleth.jpg">
                     <button class="button button-light" type="submit">Edit Photo</button>
                 </div>
-
+                </form>
             </div>
             <form ng-submit="">
                 <label class="item item-input">
@@ -20,7 +20,7 @@
                     <p>{{data.name}} &nbsp; {{data.lastname}}</p>
                 </label>
                 <label class="item item-input">
-                    <span class="input-label ">Old Password</span>
+                    <span class="input-label ">Current Password</span>
                     <input type="password" ng-model="data.Oldpassword">
                 </label>
                 <label class="item item-input">

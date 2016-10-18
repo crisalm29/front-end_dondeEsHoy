@@ -11,7 +11,7 @@ angular.module('starter.controllers', [])
             
             
         })
-        .controller('ProfileCtrl',function($scope,$ionicHistory,$state,obtenerInfoPorEmail){
+        .controller('ProfileCtrl',function($scope,$ionicPopup,obtenerInfoPorEmail){
             $scope.data = {};
             $scope.data.email = usuario;
             
@@ -21,6 +21,51 @@ angular.module('starter.controllers', [])
                $scope.data.lastname = data.data.result.lastName;
                $scope.data.Opassword = data.data.result.password;
             });
+            
+            $scope.actualizarUsuario = function(){
+                if($scope.data.Opassword === $scope.data.oldpassword){
+                    if($scope.data.Newpassword === $scope.data.Newpassword2){
+                        
+                    }
+                    
+                }else{
+                    var alertPopup = $ionicPopup.alert({
+                            title: 'Write your current password',
+                            template: 'Please verify.'
+                        }); 
+                    
+                }
+                
+            };
+            
+            $scope.collection = {
+        selectedImage : ''
+        };
+ 
+   
+        $scope.getImageSaveContact = function() {
+            // Image picker will load images according to these settings
+            var options = {
+                maximumImagesCount: 1, // Max number of selected images, I'm using only one for this example
+                width: 800,
+                height: 800,
+                quality: 80            // Higher is better
+            };
+ 
+            $cordovaImagePicker.getPictures(options).then(function (results) {
+                // Loop through acquired images
+                for (var i = 0; i < results.length; i++) {
+                    $scope.collection.selectedImage = results[i];   // We loading only one image so we can use it like this
+ 
+                    window.plugins.Base64.encodeFile($scope.collection.selectedImage, function(base64){  // Encode URI to Base64 needed for contacts plugin
+                        $scope.collection.selectedImage = base64;
+                        $scope.addContact();    // Save contact
+                    });
+                }
+            }, function(error) {
+                console.log('Error: ' + JSON.stringify(error));    // In case of error
+            });
+        }; 
             
         })
         .controller('RegisterCtrl',function($scope,$ionicHistory,$ionicSideMenuDelegate,$http,$state,$ionicPopup,$ionicPlatform,$cordovaImagePicker){
@@ -82,7 +127,6 @@ angular.module('starter.controllers', [])
  
    
         $scope.getImageSaveContact = function() {
-            alert("Entra!!");
             // Image picker will load images according to these settings
             var options = {
                 maximumImagesCount: 1, // Max number of selected images, I'm using only one for this example
