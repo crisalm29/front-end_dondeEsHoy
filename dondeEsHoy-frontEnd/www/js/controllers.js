@@ -1,7 +1,7 @@
 angular.module('starter.controllers', [])
-        .config(function($ionicConfigProvider) {
-        $ionicConfigProvider.tabs.position("bottom"); //Places them at the bottom for all OS
-        $ionicConfigProvider.tabs.style("standard"); //Makes them all look the same across all OS
+        .config(function ($ionicConfigProvider) {
+            $ionicConfigProvider.tabs.position("bottom"); //Places them at the bottom for all OS
+            $ionicConfigProvider.tabs.style("standard"); //Makes them all look the same across all OS
         })
         .controller('AppCtrl', function ($scope) {
 
@@ -11,7 +11,7 @@ angular.module('starter.controllers', [])
 
 
             };
-            
+
 
         })
         .controller('ProfileCtrl', function ($scope, $ionicPopup, obtenerInfoPorEmail) {
@@ -211,7 +211,7 @@ angular.module('starter.controllers', [])
             };
 
         })
-        .controller('MapCtrl', function ($scope, $state, $cordovaGeolocation, $ionicPopup, $ionicLoading, googlePlacesService,scope) {
+        .controller('MapCtrl', function ($scope, $state, $cordovaGeolocation, $ionicPopup, $ionicLoading, googlePlacesService) {
 
             var options = {timeout: 10000, enableHighAccuracy: true};
             var latLng;
@@ -223,7 +223,7 @@ angular.module('starter.controllers', [])
                     center: latLng,
                     zoom: 15,
                     mapTypeId: google.maps.MapTypeId.ROADMAP
-                    
+
                 };
 
                 $scope.map = new google.maps.Map(document.getElementById("map"), mapOptions);
@@ -235,12 +235,12 @@ angular.module('starter.controllers', [])
                         animation: google.maps.Animation.DROP,
                         position: latLng,
                         icon: 'img/position.png'//'http://maps.google.com/mapfiles/ms/icons/green-dot.png'
-                        
-                      });
+
+                    });
                     var infoWindow = new google.maps.InfoWindow({
                         content: "Esta es mi ubicacion"
                     });
-                    
+
                     googlePlacesService.obtenerLocales(position.coords.latitude, position.coords.longitude).then(function (data) {
                         resultados = data.data.result;
                         for (var i = 0; i < resultados.length; i++) {
@@ -296,8 +296,92 @@ angular.module('starter.controllers', [])
                 console.log("Could not get location");
             });
 
+            $scope.search = function () {
+                //alert("Entraa");
+                var map = new google.maps.Map(document.getElementById('map'), {
+                    center: latLng, //{lat: -33.8688, lng: 151.2195},
+                    zoom: 15,
+                    mapTypeId: google.maps.MapTypeId.ROADMAP
+                });
+                var marker = new google.maps.Marker({
+                    map: map,
+                    animation: google.maps.Animation.DROP,
+                    position: latLng,
+                    icon: 'img/position.png'
+                });
+                var infoWindow = new google.maps.InfoWindow({
+                    content: "Esta es mi ubicacion"
+                });
+                // Create the search box and link it to the UI element.
+                var input = document.getElementById('pac-input');
+                var searchBox = new google.maps.places.SearchBox(input);
+                //map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+                //alert(google.maps.ControlPosition.TOP_LEFT);
 
-         
+                // Bias the SearchBox results towards current map's viewport.
+                map.addListener('bounds_changed', function () {
+
+                    searchBox.setBounds(map.getBounds());
+
+                });
+
+                var markers = [];
+                // Listen for the event fired when the user selects a prediction and retrieve
+                // more details for that place.
+                searchBox.addListener('places_changed', function () {
+
+                    var places = searchBox.getPlaces();
+
+                    if (places.length === 0) {
+                        console.log("Return 0");
+                        return;
+                    }
+
+                    // Clear out the old markers.
+                    markers.forEach(function (marker) {
+                        console.log("NUll");
+                        marker.setMap(null);
+
+                    });
+                    markers = [];
+
+                    // For each place, get the icon, name and location.
+                    var bounds = new google.maps.LatLngBounds();
+
+                    places.forEach(function (place) {
+
+                        var icon = {
+                            url: place.icon,
+                            size: new google.maps.Size(71, 71),
+                            origin: new google.maps.Point(0, 0),
+                            anchor: new google.maps.Point(17, 34),
+                            scaledSize: new google.maps.Size(25, 25)
+                        };
+
+                        // Create a marker for each place.
+                        markers.push(new google.maps.Marker({
+                            map: map,
+                            icon: icon,
+                            title: place.name,
+                            position: place.geometry.location,
+                            zoom: 13
+
+                        }));
+
+                        if (place.geometry.viewport) {
+                            // Only geocodes have viewport.
+
+                            bounds.union(place.geometry.viewport);
+                        } else {
+
+                            bounds.extend(place.geometry.location);
+                        }
+                    });
+                    map.fitBounds(bounds);
+
+                });
+            };
+
 
         })
 
