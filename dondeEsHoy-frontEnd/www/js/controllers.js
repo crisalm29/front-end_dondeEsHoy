@@ -232,7 +232,7 @@ angular.module('starter.controllers', [])
                         map: map,
                         animation: google.maps.Animation.DROP,
                         position: latLng,
-                        icon: 'img/position.png'
+                        icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png'
                     });
                     var infoWindow = new google.maps.InfoWindow({
                         content: "Esta es mi ubicacion"
@@ -245,7 +245,13 @@ angular.module('starter.controllers', [])
            };
            // Create the search box and link it to the UI element.
                 var input = document.getElementById('pac-input');
-                var searchBox = new google.maps.places.SearchBox(input);
+                var optionTypes = {
+                //bounds: latLng,
+                componentRestrictions: {country: "cr"},
+                types: ['establishment']
+                };
+                var searchBox = new google.maps.places.Autocomplete(input,optionTypes);
+                
                 //map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
                 //alert(google.maps.ControlPosition.TOP_LEFT);
                 
@@ -254,20 +260,21 @@ angular.module('starter.controllers', [])
                     
                     searchBox.setBounds(map.getBounds());
                     
-                }); 
+                });
             
            var markers = [];
                 // Listen for the event fired when the user selects a prediction and retrieve
                 // more details for that place.
-                searchBox.addListener('places_changed', function () {
+                searchBox.addListener('place_changed', function () {
+                    //searchBox.addListener('place_changed', function () {
+                    var place = searchBox.getPlace();
                     
-                    var places = searchBox.getPlaces();
-                   
-                    if (places.length === 0) {
-                        
+                    //var places = searchBox.getPlace();
+                    
+                    if (place.length === 0) {
                         return;
                     }
-
+                    
                     // Clear out the old markers.
                     markers.forEach(function (marker) {
                         
@@ -279,9 +286,10 @@ angular.module('starter.controllers', [])
                     // For each place, get the icon, name and location.
                     var bounds = new google.maps.LatLngBounds();
                     
-                    places.forEach(function (place) {
+//                    places.forEach(function (place) {
+//                        
                         console.log(place);
-                     var icon = {
+                        var icon = {
                             url: place.icon,
                             size: new google.maps.Size(71, 71),
                             origin: new google.maps.Point(0, 0),
@@ -307,10 +315,11 @@ angular.module('starter.controllers', [])
                             
                             bounds.extend(place.geometry.location);
                         }
-                    });
                     map.fitBounds(bounds);
+//                    });
                     
-                });
+                
+                    });
                 
                 $scope.limpiar = function(){
                   input.value = ""; 
@@ -323,7 +332,7 @@ angular.module('starter.controllers', [])
                         map: map,
                         animation: google.maps.Animation.DROP,
                         position: latLng,
-                        icon: 'img/position.png'
+                        icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png'
                     });
                     var infoWindow = new google.maps.InfoWindow({
                         content: "Esta es mi ubicacion"
@@ -352,7 +361,7 @@ angular.module('starter.controllers', [])
                         map: $scope.map,
                         animation: google.maps.Animation.DROP,
                         position: latLng,
-                        icon: 'img/position.png'//'http://maps.google.com/mapfiles/ms/icons/green-dot.png'
+                        icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png'
 
                     });
                     var infoWindow = new google.maps.InfoWindow({
