@@ -1,168 +1,178 @@
 angular.module('starter.controllers', [])
-
+        .config(function($ionicConfigProvider) {
+        $ionicConfigProvider.tabs.position("bottom"); //Places them at the bottom for all OS
+        $ionicConfigProvider.tabs.style("standard"); //Makes them all look the same across all OS
+        })
         .controller('AppCtrl', function ($scope) {
 
         })
-        .controller('PromosCtrl',function($scope,$ionicLoading){
-            $scope.today = function(){
-                
-          
+        .controller('PromosCtrl', function ($scope, $ionicLoading) {
+            $scope.today = function () {
+
+
             };
             
-            
+
         })
-        .controller('ProfileCtrl',function($scope,$ionicPopup,obtenerInfoPorEmail){
+        .controller('ProfileCtrl', function ($scope, $ionicPopup, obtenerInfoPorEmail) {
             $scope.data = {};
             $scope.data.email = usuario;
-            
-            obtenerInfoPorEmail.obtenerInfo($scope.data.email).then(function(data){
-                
-               $scope.data.name = data.data.result.name;
-               $scope.data.lastname = data.data.result.lastName;
-               $scope.data.Opassword = data.data.result.password;
+
+            obtenerInfoPorEmail.obtenerInfo($scope.data.email).then(function (data) {
+
+                $scope.data.name = data.data.result.name;
+                $scope.data.lastname = data.data.result.lastName;
+                $scope.data.Opassword = data.data.result.password;
             });
-            
-            $scope.actualizarUsuario = function(){
-                if($scope.data.Opassword === $scope.data.oldpassword){
-                    if($scope.data.Newpassword === $scope.data.Newpassword2){
-                        
-                    }
-                    
-                }else{
-                    var alertPopup = $ionicPopup.alert({
-                            title: 'Write your current password',
+
+            $scope.actualizarUsuario = function () {
+                if ($scope.data.Opassword === $scope.data.oldpassword) {
+                    if ($scope.data.Newpassword === $scope.data.Newpassword2) {
+
+                    } else {
+                        var alertPopup = $ionicPopup.alert({
+                            title: 'Confirm your new password',
                             template: 'Please verify.'
-                        }); 
-                    
-                }
-                
-            };
-            
-            $scope.collection = {
-        selectedImage : ''
-        };
- 
-   
-        $scope.getImageSaveContact = function() {
-            // Image picker will load images according to these settings
-            var options = {
-                maximumImagesCount: 1, // Max number of selected images, I'm using only one for this example
-                width: 800,
-                height: 800,
-                quality: 80            // Higher is better
-            };
- 
-            $cordovaImagePicker.getPictures(options).then(function (results) {
-                // Loop through acquired images
-                for (var i = 0; i < results.length; i++) {
-                    $scope.collection.selectedImage = results[i];   // We loading only one image so we can use it like this
- 
-                    window.plugins.Base64.encodeFile($scope.collection.selectedImage, function(base64){  // Encode URI to Base64 needed for contacts plugin
-                        $scope.collection.selectedImage = base64;
-                        $scope.addContact();    // Save contact
-                    });
-                }
-            }, function(error) {
-                console.log('Error: ' + JSON.stringify(error));    // In case of error
-            });
-        }; 
-            
-        })
-        .controller('RegisterCtrl',function($scope,$ionicHistory,$ionicSideMenuDelegate,$http,$state,$ionicPopup,$ionicPlatform,$cordovaImagePicker){
-            $scope.data = {};
-            $ionicSideMenuDelegate.canDragContent(false);
-            $scope.goBack = function(){
-                 $ionicHistory.nextViewOptions({
-                        disableBack: true
                         });
-                $state.go('app.login', {}, {reload: true});
-                
-            };
-            $scope.register = function(){
-            if($scope.data.password === $scope.data.password2){
-                
-              var p = $http({
-                    method: 'POST',
-                    url: "http://kefon94-001-site1.etempurl.com/Users/addUser",
-                    //url: "http://localhost:49986/googlePlaces",
-                    data: {
-                        email: $scope.data.email,
-                        name: $scope.data.name,
-                        lastname: $scope.data.lastname,
-                        password: $scope.data.password
+
                     }
 
-                });
-                return p.success(function (data) {
-                    if(data.result !== false){
-                        $ionicHistory.nextViewOptions({
-                        disableBack: true
-                        });
-                    console.log("Realizado correctamente");
-                    usuario = $scope.data.email;
-                    $state.go('app.map', {}, {reload: true});}
-                else{
+                } else {
                     var alertPopup = $ionicPopup.alert({
-                            title: 'The user exists, please try with another email',
-                            template: 'Please verify.'
-                        });
-                    
-                }
-                    
-                }).error(function (e) {
-                    console.log("Error al registrar");
-                });  
-                
-            }else{
-                var alertPopup = $ionicPopup.alert({
-                            title: 'The passwords must be the same',
-                            template: 'Please verify.'
-                        });
-                
-            }};
-        
-        $scope.collection = {
-        selectedImage : ''
-        };
- 
-   
-        $scope.getImageSaveContact = function() {
-            // Image picker will load images according to these settings
-            var options = {
-                maximumImagesCount: 1, // Max number of selected images, I'm using only one for this example
-                width: 800,
-                height: 800,
-                quality: 80            // Higher is better
-            };
- 
-            $cordovaImagePicker.getPictures(options).then(function (results) {
-                // Loop through acquired images
-                for (var i = 0; i < results.length; i++) {
-                    $scope.collection.selectedImage = results[i];   // We loading only one image so we can use it like this
- 
-                    window.plugins.Base64.encodeFile($scope.collection.selectedImage, function(base64){  // Encode URI to Base64 needed for contacts plugin
-                        $scope.collection.selectedImage = base64;
-                        $scope.addContact();    // Save contact
+                        title: 'Write your current password',
+                        template: 'Please verify.'
                     });
+
                 }
-            }, function(error) {
-                console.log('Error: ' + JSON.stringify(error));    // In case of error
-            });
-        };  
- 
-     
-       
+
+            };
+
+            $scope.collection = {
+                selectedImage: ''
+            };
+
+
+            $scope.getImageSaveContact = function () {
+                // Image picker will load images according to these settings
+                var options = {
+                    maximumImagesCount: 1, // Max number of selected images, I'm using only one for this example
+                    width: 800,
+                    height: 800,
+                    quality: 80            // Higher is better
+                };
+
+                $cordovaImagePicker.getPictures(options).then(function (results) {
+                    // Loop through acquired images
+                    for (var i = 0; i < results.length; i++) {
+                        $scope.collection.selectedImage = results[i];   // We loading only one image so we can use it like this
+
+                        window.plugins.Base64.encodeFile($scope.collection.selectedImage, function (base64) {  // Encode URI to Base64 needed for contacts plugin
+                            $scope.collection.selectedImage = base64;
+                            $scope.addContact();    // Save contact
+                        });
+                    }
+                }, function (error) {
+                    console.log('Error: ' + JSON.stringify(error));    // In case of error
+                });
+            };
+
         })
-        .controller('LoginCtrl',function ($scope, $state, $ionicHistory, $ionicSideMenuDelegate, $http, $ionicPopup) {
+        .controller('RegisterCtrl', function ($scope, $ionicHistory, $ionicSideMenuDelegate, $http, $state, $ionicPopup, $ionicPlatform, $cordovaImagePicker) {
             $scope.data = {};
             $ionicSideMenuDelegate.canDragContent(false);
-            
-            $scope.goRegister = function(){
-                 $ionicHistory.nextViewOptions({
-                        disableBack: true
+            $scope.goBack = function () {
+                $ionicHistory.nextViewOptions({
+                    disableBack: true
+                });
+                $state.go('app.login', {}, {reload: true});
+
+            };
+            $scope.register = function () {
+                if ($scope.data.password === $scope.data.password2) {
+
+                    var p = $http({
+                        method: 'POST',
+                        url: "http://kefon94-001-site1.etempurl.com/Users/addUser",
+                        //url: "http://localhost:49986/googlePlaces",
+                        data: {
+                            email: $scope.data.email,
+                            name: $scope.data.name,
+                            lastname: $scope.data.lastname,
+                            password: $scope.data.password
+                        }
+
+                    });
+                    return p.success(function (data) {
+                        if (data.result !== false) {
+                            $ionicHistory.nextViewOptions({
+                                disableBack: true
+                            });
+                            console.log("Realizado correctamente");
+                            usuario = $scope.data.email;
+                            $state.go('app.map', {}, {reload: true});
+                        } else {
+                            var alertPopup = $ionicPopup.alert({
+                                title: 'The user exists, please try with another email',
+                                template: 'Please verify.'
+                            });
+
+                        }
+
+                    }).error(function (e) {
+                        console.log("Error al registrar");
+                    });
+
+                } else {
+                    var alertPopup = $ionicPopup.alert({
+                        title: 'The passwords must be the same',
+                        template: 'Please verify.'
+                    });
+
+                }
+            };
+
+            $scope.collection = {
+                selectedImage: ''
+            };
+
+
+            $scope.getImageSaveContact = function () {
+                // Image picker will load images according to these settings
+                var options = {
+                    maximumImagesCount: 1, // Max number of selected images, I'm using only one for this example
+                    width: 800,
+                    height: 800,
+                    quality: 80            // Higher is better
+                };
+
+                $cordovaImagePicker.getPictures(options).then(function (results) {
+                    // Loop through acquired images
+                    for (var i = 0; i < results.length; i++) {
+                        $scope.collection.selectedImage = results[i];   // We loading only one image so we can use it like this
+
+                        window.plugins.Base64.encodeFile($scope.collection.selectedImage, function (base64) {  // Encode URI to Base64 needed for contacts plugin
+                            $scope.collection.selectedImage = base64;
+                            $scope.addContact();    // Save contact
                         });
+                    }
+                }, function (error) {
+                    console.log('Error: ' + JSON.stringify(error));    // In case of error
+                });
+            };
+
+
+
+        })
+        .controller('LoginCtrl', function ($scope, $state, $ionicHistory, $ionicSideMenuDelegate, $http, $ionicPopup) {
+            $scope.data = {};
+            $ionicSideMenuDelegate.canDragContent(false);
+
+            $scope.goRegister = function () {
+                $ionicHistory.nextViewOptions({
+                    disableBack: true
+                });
                 $state.go('app.register', {}, {reload: true});
-                
+
             };
             $scope.doLogin = function () {
                 console.log("LOGIN user: " + $scope.data.username + " - PW: " + $scope.data.password);
@@ -176,37 +186,38 @@ angular.module('starter.controllers', [])
                     }
 
                 });
-                
+
                 return p.success(function (data) {
-                    if(data.result !== false){
+                    if (data.result !== false) {
                         $ionicHistory.nextViewOptions({
-                        disableBack: true
-                         });
+                            disableBack: true
+                        });
                         console.log("Realizado correctamente");
-                       usuario = $scope.data.username;
-                    $state.go('app.map', {}, {reload: true});}else{
-                    var alertPopup = $ionicPopup.alert({
+                        usuario = $scope.data.username;
+                        $state.go('app.map', {}, {reload: true});
+                    } else {
+                        var alertPopup = $ionicPopup.alert({
                             title: 'Checkout your email or password',
                             template: 'Please verify.'
                         });
-                    
-                    }
-                    
-                }).error(function (e) {
-                    
-                });
-                
-                
-            };
-            
-        })
-        .controller('MapCtrl', function ($scope, $state ,$cordovaGeolocation, $ionicPopup, $ionicLoading, googlePlacesService) {
-           
-            var options = {timeout: 10000, enableHighAccuracy: true};
 
+                    }
+
+                }).error(function (e) {
+
+                });
+
+
+            };
+
+        })
+        .controller('MapCtrl', function ($scope, $state, $cordovaGeolocation, $ionicPopup, $ionicLoading, googlePlacesService) {
+
+            var options = {timeout: 10000, enableHighAccuracy: true};
+            var latLng;
             $cordovaGeolocation.getCurrentPosition(options).then(function (position) {
                 var resultados = {};
-                var latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+                latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
 
                 var mapOptions = {
                     center: latLng,
@@ -222,10 +233,12 @@ angular.module('starter.controllers', [])
                         map: $scope.map,
                         animation: google.maps.Animation.DROP,
                         position: latLng
-                    });
+                        
+                      });
                     var infoWindow = new google.maps.InfoWindow({
                         content: "Esta es mi ubicacion"
                     });
+                    
                     googlePlacesService.obtenerLocales(position.coords.latitude, position.coords.longitude).then(function (data) {
                         resultados = data.data.result;
                         for (var i = 0; i < resultados.length; i++) {
@@ -280,6 +293,92 @@ angular.module('starter.controllers', [])
             }, function (error) {
                 console.log("Could not get location");
             });
+
+
+            $scope.search = 
+               function(){
+                //alert("Entraa");
+                var map = new google.maps.Map(document.getElementById('map'), {
+                    center: latLng, //{lat: -33.8688, lng: 151.2195},
+                    zoom: 15,
+                    mapTypeId: google.maps.MapTypeId.ROADMAP
+                });
+                var marker = new google.maps.Marker({
+                        map: map,
+                        animation: google.maps.Animation.DROP,
+                        position: latLng
+                    });
+                    var infoWindow = new google.maps.InfoWindow({
+                        content: "Esta es mi ubicacion"
+                    });
+                // Create the search box and link it to the UI element.
+                var input = document.getElementById('pac-input');
+                var searchBox = new google.maps.places.SearchBox(input);
+                //map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+                //alert(google.maps.ControlPosition.TOP_LEFT);
+                
+                // Bias the SearchBox results towards current map's viewport.
+                map.addListener('bounds_changed', function () {
+                    searchBox.setBounds(map.getBounds());
+                    
+                });
+
+                var markers = [];
+                // Listen for the event fired when the user selects a prediction and retrieve
+                // more details for that place.
+                searchBox.addListener('places_changed', function () {
+                    
+                    var places = searchBox.getPlaces();
+                   
+                    if (places.length === 0) {
+                        console.log("Return 0");
+                        return;
+                    }
+
+                    // Clear out the old markers.
+                    markers.forEach(function (marker) {
+                        console.log("NUll");
+                        marker.setMap(null);
+                        
+                    });
+                    markers = [];
+
+                    // For each place, get the icon, name and location.
+                    var bounds = new google.maps.LatLngBounds();
+                    
+                    places.forEach(function (place) {
+                        
+                     var icon = {
+                            url: place.icon,
+                            size: new google.maps.Size(71, 71),
+                            origin: new google.maps.Point(0, 0),
+                            anchor: new google.maps.Point(17, 34),
+                            scaledSize: new google.maps.Size(25, 25)
+                        };
+
+                        // Create a marker for each place.
+                        markers.push(new google.maps.Marker({
+                            map: map,
+                            icon: icon,
+                            title: place.name,
+                            position: place.geometry.location,
+                            zoom:13
+                            
+                        }));
+                        
+                        if (place.geometry.viewport) {
+                            // Only geocodes have viewport.
+                            
+                            bounds.union(place.geometry.viewport);
+                        } else {
+                            
+                            bounds.extend(place.geometry.location);
+                        }
+                    });
+                    map.fitBounds(bounds);
+                    
+                });
+            };
 
 
         })

@@ -3,11 +3,13 @@
         <div class="bar bar-header item-input-inset">
             <label class="item-input-wrapper">
                 <i class="icon ion-ios-search placeholder-icon"></i>
-                <input type="search" placeholder="Search">
+                <input class="controls" id="pac-input" type="text" placeholder="Search place" ng-model="Option" ng-change="search()">
             </label>
-            <button class="button button-assertive">
-                Cancel
-            </button>
+            
+            <!--button class="button button-assertive">
+                Search
+            </button-->
+            
         </div>
         
         <div id="map" data-tap-disabled="true"></div>
@@ -19,5 +21,8 @@
                 Google Maps<!--img src="img/google_maps.png"  style="width:20px;height:20px;"-->
             </button></div>
         </div>
+    
     </ion-content>
+    
+    
 </ion-view>

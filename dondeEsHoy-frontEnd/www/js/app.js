@@ -13,8 +13,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
                 $httpProvider.defaults.headers.patch = {};
             }
         ])
-
-        .run(function ($ionicPlatform) {
+        
+       .run(function ($ionicPlatform) {
 
             $ionicPlatform.ready(function () {
                 // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
