@@ -3,7 +3,7 @@
         <div class="bar bar-header item-input-inset">
             <label class="item-input-wrapper">
                 <i class="icon ion-search placeholder-icon"></i>
-                <input class="controls" data-tap-disabled="true" id="pac-input" type="text" placeholder="Search place" ng-model="search" ng-change="disableTap()">
+                <input class="controls" id="pac-input" type="text" placeholder="Search place" ng-model="Option" ng-change="search()">
                 <!--input type="text" id="Autocomplete" class="form-control" ng-autocomplete ng-model="result1"-->
             </label>
             
@@ -13,7 +13,7 @@
             
         </div>
        
-        <div id="map" data-tap-disabled="true"></div>
+        <div id="map"></div>
         <div class="row">
             <div class="col"><button class="button button-block button-balanced">
                     Waze <!--img src="img/waze.png"  style="width:20px;height:20px;"-->
