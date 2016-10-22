@@ -14,7 +14,7 @@ angular.module('starter.controllers', [])
 
 
         })
-        .controller('ProfileCtrl', function ($scope, $ionicPopup, obtenerInfoPorEmail) {
+        .controller('ProfileCtrl', function ($scope, $ionicPopup, obtenerInfoPorEmail,$cordovaImagePicker) {
             $scope.data = {};
             $scope.data.email = usuario;
 
@@ -215,7 +215,125 @@ angular.module('starter.controllers', [])
 
             var options = {timeout: 10000, enableHighAccuracy: true};
             var latLng;
-            $cordovaGeolocation.getCurrentPosition(options).then(function (position) {
+            refrescar();
+            
+            var map = new google.maps.Map(document.getElementById('map'), {
+                    center: latLng, //{lat: -33.8688, lng: 151.2195},
+                    zoom: 17,
+                    mapTypeId: google.maps.MapTypeId.ROADMAP
+                });
+            $scope.search =  function(){
+                    map = new google.maps.Map(document.getElementById('map'), {
+                    center: latLng, //{lat: -33.8688, lng: 151.2195},
+                    zoom: 17,
+                    mapTypeId: google.maps.MapTypeId.ROADMAP
+                });
+                var marker = new google.maps.Marker({
+                        map: map,
+                        animation: google.maps.Animation.DROP,
+                        position: latLng,
+                        icon: 'img/position.png'
+                    });
+                    var infoWindow = new google.maps.InfoWindow({
+                        content: "Esta es mi ubicacion"
+                    });
+                    
+                    if(input.value === ""){
+                        refrescar();
+                        
+                    }
+           };
+           // Create the search box and link it to the UI element.
+                var input = document.getElementById('pac-input');
+                var searchBox = new google.maps.places.SearchBox(input);
+                //map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+                //alert(google.maps.ControlPosition.TOP_LEFT);
+                
+                // Bias the SearchBox results towards current map's viewport.
+                map.addListener('bounds_changed', function () {
+                    
+                    searchBox.setBounds(map.getBounds());
+                    
+                }); 
+            
+           var markers = [];
+                // Listen for the event fired when the user selects a prediction and retrieve
+                // more details for that place.
+                searchBox.addListener('places_changed', function () {
+                    
+                    var places = searchBox.getPlaces();
+                   
+                    if (places.length === 0) {
+                        
+                        return;
+                    }
+
+                    // Clear out the old markers.
+                    markers.forEach(function (marker) {
+                        
+                        marker.setMap(null);
+                        
+                    });
+                    markers = [];
+
+                    // For each place, get the icon, name and location.
+                    var bounds = new google.maps.LatLngBounds();
+                    
+                    places.forEach(function (place) {
+                        console.log(place);
+                     var icon = {
+                            url: place.icon,
+                            size: new google.maps.Size(71, 71),
+                            origin: new google.maps.Point(0, 0),
+                            anchor: new google.maps.Point(17, 34),
+                            scaledSize: new google.maps.Size(25, 25)
+                        };
+
+                        // Create a marker for each place.
+                        markers.push(new google.maps.Marker({
+                            map: map,
+                            icon: icon,
+                            title: place.name,
+                            position: place.geometry.location,
+                            zoom:13
+                            
+                        }));
+                        
+                        if (place.geometry.viewport) {
+                            // Only geocodes have viewport.
+                            
+                            bounds.union(place.geometry.viewport);
+                        } else {
+                            
+                            bounds.extend(place.geometry.location);
+                        }
+                    });
+                    map.fitBounds(bounds);
+                    
+                });
+                
+                $scope.limpiar = function(){
+                  input.value = ""; 
+                  map = new google.maps.Map(document.getElementById('map'), {
+                    center: latLng, //{lat: -33.8688, lng: 151.2195},
+                    zoom: 17,
+                    mapTypeId: google.maps.MapTypeId.ROADMAP
+                });
+                var marker = new google.maps.Marker({
+                        map: map,
+                        animation: google.maps.Animation.DROP,
+                        position: latLng,
+                        icon: 'img/position.png'
+                    });
+                    var infoWindow = new google.maps.InfoWindow({
+                        content: "Esta es mi ubicacion"
+                    });  
+                    
+                    refrescar();
+                };
+                
+                function refrescar(){
+                    $cordovaGeolocation.getCurrentPosition(options).then(function (position) {
                 var resultados = {};
                 latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
 
@@ -295,96 +413,8 @@ angular.module('starter.controllers', [])
             }, function (error) {
                 console.log("Could not get location");
             });
-                var map = new google.maps.Map(document.getElementById('map'), {
-                    center: latLng, //{lat: -33.8688, lng: 151.2195},
-                    zoom: 17,
-                    mapTypeId: google.maps.MapTypeId.ROADMAP
-                });
-            $scope.search =  function(){
-                //alert("Entraa");
-                map = new google.maps.Map(document.getElementById('map'), {
-                    center: latLng, //{lat: -33.8688, lng: 151.2195},
-                    zoom: 17,
-                    mapTypeId: google.maps.MapTypeId.ROADMAP
-                });
-                var marker = new google.maps.Marker({
-                        map: map,
-                        animation: google.maps.Animation.DROP,
-                        position: latLng,
-                        icon: 'img/position.png'
-                    });
-                    var infoWindow = new google.maps.InfoWindow({
-                        content: "Esta es mi ubicacion"
-                    });
-           };
-           // Create the search box and link it to the UI element.
-                var input = document.getElementById('pac-input');
-                var searchBox = new google.maps.places.SearchBox(input);
-                //map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
-                //alert(google.maps.ControlPosition.TOP_LEFT);
-                
-                // Bias the SearchBox results towards current map's viewport.
-                map.addListener('bounds_changed', function () {
                     
-                    searchBox.setBounds(map.getBounds());
-                    
-                }); 
-            
-           var markers = [];
-                // Listen for the event fired when the user selects a prediction and retrieve
-                // more details for that place.
-                searchBox.addListener('places_changed', function () {
-                    
-                    var places = searchBox.getPlaces();
-                   
-                    if (places.length === 0) {
-                        console.log("Return 0");
-                        return;
-                    }
-
-                    // Clear out the old markers.
-                    markers.forEach(function (marker) {
-                        console.log("NUll");
-                        marker.setMap(null);
-                        
-                    });
-                    markers = [];
-
-                    // For each place, get the icon, name and location.
-                    var bounds = new google.maps.LatLngBounds();
-                    
-                    places.forEach(function (place) {
-                        
-                     var icon = {
-                            url: place.icon,
-                            size: new google.maps.Size(71, 71),
-                            origin: new google.maps.Point(0, 0),
-                            anchor: new google.maps.Point(17, 34),
-                            scaledSize: new google.maps.Size(25, 25)
-                        };
-
-                        // Create a marker for each place.
-                        markers.push(new google.maps.Marker({
-                            map: map,
-                            icon: icon,
-                            title: place.name,
-                            position: place.geometry.location,
-                            zoom:13
-                            
-                        }));
-                        
-                        if (place.geometry.viewport) {
-                            // Only geocodes have viewport.
-                            
-                            bounds.union(place.geometry.viewport);
-                        } else {
-                            
-                            bounds.extend(place.geometry.location);
-                        }
-                    });
-                    map.fitBounds(bounds);
-                    
-                });     
+                }
 
         })
 
