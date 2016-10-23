@@ -159,6 +159,8 @@ angular.module('starter.controllers', [])
                 }, function (error) {
                     console.log('Error: ' + JSON.stringify(error));    // In case of error
                 });
+                
+                alert($scope.collection.selectedImage);
             };
 
 
@@ -229,7 +231,7 @@ angular.module('starter.controllers', [])
             $scope.irAWaze = function () {
 
                 if (place !== "") {
-                    var url = 'http://waze.to/';//ll='+place.geometry.location.lat()+','+place.geometry.location.lng()+'&navigate=yes';
+                    var url = 'http://waze.to//ll='+place.geometry.location.lat()+','+place.geometry.location.lng()+'&navigate=yes';
                     console.log(url);
                     /*var isIOS = ionic.Platform.isIOS();
                     //var isAndroid = ionic.Platform.isAndroid();
