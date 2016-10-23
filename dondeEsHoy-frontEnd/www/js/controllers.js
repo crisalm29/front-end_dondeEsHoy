@@ -6,12 +6,13 @@ angular.module('starter.controllers', [])
         .controller('AppCtrl', function ($scope) {
 
         })
-        .controller('PromosCtrl', function ($scope, $ionicLoading) {
-            $scope.today = function () {
-
-
-            };
-
+        .controller('PromosCtrl', function ($scope, $ionicLoading,promosEventsToday) {
+            $scope.today;
+            promosEventsToday.promosToday().then(function(data){
+                
+                $scope.today=data.data.result;
+                
+            });
 
         })
         .controller('ProfileCtrl', function ($scope, $ionicPopup, obtenerInfoPorEmail, $cordovaImagePicker) {
@@ -228,9 +229,19 @@ angular.module('starter.controllers', [])
             $scope.irAWaze = function () {
 
                 if (place !== "") {
-                    var destination = place.geometry.location.lat() + ',' + place.geometry.location.lng();
-                    console.log(destination);
-                  window.location.assign('http://waze.to/?ll='+destination+'&navigate=yes');  
+                    var url = 'http://waze.to/?ll='+place.geometry.location.lat()+','+place.geometry.location.lng()+'&navigate=yes';
+                    console.log(url);
+                    /*var isIOS = ionic.Platform.isIOS();
+                    //var isAndroid = ionic.Platform.isAndroid();
+                    
+                    if(isIOS === true){
+                        
+                        
+                    }else{
+                        
+                        
+                    }*/
+                  window.location.assign(url);  
 
                 } else {
                     var alertPopup = $ionicPopup.alert({
