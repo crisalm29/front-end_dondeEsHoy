@@ -1,3 +1,5 @@
+var lugarEspecifico;
+
 angular.module('starter.controllers', [])
         .config(function ($ionicConfigProvider) {
             $ionicConfigProvider.tabs.position("bottom"); //Places them at the bottom for all OS
@@ -6,14 +8,63 @@ angular.module('starter.controllers', [])
         .controller('AppCtrl', function ($scope) {
 
         })
-        .controller('PromosCtrl', function ($scope, $ionicLoading,promosEventsToday) {
+        .controller('InfoPlaceCtrl', function ($scope) {
+            $scope.info = lugarEspecifico;
+            
+        })
+        .controller('PromosCtrl', function ($scope, $http,$state,promosEventsToday,promosEventsThisWeek,promosEventsThisMonth) {
             $scope.today;
+            $scope.week;
+            $scope.month;
+            $scope.info = {
+                name: '',
+                telefono: "",
+                imagebase64: ""
+                
+            };
             promosEventsToday.promosToday().then(function(data){
                 
                 $scope.today=data.data.result;
-                
+                console.log($scope.today);
             });
+            promosEventsThisWeek.promosWeek().then(function(data){
+                
+                $scope.week=data.data.result;
+                console.log($scope.week);
+            });
+            promosEventsThisMonth.promosMonth().then(function(data){
+                
+                $scope.month=data.data.result;
+                console.log($scope.month);
+            });
+            $scope.infoEspecifica = function (id) {
+                var p = $http({
+                    method: 'POST',
+                    url: "http://kefon94-001-site1.etempurl.com/Establishments/infoById",
+                    //url: "http://localhost:49986/googlePlaces",
+                    data: {
+                        id: id
+                         }
 
+                });
+
+                return p.success(function (data) {
+                    if (data.result !== false) {
+                        
+                        $scope.info.name = data.result.name;
+                        $scope.info.telefono = data.result.telefono;
+                        $scope.info.imagebase64 = data.result.imagebase64;
+                        lugarEspecifico = $scope.info;
+                        $state.go('app.infoPlace', {}, {reload: true});
+                    } else {
+                       
+
+                    }
+
+                }).error(function (e) {
+
+                });
+            };
         })
         .controller('ProfileCtrl', function ($scope, $ionicPopup, obtenerInfoPorEmail, $cordovaImagePicker) {
             $scope.data = {};
@@ -156,11 +207,12 @@ angular.module('starter.controllers', [])
                             $scope.addContact();    // Save contact
                         });
                     }
+                    alert($scope.collection.selectedImage);
                 }, function (error) {
                     console.log('Error: ' + JSON.stringify(error));    // In case of error
                 });
                 
-                alert($scope.collection.selectedImage);
+                
             };
 
 

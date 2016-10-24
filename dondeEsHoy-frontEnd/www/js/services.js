@@ -23,6 +23,54 @@ angular.module('starter.services', [])
                 promosToday: promosToday
             };
         })
+        .service('promosEventsThisWeek', function ($http, $ionicLoading, $timeout) {
+            var promosWeek = function () {
+                var p = $http({
+                    method: 'POST',
+                    url: "http://kefon94-001-site1.etempurl.com/PromosEvents/promosEventsThisWeek"
+                    //url: "http://localhost:49986/googlePlaces",
+                    
+
+                });
+                return p.success(function (data) {
+                    $ionicLoading.hide();
+                    console.log("Success");
+                    return data;
+                }).error(function (e) {
+                    console.log("Error");
+                    $ionicLoading.hide();
+
+                });
+
+            };
+            return {
+                promosWeek: promosWeek
+            };
+        })
+        .service('promosEventsThisMonth', function ($http, $ionicLoading, $timeout) {
+            var promosMonth = function () {
+                var p = $http({
+                    method: 'POST',
+                    url: "http://kefon94-001-site1.etempurl.com/PromosEvents/promosEventsThisMoth"
+                    //url: "http://localhost:49986/googlePlaces",
+                    
+
+                });
+                return p.success(function (data) {
+                    $ionicLoading.hide();
+                    console.log("Success");
+                    return data;
+                }).error(function (e) {
+                    console.log("Error");
+                    $ionicLoading.hide();
+
+                });
+
+            };
+            return {
+                promosMonth: promosMonth
+            };
+        })
         .service('obtenerInfoPorEmail', function ($http, $ionicLoading, $timeout) {
             var obtenerInfo = function (usuario) {
                 var p = $http({

@@ -106,6 +106,15 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
                                 controller: 'RegisterCtrl'
                             }}
                     })
+                    
+                    .state('app.infoPlace', {
+                        url: '/infoPlace',
+                        views: {
+                            'menuContent': {
+                                templateUrl: 'templates/infoPlace.html',
+                                controller: 'InfoPlaceCtrl'
+                            }}
+                    })
             ;
 
 
