@@ -107,16 +107,16 @@ angular.module('starter.controllers', [])
 
                     } else {
                         var alertPopup = $ionicPopup.alert({
-                            title: 'Confirm your new password',
-                            template: 'Please verify.'
+                            title: 'Confirma tu nueva contraseña',
+                            template: 'Por favor verifique.'
                         });
 
                     }
 
                 } else {
                     var alertPopup = $ionicPopup.alert({
-                        title: 'Write your current password',
-                        template: 'Please verify.'
+                        title: 'Escribe tu contraseña actual.',
+                        template: 'Por favor verifique.'
                     });
 
                 }
@@ -189,8 +189,8 @@ angular.module('starter.controllers', [])
                             $state.go('app.map', {}, {reload: true});
                         } else {
                             var alertPopup = $ionicPopup.alert({
-                                title: 'The user exists, please try with another email',
-                                template: 'Please verify.'
+                                title: 'El usuario ya existe, intente con otro email',
+                                template: 'Por favor verifique.'
                             });
 
                         }
@@ -201,8 +201,8 @@ angular.module('starter.controllers', [])
 
                 } else {
                     var alertPopup = $ionicPopup.alert({
-                        title: 'The passwords must be the same',
-                        template: 'Please verify.'
+                        title: 'Las contraseñas deben ser iguales',
+                        template: 'Por favor verifique.'
                     });
 
                 }
@@ -277,8 +277,8 @@ angular.module('starter.controllers', [])
                         $state.go('app.map', {}, {reload: true});
                     } else {
                         var alertPopup = $ionicPopup.alert({
-                            title: 'Checkout your email or password',
-                            template: 'Please verify.'
+                            title: 'El usuario y la contraseña no coinciden',
+                            template: 'Por favor verifique.'
                         });
 
                     }
@@ -516,7 +516,7 @@ angular.module('starter.controllers', [])
 
                         }, function (err) {
                             var alertPopup = $ionicPopup.alert({
-                                title: 'Error al iniciar sesion!',
+                                title: 'Error al conectar!',
                                 template: 'Por favor veirifica tu conexion.'
                             });
 
