@@ -308,7 +308,7 @@ angular.module('starter.controllers', [])
             $scope.irAWaze = function () {
 
                 if (place !== "") {
-                    var url = 'http://waze.to//?ll='+place.geometry.location.lat()+','+place.geometry.location.lng()+'&navigate=yes';
+                    var url = 'http://waze//?ll='+place.geometry.location.lat()+','+place.geometry.location.lng()+'&navigate=yes';
                     console.log(url);
                     /*var isIOS = ionic.Platform.isIOS();
                     //var isAndroid = ionic.Platform.isAndroid();
