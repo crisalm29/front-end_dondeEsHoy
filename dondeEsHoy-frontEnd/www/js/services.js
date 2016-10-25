@@ -1,4 +1,30 @@
 angular.module('starter.services', [])
+    .service('promosByEstablishment', function ($http, $ionicLoading, $timeout) {
+            var promosByEstablishment = function (id) {
+                var p = $http({
+                    method: 'POST',
+                    url: "http://kefon94-001-site1.etempurl.com/PromosEvents/promosEventsThisMothByEstablishment",
+                    //url: "http://localhost:49986/googlePlaces",
+                    data: {
+                       establishment: id 
+                    }
+
+                });
+                return p.success(function (data) {
+                    $ionicLoading.hide();
+                    console.log("Success");
+                    return data;
+                }).error(function (e) {
+                    console.log("Error");
+                    $ionicLoading.hide();
+
+                });
+
+            };
+            return {
+                promosByEstablishment: promosByEstablishment
+            };
+        })
         .service('promosEventsToday', function ($http, $ionicLoading, $timeout) {
             var promosToday = function () {
                 var p = $http({

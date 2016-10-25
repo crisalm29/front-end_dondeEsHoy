@@ -8,9 +8,21 @@ angular.module('starter.controllers', [])
         .controller('AppCtrl', function ($scope) {
 
         })
-        .controller('InfoPlaceCtrl', function ($scope) {
+        .controller('InfoPlaceCtrl', function ($scope,promosByEstablishment) {
             $scope.info = lugarEspecifico;
-            
+            $scope.promos;
+            function corregirFechasNull(vector){
+             for(var i = 0; i<vector.length;i++){
+                 if(vector[i].due_date === null){
+                 vector[i].due_date = "Ahora";}
+                 
+             }
+            }
+            promosByEstablishment.promosByEstablishment($scope.info.establishmentID).then(function(data){
+                $scope.promos = data.data.result;
+                corregirFechasNull($scope.promos);
+                console.log($scope.promos);
+            });
         })
         .controller('PromosCtrl', function ($scope, $http,$state,promosEventsToday,promosEventsThisWeek,promosEventsThisMonth) {
             $scope.today;
@@ -19,22 +31,32 @@ angular.module('starter.controllers', [])
             $scope.info = {
                 name: '',
                 telefono: "",
-                imagebase64: ""
-                
+                imagebase64: "",
+                establishmentID: "" 
             };
+            function corregirFechasNull(vector){
+             for(var i = 0; i<vector.length;i++){
+                 if(vector[i].promoEvent.due_date === null){
+                 vector[i].promoEvent.due_date = "Ahora";}
+                 
+             }
+            }
             promosEventsToday.promosToday().then(function(data){
                 
                 $scope.today=data.data.result;
+                corregirFechasNull($scope.today);
                 console.log($scope.today);
             });
             promosEventsThisWeek.promosWeek().then(function(data){
                 
                 $scope.week=data.data.result;
+                corregirFechasNull($scope.week);
                 console.log($scope.week);
             });
             promosEventsThisMonth.promosMonth().then(function(data){
                 
                 $scope.month=data.data.result;
+                corregirFechasNull($scope.month);
                 console.log($scope.month);
             });
             $scope.infoEspecifica = function (id) {
@@ -54,6 +76,8 @@ angular.module('starter.controllers', [])
                         $scope.info.name = data.result.name;
                         $scope.info.telefono = data.result.telefono;
                         $scope.info.imagebase64 = data.result.imagebase64;
+                        $scope.info.establishmentID = id;
+                        
                         lugarEspecifico = $scope.info;
                         $state.go('app.infoPlace', {}, {reload: true});
                     } else {

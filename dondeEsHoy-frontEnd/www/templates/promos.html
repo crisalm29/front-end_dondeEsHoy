@@ -5,9 +5,9 @@
             <ion-tab  title="Today" icon-on="ion-ios-clock" icon-off="ion-ios-clock">
                 <ion-scroll>
                     <div class="list card" ng-repeat="hoy in today">
-                        <div class="item item-avatar">
-                            <img src="img/antik.jpg">
-                            <button class="button  button-light" ng-click="infoEspecifica({{hoy.establishment.establishmentId}})">{{hoy.establishment.establishmentName}}</button>
+                        <div class="item item-avatar item-divider">
+                            <!--img src="img/antik.jpg"-->
+                            <button class="button button-clear  button-dark" ng-click="infoEspecifica({{hoy.establishment.establishmentId}})">{{hoy.establishment.establishmentName}}</button>
                             <p>Fecha: {{hoy.promoEvent.start_date| date}} - {{hoy.promoEvent.due_date| date}}</p>
                         </div>
 
@@ -28,9 +28,9 @@
             <ion-tab title="This Week" icon-on="ion-ios-calendar" icon-off="ion-ios-calendar">
                 <ion-scroll>
                     <div class="list card" ng-repeat="semana in week">
-                        <div class="item item-avatar">
-                            <img src="img/antik.jpg">
-                            <button class="button  button-light">{{semana.establishment.establishmentName}}</button>
+                        <div class="item item-avatar item-divider">
+                            <!--img src="img/antik.jpg"-->
+                            <button class="button button-clear  button-dark">{{semana.establishment.establishmentName}}</button>
                             <p>Fecha: {{semana.promoEvent.start_date| date}} - {{semana.promoEvent.due_date| date}}</p>
                         </div>
 
@@ -54,9 +54,9 @@
             <ion-tab title="This Month" icon-on="ion-ios-calendar-outline" icon-off="ion-ios-calendar-outline">
                 <ion-scroll>
                     <div class="list card" ng-repeat="mes in month">
-                        <div class="item item-avatar">
-                            <img src="img/antik.jpg">
-                            <button class="button  button-light">{{mes.establishment.establishmentName}}</button>
+                        <div class="item item-avatar item-divider ">
+                            <!--img src="img/antik.jpg"-->
+                            <button class="button button-clear  button-dark">{{mes.establishment.establishmentName}}</button>
                             <p>Fecha: {{mes.promoEvent.start_date| date}} - {{mes.promoEvent.due_date| date}}</p>
                         </div>
 

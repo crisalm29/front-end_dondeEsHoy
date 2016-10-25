@@ -1,17 +1,36 @@
 <ion-view view-title="{{info.name}}">
     <ion-content>
         <div class="list card">
+             <a class="item item-icon-left ">
+                    <i class="icon ion-home"></i>
+                    <p>{{info.name}}</p>
+                </a>
 
-            <a href="#" class="item item-icon-left">
-                <i class="icon ion-home"></i>
-                <p>{{info.name}}</p>
-            </a>
+                <a class="item item-icon-left">
+                    <i class="icon ion-ios-telephone"></i>
+                    <p>{{info.telefono}}</p>
+                </a>
+            
+            <ion-scroll>
+                <div class="list card" ng-repeat="prom in promos">
+                    <div class="item item-avatar item-divider">
+                        <!--img src="img/antik.jpg"-->
+                        <p>Fecha: {{prom.start_date| date}} - {{prom.due_date| date}}</p>
+                    </div>
 
-            <a href="#" class="item item-icon-left">
-                <i class="icon ion-ios-telephone"></i>
-                <p>{{info.telefono}}</p>
-            </a>
+                    <div class="item item-body">
+                        <!--img class="full-image" src="img/promoAntik.jpg"-->
+                        <h3>{{prom.name}}</h3>
+                        <p>
+                            {{prom.description}}
+                        </p>
 
-       </div>
+                    </div>
+
+                </div>
+                <!-- Tab 1 content -->
+            </ion-scroll>
+
+        </div>
     </ion-content>
 </ion-view>
