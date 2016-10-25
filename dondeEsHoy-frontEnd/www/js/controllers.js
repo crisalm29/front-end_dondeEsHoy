@@ -312,7 +312,7 @@ angular.module('starter.controllers', [])
                     var lng = ""+place.geometry.location.lng();
                     lat = lat.substr(0,lat.lastIndexOf(".")+7);
                     lng = lng.substr(0,lng.lastIndexOf(".")+7);
-                    var url = 'http://waze//?ll='+lat+','+lng+'&navigate=yes';
+                    var url = 'http://waze.to//?ll='+lat+','+lng+'&navigate=yes';
                     console.log(lat);
                     console.log(lng);
                     /*var isIOS = ionic.Platform.isIOS();
