@@ -174,7 +174,8 @@ angular.module('starter.controllers', [])
                             email: $scope.data.email,
                             name: $scope.data.name,
                             lastname: $scope.data.lastname,
-                            password: $scope.data.password
+                            password: $scope.data.password//,
+                            //imageBase64:
                         }
 
                     });
@@ -231,7 +232,7 @@ angular.module('starter.controllers', [])
                             $scope.addContact();    // Save contact
                         });
                     }
-                    alert($scope.collection.selectedImage);
+                    
                 }, function (error) {
                     console.log('Error: ' + JSON.stringify(error));    // In case of error
                 });
