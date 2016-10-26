@@ -8,23 +8,24 @@ angular.module('starter.controllers', [])
         .controller('AppCtrl', function ($scope) {
 
         })
-        .controller('InfoPlaceCtrl', function ($scope,promosByEstablishment) {
+        .controller('InfoPlaceCtrl', function ($scope, promosByEstablishment) {
             $scope.info = lugarEspecifico;
             $scope.promos;
-            function corregirFechasNull(vector){
-             for(var i = 0; i<vector.length;i++){
-                 if(vector[i].due_date === null){
-                 vector[i].due_date = "Ahora";}
-                 
-             }
+            function corregirFechasNull(vector) {
+                for (var i = 0; i < vector.length; i++) {
+                    if (vector[i].due_date === null) {
+                        vector[i].due_date = "Ahora";
+                    }
+
+                }
             }
-            promosByEstablishment.promosByEstablishment($scope.info.establishmentID).then(function(data){
+            promosByEstablishment.promosByEstablishment($scope.info.establishmentID).then(function (data) {
                 $scope.promos = data.data.result;
                 corregirFechasNull($scope.promos);
                 console.log($scope.promos);
             });
         })
-        .controller('PromosCtrl', function ($scope, $http,$state,promosEventsToday,promosEventsThisWeek,promosEventsThisMonth) {
+        .controller('PromosCtrl', function ($scope, $http, $state, promosEventsToday, promosEventsThisWeek, promosEventsThisMonth) {
             $scope.today;
             $scope.week;
             $scope.month;
@@ -32,30 +33,31 @@ angular.module('starter.controllers', [])
                 name: '',
                 telefono: "",
                 imagebase64: "",
-                establishmentID: "" 
+                establishmentID: ""
             };
-            function corregirFechasNull(vector){
-             for(var i = 0; i<vector.length;i++){
-                 if(vector[i].promoEvent.due_date === null){
-                 vector[i].promoEvent.due_date = "Ahora";}
-                 
-             }
+            function corregirFechasNull(vector) {
+                for (var i = 0; i < vector.length; i++) {
+                    if (vector[i].promoEvent.due_date === null) {
+                        vector[i].promoEvent.due_date = "Ahora";
+                    }
+
+                }
             }
-            promosEventsToday.promosToday().then(function(data){
-                
-                $scope.today=data.data.result;
+            promosEventsToday.promosToday().then(function (data) {
+
+                $scope.today = data.data.result;
                 corregirFechasNull($scope.today);
                 console.log($scope.today);
             });
-            promosEventsThisWeek.promosWeek().then(function(data){
-                
-                $scope.week=data.data.result;
+            promosEventsThisWeek.promosWeek().then(function (data) {
+
+                $scope.week = data.data.result;
                 corregirFechasNull($scope.week);
                 console.log($scope.week);
             });
-            promosEventsThisMonth.promosMonth().then(function(data){
-                
-                $scope.month=data.data.result;
+            promosEventsThisMonth.promosMonth().then(function (data) {
+
+                $scope.month = data.data.result;
                 corregirFechasNull($scope.month);
                 console.log($scope.month);
             });
@@ -66,22 +68,22 @@ angular.module('starter.controllers', [])
                     //url: "http://localhost:49986/googlePlaces",
                     data: {
                         id: id
-                         }
+                    }
 
                 });
 
                 return p.success(function (data) {
                     if (data.result !== false) {
-                        
+
                         $scope.info.name = data.result.name;
                         $scope.info.telefono = data.result.telefono;
                         $scope.info.imagebase64 = data.result.imagebase64;
                         $scope.info.establishmentID = id;
-                        
+
                         lugarEspecifico = $scope.info;
                         $state.go('app.infoPlace', {}, {reload: true});
                     } else {
-                       
+
 
                     }
 
@@ -93,12 +95,22 @@ angular.module('starter.controllers', [])
         .controller('ProfileCtrl', function ($scope, $ionicPopup, obtenerInfoPorEmail, $cordovaImagePicker) {
             $scope.data = {};
             $scope.data.email = usuario;
-
+            var Base64={_keyStr:"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",encode:function(e){var t="";var n,r,i,s,o,u,a;var f=0;e=Base64._utf8_encode(e);while(f<e.length){n=e.charCodeAt(f++);r=e.charCodeAt(f++);i=e.charCodeAt(f++);s=n>>2;o=(n&3)<<4|r>>4;u=(r&15)<<2|i>>6;a=i&63;if(isNaN(r)){u=a=64}else if(isNaN(i)){a=64}t=t+this._keyStr.charAt(s)+this._keyStr.charAt(o)+this._keyStr.charAt(u)+this._keyStr.charAt(a)}return t},decode:function(e){var t="";var n,r,i;var s,o,u,a;var f=0;e=e.replace(/[^A-Za-z0-9+/=]/g,"");while(f<e.length){s=this._keyStr.indexOf(e.charAt(f++));o=this._keyStr.indexOf(e.charAt(f++));u=this._keyStr.indexOf(e.charAt(f++));a=this._keyStr.indexOf(e.charAt(f++));n=s<<2|o>>4;r=(o&15)<<4|u>>2;i=(u&3)<<6|a;t=t+String.fromCharCode(n);if(u!=64){t=t+String.fromCharCode(r)}if(a!=64){t=t+String.fromCharCode(i)}}t=Base64._utf8_decode(t);return t},_utf8_encode:function(e){e=e.replace(/rn/g,"n");var t="";for(var n=0;n<e.length;n++){var r=e.charCodeAt(n);if(r<128){t+=String.fromCharCode(r)}else if(r>127&&r<2048){t+=String.fromCharCode(r>>6|192);t+=String.fromCharCode(r&63|128)}else{t+=String.fromCharCode(r>>12|224);t+=String.fromCharCode(r>>6&63|128);t+=String.fromCharCode(r&63|128)}}return t},_utf8_decode:function(e){var t="";var n=0;var r=c1=c2=0;while(n<e.length){r=e.charCodeAt(n);if(r<128){t+=String.fromCharCode(r);n++}else if(r>191&&r<224){c2=e.charCodeAt(n+1);t+=String.fromCharCode((r&31)<<6|c2&63);n+=2}else{c2=e.charCodeAt(n+1);c3=e.charCodeAt(n+2);t+=String.fromCharCode((r&15)<<12|(c2&63)<<6|c3&63);n+=3}}return t}};
+            
+            var decodedString;
+            function codificarBase64(encode){
+                decodedString= Base64.decode(encode);
+                $scope.data.imageBase64 = decodedString;
+            };
+                      
+            /*var decodedString = Base64.decode(encodedString);
+            console.log(decodedString);*/
             obtenerInfoPorEmail.obtenerInfo($scope.data.email).then(function (data) {
 
                 $scope.data.name = data.data.result.name;
                 $scope.data.lastname = data.data.result.lastName;
                 $scope.data.Opassword = data.data.result.password;
+                codificarBase64(data.data.result.imagebase64);
             });
 
             $scope.actualizarUsuario = function () {
@@ -163,9 +175,20 @@ angular.module('starter.controllers', [])
                 $state.go('app.login', {}, {reload: true});
 
             };
+            
+            var Base64={_keyStr:"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",encode:function(e){var t="";var n,r,i,s,o,u,a;var f=0;e=Base64._utf8_encode(e);while(f<e.length){n=e.charCodeAt(f++);r=e.charCodeAt(f++);i=e.charCodeAt(f++);s=n>>2;o=(n&3)<<4|r>>4;u=(r&15)<<2|i>>6;a=i&63;if(isNaN(r)){u=a=64}else if(isNaN(i)){a=64}t=t+this._keyStr.charAt(s)+this._keyStr.charAt(o)+this._keyStr.charAt(u)+this._keyStr.charAt(a)}return t},decode:function(e){var t="";var n,r,i;var s,o,u,a;var f=0;e=e.replace(/[^A-Za-z0-9+/=]/g,"");while(f<e.length){s=this._keyStr.indexOf(e.charAt(f++));o=this._keyStr.indexOf(e.charAt(f++));u=this._keyStr.indexOf(e.charAt(f++));a=this._keyStr.indexOf(e.charAt(f++));n=s<<2|o>>4;r=(o&15)<<4|u>>2;i=(u&3)<<6|a;t=t+String.fromCharCode(n);if(u!=64){t=t+String.fromCharCode(r)}if(a!=64){t=t+String.fromCharCode(i)}}t=Base64._utf8_decode(t);return t},_utf8_encode:function(e){e=e.replace(/rn/g,"n");var t="";for(var n=0;n<e.length;n++){var r=e.charCodeAt(n);if(r<128){t+=String.fromCharCode(r)}else if(r>127&&r<2048){t+=String.fromCharCode(r>>6|192);t+=String.fromCharCode(r&63|128)}else{t+=String.fromCharCode(r>>12|224);t+=String.fromCharCode(r>>6&63|128);t+=String.fromCharCode(r&63|128)}}return t},_utf8_decode:function(e){var t="";var n=0;var r=c1=c2=0;while(n<e.length){r=e.charCodeAt(n);if(r<128){t+=String.fromCharCode(r);n++}else if(r>191&&r<224){c2=e.charCodeAt(n+1);t+=String.fromCharCode((r&31)<<6|c2&63);n+=2}else{c2=e.charCodeAt(n+1);c3=e.charCodeAt(n+2);t+=String.fromCharCode((r&15)<<12|(c2&63)<<6|c3&63);n+=3}}return t}};
+            var encodedString;
+            function codificarBase64(src){
+                encodedString= Base64.encode(src);
+                $scope.data.imageBase64 = encodedString;
+            };
+                      
+            /*var decodedString = Base64.decode(encodedString);
+            console.log(decodedString);*/
+            
             $scope.register = function () {
                 if ($scope.data.password === $scope.data.password2) {
-
+                    codificarBase64($scope.collection.selectedImage);
                     var p = $http({
                         method: 'POST',
                         url: "http://kefon94-001-site1.etempurl.com/Users/addUser",
@@ -174,8 +197,8 @@ angular.module('starter.controllers', [])
                             email: $scope.data.email,
                             name: $scope.data.name,
                             lastname: $scope.data.lastname,
-                            password: $scope.data.password//,
-                            //imageBase64:
+                            password: $scope.data.password,
+                            imageBase64:$scope.data.imageBase64
                         }
 
                     });
@@ -230,14 +253,15 @@ angular.module('starter.controllers', [])
                         window.plugins.Base64.encodeFile($scope.collection.selectedImage, function (base64) {  // Encode URI to Base64 needed for contacts plugin
                             $scope.collection.selectedImage = base64;
                             $scope.addContact();    // Save contact
+                            
                         });
                     }
-                    
+
                 }, function (error) {
                     console.log('Error: ' + JSON.stringify(error));    // In case of error
                 });
-                
-                
+
+
             };
 
 
@@ -245,6 +269,8 @@ angular.module('starter.controllers', [])
         })
         .controller('LoginCtrl', function ($scope, $state, $ionicHistory, $ionicSideMenuDelegate, $http, $ionicPopup) {
             $scope.data = {};
+            
+            
             $ionicSideMenuDelegate.canDragContent(false);
 
             $scope.goRegister = function () {
@@ -303,29 +329,29 @@ angular.module('starter.controllers', [])
                 mapTypeId: google.maps.MapTypeId.ROADMAP
             });
 
-            
+
             var place = "";
             $scope.irAWaze = function () {
 
                 if (place !== "") {
-                    var lat = ""+place.geometry.location.lat();
-                    var lng = ""+place.geometry.location.lng();
-                    lat = lat.substr(0,lat.lastIndexOf(".")+7);
-                    lng = lng.substr(0,lng.lastIndexOf(".")+7);
-                    var url = 'http://waze.to//?ll='+lat+','+lng+'&navigate=yes';
+                    var lat = "" + place.geometry.location.lat();
+                    var lng = "" + place.geometry.location.lng();
+                    lat = lat.substr(0, lat.lastIndexOf(".") + 7);
+                    lng = lng.substr(0, lng.lastIndexOf(".") + 7);
+                    var url = 'http://waze.to//?ll=' + lat + ',' + lng + '&navigate=yes';
                     console.log(lat);
                     console.log(lng);
                     /*var isIOS = ionic.Platform.isIOS();
-                    //var isAndroid = ionic.Platform.isAndroid();
-                    
-                    if(isIOS === true){
-                        
-                        
-                    }else{
-                        
-                        
-                    }*/
-                  window.location.assign(url);  
+                     //var isAndroid = ionic.Platform.isAndroid();
+                     
+                     if(isIOS === true){
+                     
+                     
+                     }else{
+                     
+                     
+                     }*/
+                    window.location.assign(url);
 
                 } else {
                     var alertPopup = $ionicPopup.alert({
