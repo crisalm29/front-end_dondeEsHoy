@@ -101,6 +101,7 @@ angular.module('starter.controllers', [])
             function decodificarBase64(encode){
                 decodedString= Base64.decode(encode);
                 $scope.data.imageBase64 = decodedString;
+                $scope.collection.selectedImage = decodedString;
             };
             
             var encodedString;
