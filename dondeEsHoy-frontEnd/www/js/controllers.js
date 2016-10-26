@@ -168,6 +168,7 @@ angular.module('starter.controllers', [])
                     });
         };
             function servicioActualizar2(){
+                $scope.data.imageBase64 = $scope.collection.selectedImage;
                 codificarBase64($scope.data.imageBase64);
                 var p = $http({
                         method: 'POST',
@@ -255,7 +256,7 @@ angular.module('starter.controllers', [])
                     }
                 }, function (error) {
                     console.log('Error: ' + JSON.stringify(error));    // In case of error
-                }).then($scope.data.imageBase64 = $scope.collection.selectedImage).then(servicioActualizar2());
+                }).then(servicioActualizar2());
             };
 
         })
@@ -432,7 +433,7 @@ angular.module('starter.controllers', [])
                     var lng = "" + place.geometry.location.lng();
                     lat = lat.substr(0, lat.lastIndexOf(".") + 7);
                     lng = lng.substr(0, lng.lastIndexOf(".") + 7);
-                    var url = 'http://waze.to//?ll=' + lat + ',' + lng + '&navigate=yes';
+                    var url = "http://google.com";//'http://waze.to//?ll=' + lat + ',' + lng + '&navigate=yes';
                     console.log(lat);
                     console.log(lng);
                     /*var isIOS = ionic.Platform.isIOS();
