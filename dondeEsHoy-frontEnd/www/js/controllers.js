@@ -130,12 +130,13 @@ angular.module('starter.controllers', [])
                             name: $scope.data.name,
                             lastname: $scope.data.lastname,
                             password: $scope.data.Newpassword,
-                            imageBase64:decodedString
+                            imageBase64:encodedString
                         }
 
                     });
                     return p.success(function (data) {
                         if (data.result !== false) {
+                            
                             var alertPopup = $ionicPopup.alert({
                                 title: 'Se ha actualizado tu cuenta de usuario',
                                 template: ''
@@ -155,8 +156,11 @@ angular.module('starter.controllers', [])
             $scope.actualizarUsuario = function () {
                 if ($scope.data.Opassword === $scope.data.oldpassword) {
                     if ($scope.data.Newpassword === $scope.data.Newpassword2) {
+                        if($scope.collection !== ""){
+                            $scope.data.imageBase64 = $scope.collection;                            
+                        }
                         codificarBase64($scope.data.imageBase64);
-
+                        servicioActualizar();
                     } else {
                         var alertPopup = $ionicPopup.alert({
                             title: 'Confirma tu nueva contraseña',
