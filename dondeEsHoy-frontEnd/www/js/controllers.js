@@ -119,7 +119,20 @@ angular.module('starter.controllers', [])
                 decodificarBase64(data.data.result.imagebase64);
             });
             
+            function refrescar(){
+                obtenerInfoPorEmail.obtenerInfo($scope.data.email).then(function (data) {
+
+                $scope.data.id = data.data.result.id;
+                $scope.data.name = data.data.result.name;
+                $scope.data.lastname = data.data.result.lastName;
+                $scope.data.Opassword = data.data.result.password;
+                decodificarBase64(data.data.result.imagebase64);
+            });
+                
+            }
+            
             function servicioActualizar(){
+                codificarBase64($scope.data.imageBase64);
                 var p = $http({
                         method: 'POST',
                         url: "http://kefon94-001-site1.etempurl.com/Users/modifyUser",
@@ -142,6 +155,7 @@ angular.module('starter.controllers', [])
                                 title: 'Se ha actualizado tu cuenta de usuario',
                                 template: ''
                             });
+                            refrescar();
                            
                         } else {
                             var alertPopup = $ionicPopup.alert({
@@ -160,7 +174,6 @@ angular.module('starter.controllers', [])
                         if($scope.collection.selectedImage !== ""){
                             $scope.data.imageBase64 = $scope.collection.selectedImage;                            
                         }
-                        codificarBase64($scope.data.imageBase64);
                         servicioActualizar();
                     } else {
                         var alertPopup = $ionicPopup.alert({
@@ -202,12 +215,12 @@ angular.module('starter.controllers', [])
                         window.plugins.Base64.encodeFile($scope.collection.selectedImage, function (base64) {  // Encode URI to Base64 needed for contacts plugin
                             $scope.collection.selectedImage = base64;
                             $scope.addContact();    // Save contact
-                            $scope.data.imageBase64 = $scope.collection.selectedImage;
+                            
                         });
                     }
                 }, function (error) {
                     console.log('Error: ' + JSON.stringify(error));    // In case of error
-                });
+                }).then($scope.data.imageBase64 = $scope.collection.selectedImage).then(servicioActualizar());
             };
 
         })
