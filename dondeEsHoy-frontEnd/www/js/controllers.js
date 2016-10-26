@@ -167,7 +167,42 @@ angular.module('starter.controllers', [])
                 
                     });
         };
+            function servicioActualizar2(){
+                codificarBase64($scope.data.imageBase64);
+                var p = $http({
+                        method: 'POST',
+                        url: "http://kefon94-001-site1.etempurl.com/Users/modifyUser",
+                        //url: "http://localhost:49986/googlePlaces",
+                        data: {
+                            id: $scope.data.id,
+                            email: $scope.data.email,
+                            name: $scope.data.name,
+                            lastname: $scope.data.lastname,
+                            password: $scope.data.Opassword,
+                            imageBase64:encodedString
+                        }
 
+                    });
+                    return p.success(function (data) {
+                    console.log(data);
+                        if (data.result !== false) {
+                            
+                            var alertPopup = $ionicPopup.alert({
+                                title: 'Se ha actualizado tu cuenta de usuario',
+                                template: ''
+                            });
+                            refrescar();
+                           
+                        } else {
+                            var alertPopup = $ionicPopup.alert({
+                                title: 'Error',
+                                template: 'Por favor verifique.'
+                            });
+
+                        }
+                
+                    });
+        };
             $scope.actualizarUsuario = function () {
                 if ($scope.data.Opassword === $scope.data.Oldpassword) {
                     if ($scope.data.Newpassword === $scope.data.Newpassword2) {
@@ -220,7 +255,7 @@ angular.module('starter.controllers', [])
                     }
                 }, function (error) {
                     console.log('Error: ' + JSON.stringify(error));    // In case of error
-                }).then($scope.data.imageBase64 = $scope.collection.selectedImage).then(servicioActualizar());
+                }).then($scope.data.imageBase64 = $scope.collection.selectedImage).then(servicioActualizar2());
             };
 
         })
