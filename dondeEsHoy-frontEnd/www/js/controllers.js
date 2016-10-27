@@ -92,128 +92,177 @@ angular.module('starter.controllers', [])
                 });
             };
         })
-        .controller('ProfileCtrl', function ($scope,$http ,$ionicPopup, obtenerInfoPorEmail, $cordovaImagePicker) {
+        .controller('ProfileCtrl', function ($scope, $http, $ionicPopup, obtenerInfoPorEmail, $cordovaImagePicker) {
             $scope.data = {};
             $scope.collection = {
                 selectedImage: ''
             };
             $scope.data.email = usuario;
-            var Base64={_keyStr:"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",encode:function(e){var t="";var n,r,i,s,o,u,a;var f=0;e=Base64._utf8_encode(e);while(f<e.length){n=e.charCodeAt(f++);r=e.charCodeAt(f++);i=e.charCodeAt(f++);s=n>>2;o=(n&3)<<4|r>>4;u=(r&15)<<2|i>>6;a=i&63;if(isNaN(r)){u=a=64}else if(isNaN(i)){a=64}t=t+this._keyStr.charAt(s)+this._keyStr.charAt(o)+this._keyStr.charAt(u)+this._keyStr.charAt(a)}return t},decode:function(e){var t="";var n,r,i;var s,o,u,a;var f=0;e=e.replace(/[^A-Za-z0-9+/=]/g,"");while(f<e.length){s=this._keyStr.indexOf(e.charAt(f++));o=this._keyStr.indexOf(e.charAt(f++));u=this._keyStr.indexOf(e.charAt(f++));a=this._keyStr.indexOf(e.charAt(f++));n=s<<2|o>>4;r=(o&15)<<4|u>>2;i=(u&3)<<6|a;t=t+String.fromCharCode(n);if(u!=64){t=t+String.fromCharCode(r)}if(a!=64){t=t+String.fromCharCode(i)}}t=Base64._utf8_decode(t);return t},_utf8_encode:function(e){e=e.replace(/rn/g,"n");var t="";for(var n=0;n<e.length;n++){var r=e.charCodeAt(n);if(r<128){t+=String.fromCharCode(r)}else if(r>127&&r<2048){t+=String.fromCharCode(r>>6|192);t+=String.fromCharCode(r&63|128)}else{t+=String.fromCharCode(r>>12|224);t+=String.fromCharCode(r>>6&63|128);t+=String.fromCharCode(r&63|128)}}return t},_utf8_decode:function(e){var t="";var n=0;var r=c1=c2=0;while(n<e.length){r=e.charCodeAt(n);if(r<128){t+=String.fromCharCode(r);n++}else if(r>191&&r<224){c2=e.charCodeAt(n+1);t+=String.fromCharCode((r&31)<<6|c2&63);n+=2}else{c2=e.charCodeAt(n+1);c3=e.charCodeAt(n+2);t+=String.fromCharCode((r&15)<<12|(c2&63)<<6|c3&63);n+=3}}return t}};
-            
-            var decodedString;
-            function decodificarBase64(encode){
-                decodedString= Base64.decode(encode);
-                $scope.data.imageBase64 = decodedString;
-                $scope.collection.selectedImage = decodedString;
-            };
-            
-            var encodedString;
-            function codificarBase64(src){
-                encodedString= Base64.encode(src);
-            };
-                      
+            function convertImgToBase64(url, callback, outputFormat) {
+                var img = new Image();
+                img.crossOrigin = 'Anonymous';
+                img.onload = function () {
+                    var canvas = document.createElement('CANVAS');
+                    var ctx = canvas.getContext('2d');
+                    canvas.height = this.height;
+                    canvas.width = this.width;
+                    ctx.drawImage(this, 0, 0);
+                    var dataURL = canvas.toDataURL(outputFormat || 'image/png');
+                    callback(dataURL);
+                    canvas = null;
+                };
+                img.src = url;
+            }
+
+            /*
+             ** version2: convert local image
+             */
+            function encodeImageFileAsURL(cb) {
+                return function () {
+                    var file = this.files[0];
+                    var reader = new FileReader();
+                    reader.onloadend = function () {
+                        cb(reader.result);
+                    };
+                    reader.readAsDataURL(file);
+                };
+            }
+            ;
+
+            function encodeImageFileAsURL() {
+
+                var filesSelected = document.getElementById("inputFileToLoad").files;
+                if (filesSelected.length > 0)
+                {
+                    var fileToLoad = filesSelected[0];
+
+                    var fileReader = new FileReader();
+
+                    fileReader.onload = function (fileLoadedEvent) {
+                        var srcData = fileLoadedEvent.target.result; // <--- data: base64
+
+                        var newImage = document.createElement('img');
+                        newImage.src = srcData;
+
+                        document.getElementById("imgTest").innerHTML = newImage.outerHTML;
+                        
+                    };
+                    fileReader.readAsDataURL(fileToLoad);
+                }
+            }
+
+            function convertirABase64(direccion){                          
+            convertImgToBase64(direccion, function (base64Img) {
+                $scope.collection.selectedImage;
+                $scope.data.imageBase64 = base64Img;
+                
+            });
+        }
+
             /*var decodedString = Base64.decode(encodedString);
-            console.log(decodedString);*/
+             console.log(decodedString);*/
             obtenerInfoPorEmail.obtenerInfo($scope.data.email).then(function (data) {
 
                 $scope.data.id = data.data.result.id;
                 $scope.data.name = data.data.result.name;
                 $scope.data.lastname = data.data.result.lastName;
                 $scope.data.Opassword = data.data.result.password;
-                decodificarBase64(data.data.result.imagebase64);
+                $scope.data.imageBase64 = data.data.result.imagebase64;
+                $scope.collection.selectedImage = data.data.result.imagebase64;
+                
             });
-            
-            function refrescar(){
+
+            function refrescar() {
                 obtenerInfoPorEmail.obtenerInfo($scope.data.email).then(function (data) {
 
-                $scope.data.id = data.data.result.id;
-                $scope.data.name = data.data.result.name;
-                $scope.data.lastname = data.data.result.lastName;
-                $scope.data.Opassword = data.data.result.password;
-                decodificarBase64(data.data.result.imagebase64);
-            });
-                
+                    $scope.data.id = data.data.result.id;
+                    $scope.data.name = data.data.result.name;
+                    $scope.data.lastname = data.data.result.lastName;
+                    $scope.data.Opassword = data.data.result.password;
+                    $scope.data.imageBase64 = data.data.result.imagebase64;
+                    $scope.collection.selectedImage = data.data.result.imagebase64;
+                });
+
             }
-            
-            function servicioActualizar(){
-                codificarBase64($scope.data.imageBase64);
-                var p = $http({
-                        method: 'POST',
-                        url: "http://kefon94-001-site1.etempurl.com/Users/modifyUser",
-                        //url: "http://localhost:49986/googlePlaces",
-                        data: {
-                            id: $scope.data.id,
-                            email: $scope.data.email,
-                            name: $scope.data.name,
-                            lastname: $scope.data.lastname,
-                            password: $scope.data.Newpassword,
-                            imageBase64:encodedString
-                        }
 
-                    });
-                    return p.success(function (data) {
+            function servicioActualizar() {
+                   var p = $http({
+                    method: 'POST',
+                    url: "http://kefon94-001-site1.etempurl.com/Users/modifyUser",
+                    //url: "http://localhost:49986/googlePlaces",
+                    data: {
+                        id: $scope.data.id,
+                        email: $scope.data.email,
+                        name: $scope.data.name,
+                        lastname: $scope.data.lastname,
+                        password: $scope.data.Newpassword,
+                        imageBase64: $scope.data.imageBase64
+                                
+                    }
+
+                });
+                return p.success(function (data) {
                     console.log(data);
-                        if (data.result !== false) {
-                            
-                            var alertPopup = $ionicPopup.alert({
-                                title: 'Se ha actualizado tu cuenta de usuario',
-                                template: ''
-                            });
-                            refrescar();
-                           
-                        } else {
-                            var alertPopup = $ionicPopup.alert({
-                                title: 'Error',
-                                template: 'Por favor verifique.'
-                            });
+                    if (data.result !== false) {
 
-                        }
-                
-                    });
-        };
-            function servicioActualizar2(){
-                $scope.data.imageBase64 = $scope.collection.selectedImage;
-                codificarBase64($scope.data.imageBase64);
+                        var alertPopup = $ionicPopup.alert({
+                            title: 'Se ha actualizado tu cuenta de usuario',
+                            template: ''
+                        });
+                        refrescar();
+
+                    } else {
+                        var alertPopup = $ionicPopup.alert({
+                            title: 'Error',
+                            template: 'Por favor verifique.'
+                        });
+
+                    }
+
+                });
+            }
+            ;
+            function servicioActualizar2() {
+                convertirABase64($scope.collection.selectedImage);
                 var p = $http({
-                        method: 'POST',
-                        url: "http://kefon94-001-site1.etempurl.com/Users/modifyUser",
-                        //url: "http://localhost:49986/googlePlaces",
-                        data: {
-                            id: $scope.data.id,
-                            email: $scope.data.email,
-                            name: $scope.data.name,
-                            lastname: $scope.data.lastname,
-                            password: $scope.data.Opassword,
-                            imageBase64:encodedString
-                        }
+                    method: 'POST',
+                    url: "http://kefon94-001-site1.etempurl.com/Users/modifyUser",
+                    //url: "http://localhost:49986/googlePlaces",
+                    data: {
+                        id: $scope.data.id,
+                        email: $scope.data.email,
+                        name: $scope.data.name,
+                        lastname: $scope.data.lastname,
+                        password: $scope.data.Opassword,
+                        imageBase64: $scope.data.imageBase64
+                    }
 
-                    });
-                    return p.success(function (data) {
+                });
+                return p.success(function (data) {
                     console.log(data);
-                        if (data.result !== false) {
-                            
-                            var alertPopup = $ionicPopup.alert({
-                                title: 'Se ha actualizado tu cuenta de usuario',
-                                template: ''
-                            });
-                            refrescar();
-                           
-                        } else {
-                            var alertPopup = $ionicPopup.alert({
-                                title: 'Error',
-                                template: 'Por favor verifique.'
-                            });
+                    if (data.result !== false) {
 
-                        }
-                
-                    });
-        };
+                        var alertPopup = $ionicPopup.alert({
+                            title: 'Se ha actualizado tu cuenta de usuario',
+                            template: ''
+                        });
+                        refrescar();
+
+                    } else {
+                        var alertPopup = $ionicPopup.alert({
+                            title: 'Error',
+                            template: 'Por favor verifique.'
+                        });
+
+                    }
+
+                });
+            }
+            ;
             $scope.actualizarUsuario = function () {
                 if ($scope.data.Opassword === $scope.data.Oldpassword) {
                     if ($scope.data.Newpassword === $scope.data.Newpassword2) {
-                        if($scope.collection.selectedImage !== ""){
-                            $scope.data.imageBase64 = $scope.collection.selectedImage;                            
-                        }
+                        
                         servicioActualizar();
                     } else {
                         var alertPopup = $ionicPopup.alert({
@@ -233,7 +282,7 @@ angular.module('starter.controllers', [])
 
             };
 
-            
+
             $scope.getImageSaveContact = function () {
                 // Image picker will load images according to these settings
                 var options = {
@@ -251,7 +300,7 @@ angular.module('starter.controllers', [])
                         window.plugins.Base64.encodeFile($scope.collection.selectedImage, function (base64) {  // Encode URI to Base64 needed for contacts plugin
                             $scope.collection.selectedImage = base64;
                             $scope.addContact();    // Save contact
-                            
+
                         });
                     }
                 }, function (error) {
@@ -270,20 +319,73 @@ angular.module('starter.controllers', [])
                 $state.go('app.login', {}, {reload: true});
 
             };
-            
-            var Base64={_keyStr:"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",encode:function(e){var t="";var n,r,i,s,o,u,a;var f=0;e=Base64._utf8_encode(e);while(f<e.length){n=e.charCodeAt(f++);r=e.charCodeAt(f++);i=e.charCodeAt(f++);s=n>>2;o=(n&3)<<4|r>>4;u=(r&15)<<2|i>>6;a=i&63;if(isNaN(r)){u=a=64}else if(isNaN(i)){a=64}t=t+this._keyStr.charAt(s)+this._keyStr.charAt(o)+this._keyStr.charAt(u)+this._keyStr.charAt(a)}return t},decode:function(e){var t="";var n,r,i;var s,o,u,a;var f=0;e=e.replace(/[^A-Za-z0-9+/=]/g,"");while(f<e.length){s=this._keyStr.indexOf(e.charAt(f++));o=this._keyStr.indexOf(e.charAt(f++));u=this._keyStr.indexOf(e.charAt(f++));a=this._keyStr.indexOf(e.charAt(f++));n=s<<2|o>>4;r=(o&15)<<4|u>>2;i=(u&3)<<6|a;t=t+String.fromCharCode(n);if(u!=64){t=t+String.fromCharCode(r)}if(a!=64){t=t+String.fromCharCode(i)}}t=Base64._utf8_decode(t);return t},_utf8_encode:function(e){e=e.replace(/rn/g,"n");var t="";for(var n=0;n<e.length;n++){var r=e.charCodeAt(n);if(r<128){t+=String.fromCharCode(r)}else if(r>127&&r<2048){t+=String.fromCharCode(r>>6|192);t+=String.fromCharCode(r&63|128)}else{t+=String.fromCharCode(r>>12|224);t+=String.fromCharCode(r>>6&63|128);t+=String.fromCharCode(r&63|128)}}return t},_utf8_decode:function(e){var t="";var n=0;var r=c1=c2=0;while(n<e.length){r=e.charCodeAt(n);if(r<128){t+=String.fromCharCode(r);n++}else if(r>191&&r<224){c2=e.charCodeAt(n+1);t+=String.fromCharCode((r&31)<<6|c2&63);n+=2}else{c2=e.charCodeAt(n+1);c3=e.charCodeAt(n+2);t+=String.fromCharCode((r&15)<<12|(c2&63)<<6|c3&63);n+=3}}return t}};
-            var encodedString;
-            function codificarBase64(src){
-                encodedString= Base64.encode(src);
-                $scope.data.imageBase64 = encodedString;
-            };
-                      
-            /*var decodedString = Base64.decode(encodedString);
-            console.log(decodedString);*/
-            
+
+             function convertImgToBase64(url, callback, outputFormat) {
+                var img = new Image();
+                img.crossOrigin = 'Anonymous';
+                img.onload = function () {
+                    var canvas = document.createElement('CANVAS');
+                    var ctx = canvas.getContext('2d');
+                    canvas.height = this.height;
+                    canvas.width = this.width;
+                    ctx.drawImage(this, 0, 0);
+                    var dataURL = canvas.toDataURL(outputFormat || 'image/png');
+                    callback(dataURL);
+                    canvas = null;
+                };
+                img.src = url;
+            }
+
+            /*
+             ** version2: convert local image
+             */
+            function encodeImageFileAsURL(cb) {
+                return function () {
+                    var file = this.files[0];
+                    var reader = new FileReader();
+                    reader.onloadend = function () {
+                        cb(reader.result);
+                    };
+                    reader.readAsDataURL(file);
+                };
+            }
+            ;
+
+            function encodeImageFileAsURL() {
+
+                var filesSelected = document.getElementById("inputFileToLoad").files;
+                if (filesSelected.length > 0)
+                {
+                    var fileToLoad = filesSelected[0];
+
+                    var fileReader = new FileReader();
+
+                    fileReader.onload = function (fileLoadedEvent) {
+                        var srcData = fileLoadedEvent.target.result; // <--- data: base64
+
+                        var newImage = document.createElement('img');
+                        newImage.src = srcData;
+
+                        document.getElementById("imgTest").innerHTML = newImage.outerHTML;
+                                            };
+                    fileReader.readAsDataURL(fileToLoad);
+                }
+            }
+
+            function convertirABase64(direccion){                          
+            convertImgToBase64(direccion, function (base64Img) {
+                $scope.data.imageBase64 = base64Img;
+                /*var img = document.createElement("img");
+                img.width = "250px";
+                img.height = "250px";
+                img.src = base64Img;//"data:image/png;base64," + base64Img;
+                var preview = document.getElementById("myImg");
+                preview.appendChild(img);*/
+            });
+        }
+
             $scope.register = function () {
                 if ($scope.data.password === $scope.data.password2) {
-                    codificarBase64($scope.collection.selectedImage);
                     var p = $http({
                         method: 'POST',
                         url: "http://kefon94-001-site1.etempurl.com/Users/addUser",
@@ -293,7 +395,7 @@ angular.module('starter.controllers', [])
                             name: $scope.data.name,
                             lastname: $scope.data.lastname,
                             password: $scope.data.password,
-                            imageBase64:$scope.data.imageBase64
+                            imageBase64: $scope.data.imageBase64
                         }
 
                     });
@@ -348,13 +450,13 @@ angular.module('starter.controllers', [])
                         window.plugins.Base64.encodeFile($scope.collection.selectedImage, function (base64) {  // Encode URI to Base64 needed for contacts plugin
                             $scope.collection.selectedImage = base64;
                             $scope.addContact();    // Save contact
-                            
+
                         });
                     }
 
                 }, function (error) {
                     console.log('Error: ' + JSON.stringify(error));    // In case of error
-                });
+                }).then(convertirABase64($scope.collection.selectedImage));
 
 
             };
@@ -363,9 +465,10 @@ angular.module('starter.controllers', [])
 
         })
         .controller('LoginCtrl', function ($scope, $state, $ionicHistory, $ionicSideMenuDelegate, $http, $ionicPopup) {
+           
             $scope.data = {};
-            
-            
+
+
             $ionicSideMenuDelegate.canDragContent(false);
 
             $scope.goRegister = function () {
@@ -661,8 +764,6 @@ angular.module('starter.controllers', [])
             }
 
         })
-
-
         .controller('ListaCtrl', function ($scope) {
 
             $scope.lista = [
