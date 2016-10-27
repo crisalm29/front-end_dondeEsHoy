@@ -196,7 +196,7 @@ angular.module('starter.controllers', [])
                         name: $scope.data.name,
                         lastname: $scope.data.lastname,
                         password: $scope.data.Newpassword,
-                        imageBase64: $scope.data.imageBase64
+                        imagebase64: $scope.data.imageBase64
                                 
                     }
 
@@ -234,7 +234,7 @@ angular.module('starter.controllers', [])
                         name: $scope.data.name,
                         lastname: $scope.data.lastname,
                         password: $scope.data.Opassword,
-                        imageBase64: $scope.data.imageBase64
+                        imagebase64: $scope.data.imageBase64
                     }
 
                 });
@@ -386,7 +386,7 @@ angular.module('starter.controllers', [])
         }
         
             $scope.register = function() {
-                //console.log($scope.data.imageBase64);
+                console.log($scope.data.imageBase64);
                 if ($scope.data.password === $scope.data.password2) {                    
                     var p = $http({
                         method: 'POST',
@@ -538,7 +538,7 @@ angular.module('starter.controllers', [])
                     var lng = "" + place.geometry.location.lng();
                     lat = lat.substr(0, lat.lastIndexOf(".") + 7);
                     lng = lng.substr(0, lng.lastIndexOf(".") + 7);
-                    var url = 'http://waze.to/?ll=' + lat + ',' + lng + '&navigate=yes';
+                    var url = 'http://waze.to/waze://?ll=' + lat + ',' + lng + '&navigate=yes';
                     console.log(lat);
                     console.log(lng);
                     /*var isIOS = ionic.Platform.isIOS();
