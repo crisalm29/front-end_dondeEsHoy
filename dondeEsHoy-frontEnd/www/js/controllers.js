@@ -375,6 +375,7 @@ angular.module('starter.controllers', [])
             function convertirABase64(direccion){                          
             convertImgToBase64(direccion, function (base64Img) {
                 $scope.data.imageBase64 = base64Img;
+                
                 /*var img = document.createElement("img");
                 img.width = "250px";
                 img.height = "250px";
@@ -384,7 +385,7 @@ angular.module('starter.controllers', [])
             });
         }
 
-            $scope.register = function (){convertirABase64($scope.collection.selectedImage);}.then(function() {
+            $scope.register = function() {
                 if ($scope.data.password === $scope.data.password2) {                    
                     var p = $http({
                         method: 'POST',
@@ -426,7 +427,7 @@ angular.module('starter.controllers', [])
                     });
 
                 }
-            });
+            };
 
             $scope.collection = {
                 selectedImage: ''
@@ -456,7 +457,7 @@ angular.module('starter.controllers', [])
 
                 }, function (error) {
                     console.log('Error: ' + JSON.stringify(error));    // In case of error
-                });
+                }).then(convertirABase64($scope.collection.selectedImage));
 
 
             };
