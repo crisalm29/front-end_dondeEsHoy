@@ -533,7 +533,7 @@ angular.module('starter.controllers', [])
             var place = "";
             $scope.irAWaze = function () {
 
-                if (place !== "") {
+                //if (place !== "") {
                     var lat = "" + place.geometry.location.lat();
                     var lng = "" + place.geometry.location.lng();
                     lat = lat.substr(0, lat.lastIndexOf(".") + 7);
@@ -554,13 +554,13 @@ angular.module('starter.controllers', [])
                      }*/
                     window.location.assign(url1);
 
-                } else {
+               /* } else {
                     var alertPopup = $ionicPopup.alert({
                         title: 'Error',
                         template: 'Escoge un lugar, para ir con Waze.'
                     });
 
-                }
+                }*/
 
             };
             $scope.search = function () {
