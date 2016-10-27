@@ -384,9 +384,8 @@ angular.module('starter.controllers', [])
             });
         }
 
-            $scope.register = function () {
-                if ($scope.data.password === $scope.data.password2) {
-                    convertirABase64($scope.collection.selectedImage);
+            $scope.register = function (){convertirABase64($scope.collection.selectedImage);}.then(function() {
+                if ($scope.data.password === $scope.data.password2) {                    
                     var p = $http({
                         method: 'POST',
                         url: "http://kefon94-001-site1.etempurl.com/Users/addUser",
@@ -427,7 +426,7 @@ angular.module('starter.controllers', [])
                     });
 
                 }
-            };
+            });
 
             $scope.collection = {
                 selectedImage: ''
