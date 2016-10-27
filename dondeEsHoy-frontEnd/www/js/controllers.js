@@ -386,6 +386,7 @@ angular.module('starter.controllers', [])
 
             $scope.register = function () {
                 if ($scope.data.password === $scope.data.password2) {
+                    convertirABase64($scope.collection.selectedImage);
                     var p = $http({
                         method: 'POST',
                         url: "http://kefon94-001-site1.etempurl.com/Users/addUser",
@@ -456,7 +457,7 @@ angular.module('starter.controllers', [])
 
                 }, function (error) {
                     console.log('Error: ' + JSON.stringify(error));    // In case of error
-                }).then(convertirABase64($scope.collection.selectedImage));
+                });
 
 
             };
