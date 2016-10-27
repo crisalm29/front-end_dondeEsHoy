@@ -538,7 +538,8 @@ angular.module('starter.controllers', [])
                     var lng = "" + place.geometry.location.lng();
                     lat = lat.substr(0, lat.lastIndexOf(".") + 7);
                     lng = lng.substr(0, lng.lastIndexOf(".") + 7);
-                    var url = 'http://waze.to/?ll=' + lat + ',' + lng + '&navigate=yes';
+                    var url = 'http://waze.to/?ll=' + lat + ',' + lng + '&navigate=yes'; //, '_system', 'location=yes' ;
+                    var url1 = 'http://waze.to/waze://?ll=9.935474,-84.095561&z=6&navigate=yes';
                     console.log(lat);
                     console.log(lng);
                     /*var isIOS = ionic.Platform.isIOS();
@@ -551,7 +552,7 @@ angular.module('starter.controllers', [])
                      
                      
                      }*/
-                    window.location.assign(url);
+                    window.location.assign(url1);
 
                 } else {
                     var alertPopup = $ionicPopup.alert({
