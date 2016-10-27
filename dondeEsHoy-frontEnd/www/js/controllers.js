@@ -374,18 +374,19 @@ angular.module('starter.controllers', [])
 
             function convertirABase64(direccion){                          
             convertImgToBase64(direccion, function (base64Img) {
-                $scope.data.imageBase64 = base64Img;
-                
+                $scope.data.imageBase64=base64Img;
                 /*var img = document.createElement("img");
                 img.width = "250px";
                 img.height = "250px";
                 img.src = base64Img;//"data:image/png;base64," + base64Img;
-                var preview = document.getElementById("myImg");
-                preview.appendChild(img);*/
+                $scope.data.imageBase64 = img.src;*/
+                //var preview = document.getElementById("myImg");
+                //preview.appendChild(img);
             });
         }
-
+        
             $scope.register = function() {
+                //console.log($scope.data.imageBase64);
                 if ($scope.data.password === $scope.data.password2) {                    
                     var p = $http({
                         method: 'POST',
@@ -401,6 +402,7 @@ angular.module('starter.controllers', [])
 
                     });
                     return p.success(function (data) {
+                        console.log(data);
                         if (data.result !== false) {
                             $ionicHistory.nextViewOptions({
                                 disableBack: true
@@ -430,9 +432,8 @@ angular.module('starter.controllers', [])
             };
 
             $scope.collection = {
-                selectedImage: ''
-            };
-
+                selectedImage: 'img/Antik.jpg'};
+            convertirABase64($scope.collection.selectedImage);
 
             $scope.getImageSaveContact = function () {
                 // Image picker will load images according to these settings
@@ -537,7 +538,7 @@ angular.module('starter.controllers', [])
                     var lng = "" + place.geometry.location.lng();
                     lat = lat.substr(0, lat.lastIndexOf(".") + 7);
                     lng = lng.substr(0, lng.lastIndexOf(".") + 7);
-                    var url = "http://google.com";//'http://waze.to//?ll=' + lat + ',' + lng + '&navigate=yes';
+                    var url = 'http://waze.to/?ll=' + lat + ',' + lng + '&navigate=yes';
                     console.log(lat);
                     console.log(lng);
                     /*var isIOS = ionic.Platform.isIOS();
