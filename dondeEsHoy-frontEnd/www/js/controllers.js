@@ -129,7 +129,7 @@ angular.module('starter.controllers', [])
             }
             ;
 
-            function encodeImageFileAsURL() {
+            function encodeImageFileAsURL(){
 
                 var filesSelected = document.getElementById("inputFileToLoad").files;
                 if (filesSelected.length > 0)
@@ -145,19 +145,19 @@ angular.module('starter.controllers', [])
                         newImage.src = srcData;
 
                         document.getElementById("imgTest").innerHTML = newImage.outerHTML;
-                        
+
                     };
                     fileReader.readAsDataURL(fileToLoad);
                 }
             }
 
-            function convertirABase64(direccion){                          
-            convertImgToBase64(direccion, function (base64Img) {
-                $scope.collection.selectedImage;
-                $scope.data.imageBase64 = base64Img;
-                
-            });
-        }
+            function convertirABase64(direccion) {
+                convertImgToBase64(direccion, function (base64Img) {
+                    $scope.collection.selectedImage = base64Img;
+                    $scope.data.imageBase64 = base64Img;
+
+                });
+            }
 
             /*var decodedString = Base64.decode(encodedString);
              console.log(decodedString);*/
@@ -169,7 +169,7 @@ angular.module('starter.controllers', [])
                 $scope.data.Opassword = data.data.result.password;
                 $scope.data.imageBase64 = data.data.result.imagebase64;
                 $scope.collection.selectedImage = data.data.result.imagebase64;
-                
+
             });
 
             function refrescar() {
@@ -186,7 +186,7 @@ angular.module('starter.controllers', [])
             }
 
             function servicioActualizar() {
-                   var p = $http({
+                var p = $http({
                     method: 'POST',
                     url: "http://kefon94-001-site1.etempurl.com/Users/modifyUser",
                     //url: "http://localhost:49986/googlePlaces",
@@ -197,7 +197,7 @@ angular.module('starter.controllers', [])
                         lastname: $scope.data.lastname,
                         password: $scope.data.Newpassword,
                         imagebase64: $scope.data.imageBase64
-                                
+
                     }
 
                 });
@@ -262,7 +262,7 @@ angular.module('starter.controllers', [])
             $scope.actualizarUsuario = function () {
                 if ($scope.data.Opassword === $scope.data.Oldpassword) {
                     if ($scope.data.Newpassword === $scope.data.Newpassword2) {
-                        
+
                         servicioActualizar();
                     } else {
                         var alertPopup = $ionicPopup.alert({
@@ -320,7 +320,7 @@ angular.module('starter.controllers', [])
 
             };
 
-             function convertImgToBase64(url, callback, outputFormat) {
+            function convertImgToBase64(url, callback, outputFormat) {
                 var img = new Image();
                 img.crossOrigin = 'Anonymous';
                 img.onload = function () {
@@ -367,27 +367,27 @@ angular.module('starter.controllers', [])
                         newImage.src = srcData;
 
                         document.getElementById("imgTest").innerHTML = newImage.outerHTML;
-                                            };
+                    };
                     fileReader.readAsDataURL(fileToLoad);
                 }
             }
 
-            function convertirABase64(direccion){                          
-            convertImgToBase64(direccion, function (base64Img) {
-                $scope.data.imageBase64=base64Img;
-                /*var img = document.createElement("img");
-                img.width = "250px";
-                img.height = "250px";
-                img.src = base64Img;//"data:image/png;base64," + base64Img;
-                $scope.data.imageBase64 = img.src;*/
-                //var preview = document.getElementById("myImg");
-                //preview.appendChild(img);
-            });
-        }
-        
-            $scope.register = function() {
+            function convertirABase64(direccion) {
+                convertImgToBase64(direccion, function (base64Img) {
+                    $scope.data.imageBase64 = base64Img;
+                    /*var img = document.createElement("img");
+                     img.width = "250px";
+                     img.height = "250px";
+                     img.src = base64Img;//"data:image/png;base64," + base64Img;
+                     $scope.data.imageBase64 = img.src;*/
+                    //var preview = document.getElementById("myImg");
+                    //preview.appendChild(img);
+                });
+            }
+
+            $scope.register = function () {
                 console.log($scope.data.imageBase64);
-                if ($scope.data.password === $scope.data.password2) {                    
+                if ($scope.data.password === $scope.data.password2) {
                     var p = $http({
                         method: 'POST',
                         url: "http://kefon94-001-site1.etempurl.com/Users/addUser",
@@ -467,7 +467,7 @@ angular.module('starter.controllers', [])
 
         })
         .controller('LoginCtrl', function ($scope, $state, $ionicHistory, $ionicSideMenuDelegate, $http, $ionicPopup) {
-           
+
             $scope.data = {};
 
 
@@ -538,7 +538,7 @@ angular.module('starter.controllers', [])
                     var lng = "" + place.geometry.location.lng();
                     lat = lat.substr(0, lat.lastIndexOf(".") + 7);
                     lng = lng.substr(0, lng.lastIndexOf(".") + 7);
-                    var url = 'http://waze.to/waze://?ll=' + lat + ',' + lng + '&navigate=yes';
+                    var url = 'waze://?ll=' + lat + ',' + lng;// + '&navigate=yes';
                     console.log(lat);
                     console.log(lng);
                     /*var isIOS = ionic.Platform.isIOS();
@@ -551,7 +551,8 @@ angular.module('starter.controllers', [])
                      
                      
                      }*/
-                    window.location.assign(url);
+                    WazeLink.open(url);
+                    //window.location.assign(url);
 
                 } else {
                     var alertPopup = $ionicPopup.alert({
