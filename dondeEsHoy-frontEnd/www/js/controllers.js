@@ -129,7 +129,7 @@ angular.module('starter.controllers', [])
             }
             ;
 
-            function encodeImageFileAsURL(){
+            function encodeImageFileAsURL() {
 
                 var filesSelected = document.getElementById("inputFileToLoad").files;
                 if (filesSelected.length > 0)
@@ -376,57 +376,57 @@ angular.module('starter.controllers', [])
                 convertImgToBase64(direccion, function (base64Img) {
                     $scope.data.imageBase64 = base64Img;
                     callback();
-                    
+
                 });
-                
-                
+
+
             }
-            
-            function registro(){
-                var p = $http({
-                        method: 'POST',
-                        url: "http://kefon94-001-site1.etempurl.com/Users/addUser",
-                        //url: "http://localhost:49986/googlePlaces",
-                        data: {
-                            email: $scope.data.email,
-                            name: $scope.data.name,
-                            lastname: $scope.data.lastname,
-                            password: $scope.data.password,
-                            imageBase64: $scope.data.imageBase64
-                        }
 
-                    });
-                    return p.success(function (data) {
-                        console.log(data);
-                        if (data.result !== false) {
-                            $ionicHistory.nextViewOptions({
-                                disableBack: true
-                            });
-                            console.log("Realizado correctamente");
-                            usuario = $scope.data.email;
-                            $state.go('app.map', {}, {reload: true});
-                        } else {
-                            var alertPopup = $ionicPopup.alert({
-                                title: 'El usuario ya existe, intente con otro email',
-                                template: 'Por favor verifique.'
-                            });
 
-                        }
-
-                    }).error(function (e) {
-                        console.log("Error al registrar");
-                    });
-
-                
-            }
 
             $scope.register = function () {
-                
+
                 if ($scope.data.password === $scope.data.password2) {
-                    
-                    convertirABase64($scope.collection.selectedImage, registro());
-                    
-                    
+
+                    convertirABase64($scope.collection.selectedImage, function (){
+                        var p = $http({
+                            method: 'POST',
+                            url: "http://kefon94-001-site1.etempurl.com/Users/addUser",
+                            //url: "http://localhost:49986/googlePlaces",
+                            data: {
+                                email: $scope.data.email,
+                                name: $scope.data.name,
+                                lastname: $scope.data.lastname,
+                                password: $scope.data.password,
+                                imageBase64: $scope.data.imageBase64
+                            }
+
+                        });
+                        return p.success(function (data) {
+                            console.log(data);
+                            if (data.result !== false) {
+                                $ionicHistory.nextViewOptions({
+                                    disableBack: true
+                                });
+                                console.log("Realizado correctamente");
+                                usuario = $scope.data.email;
+                                $state.go('app.map', {}, {reload: true});
+                            } else {
+                                var alertPopup = $ionicPopup.alert({
+                                    title: 'El usuario ya existe, intente con otro email',
+                                    template: 'Por favor verifique.'
+                                });
+
+                            }
+
+                        }).error(function (e) {
+                            console.log("Error al registrar");
+                        });
+
+
+                    });
+
+
                 } else {
                     var alertPopup = $ionicPopup.alert({
                         title: 'Las contraseñas deben ser iguales',
@@ -438,7 +438,7 @@ angular.module('starter.controllers', [])
 
             $scope.collection = {
                 selectedImage: ''//img/Antik.jpg'
-                };
+            };
             //convertirABase64($scope.collection.selectedImage);
 
             $scope.getImageSaveContact = function () {
@@ -523,13 +523,13 @@ angular.module('starter.controllers', [])
             };
 
         })
-        .controller('MapCtrl', function ($scope, $state,$window ,$cordovaGeolocation, $ionicPopup, $ionicLoading, googlePlacesService) {
+        .controller('MapCtrl', function ($scope, $state, $window, $cordovaGeolocation, $ionicPopup, $ionicLoading, googlePlacesService) {
             /*$(document).on({
-            'DOMNodeInserted': function() {
-                $('.pac-item, .pac-item span', this).addClass('needsclick');
-            }
-            }, '.pac-container');*/
-            
+             'DOMNodeInserted': function() {
+             $('.pac-item, .pac-item span', this).addClass('needsclick');
+             }
+             }, '.pac-container');*/
+
             var options = {timeout: 10000, enableHighAccuracy: true};
             var latLng;
             refrescar();
@@ -564,8 +564,8 @@ angular.module('starter.controllers', [])
                      
                      }*/
                     console.log(url);
-                    $window.open(url,"_blanl");
-                }else {
+                    $window.open(url, "_blanl");
+                } else {
                     var alertPopup = $ionicPopup.alert({
                         title: 'Error',
                         template: 'Escoge un lugar, para ir con Waze.'
