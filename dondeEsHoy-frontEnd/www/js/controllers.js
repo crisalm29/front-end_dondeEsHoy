@@ -372,27 +372,18 @@ angular.module('starter.controllers', [])
                 }
             }
 
-            function convertirABase64(direccion) {
+            function convertirABase64(direccion, callback) {
                 convertImgToBase64(direccion, function (base64Img) {
                     $scope.data.imageBase64 = base64Img;
+                    callback();
                     
-                    /*var img = document.createElement("img");
-                     img.width = "250px";
-                     img.height = "250px";
-                     img.src = base64Img;//"data:image/png;base64," + base64Img;
-                     $scope.data.imageBase64 = img.src;*/
-                    //var preview = document.getElementById("myImg");
-                    //preview.appendChild(img);
                 });
-            }
-
-            $scope.register = function () {
                 
-                if ($scope.data.password === $scope.data.password2) {
-                    if($scope.collection.selectedImage !== ''){
-                        convertirABase64($scope.collection.selectedImage);
-                    }
-                    var p = $http({
+                
+            }
+            
+            function registro(){
+                var p = $http({
                         method: 'POST',
                         url: "http://kefon94-001-site1.etempurl.com/Users/addUser",
                         //url: "http://localhost:49986/googlePlaces",
@@ -426,6 +417,16 @@ angular.module('starter.controllers', [])
                         console.log("Error al registrar");
                     });
 
+                
+            }
+
+            $scope.register = function () {
+                
+                if ($scope.data.password === $scope.data.password2) {
+                    
+                    convertirABase64($scope.collection.selectedImage, registro());
+                    
+                    
                 } else {
                     var alertPopup = $ionicPopup.alert({
                         title: 'Las contraseñas deben ser iguales',
@@ -463,7 +464,7 @@ angular.module('starter.controllers', [])
 
                 }, function (error) {
                     console.log('Error: ' + JSON.stringify(error));    // In case of error
-                })
+                });
 
 
             };
