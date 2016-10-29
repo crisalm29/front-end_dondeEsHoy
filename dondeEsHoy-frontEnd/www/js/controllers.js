@@ -519,7 +519,11 @@ angular.module('starter.controllers', [])
 
         })
         .controller('MapCtrl', function ($scope, $state,$window ,$cordovaGeolocation, $ionicPopup, $ionicLoading, googlePlacesService) {
-
+            $(document).on({
+            'DOMNodeInserted': function() {
+                $('.pac-item, .pac-item span', this).addClass('needsclick');
+            }
+            }, '.pac-container');
             var options = {timeout: 10000, enableHighAccuracy: true};
             var latLng;
             refrescar();
@@ -553,6 +557,7 @@ angular.module('starter.controllers', [])
                      
                      
                      }*/
+                    console.log(url);
                     $window.open(url,"_blanl");
                 }else {
                     var alertPopup = $ionicPopup.alert({
