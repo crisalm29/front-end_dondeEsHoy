@@ -523,11 +523,11 @@ angular.module('starter.controllers', [])
 
         })
         .controller('MapCtrl', function ($scope, $state,$window ,$cordovaGeolocation, $ionicPopup, $ionicLoading, googlePlacesService) {
-            $(document).on({
+            /*$(document).on({
             'DOMNodeInserted': function() {
                 $('.pac-item, .pac-item span', this).addClass('needsclick');
             }
-            }, '.pac-container');
+            }, '.pac-container');*/
             
             var options = {timeout: 10000, enableHighAccuracy: true};
             var latLng;
