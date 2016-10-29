@@ -1,5 +1,5 @@
 var lugarEspecifico;
-
+var usuario;
 angular.module('starter.controllers', [])
         .config(function ($ionicConfigProvider) {
             $ionicConfigProvider.tabs.position("bottom"); //Places them at the bottom for all OS
@@ -38,7 +38,7 @@ angular.module('starter.controllers', [])
             function corregirFechasNull(vector) {
                 for (var i = 0; i < vector.length; i++) {
                     if (vector[i].promoEvent.due_date === null) {
-                        vector[i].promoEvent.due_date = "Ahora";
+                        vector[i].promoEvent.due_date = "Indefinido";
                     }
 
                 }
@@ -375,6 +375,7 @@ angular.module('starter.controllers', [])
             function convertirABase64(direccion) {
                 convertImgToBase64(direccion, function (base64Img) {
                     $scope.data.imageBase64 = base64Img;
+                    
                     /*var img = document.createElement("img");
                      img.width = "250px";
                      img.height = "250px";
@@ -432,7 +433,7 @@ angular.module('starter.controllers', [])
             };
 
             $scope.collection = {
-                selectedImage:'' //'img/Antik.jpg'//
+                selectedImage: ''//img/Antik.jpg'
                 };
             //convertirABase64($scope.collection.selectedImage);
 
@@ -524,6 +525,7 @@ angular.module('starter.controllers', [])
                 $('.pac-item, .pac-item span', this).addClass('needsclick');
             }
             }, '.pac-container');
+            
             var options = {timeout: 10000, enableHighAccuracy: true};
             var latLng;
             refrescar();
