@@ -432,8 +432,9 @@ angular.module('starter.controllers', [])
             };
 
             $scope.collection = {
-                selectedImage: 'img/Antik.jpg'};
-            convertirABase64($scope.collection.selectedImage);
+                selectedImage:'' //'img/Antik.jpg'//
+                };
+            //convertirABase64($scope.collection.selectedImage);
 
             $scope.getImageSaveContact = function () {
                 // Image picker will load images according to these settings
@@ -517,7 +518,7 @@ angular.module('starter.controllers', [])
             };
 
         })
-        .controller('MapCtrl', function ($scope, $state, $cordovaGeolocation, $ionicPopup, $ionicLoading, googlePlacesService) {
+        .controller('MapCtrl', function ($scope, $state,$window ,$cordovaGeolocation, $ionicPopup, $ionicLoading, googlePlacesService) {
 
             var options = {timeout: 10000, enableHighAccuracy: true};
             var latLng;
@@ -538,7 +539,8 @@ angular.module('starter.controllers', [])
                     var lng = "" + place.geometry.location.lng();
                     lat = lat.substr(0, lat.lastIndexOf(".") + 7);
                     lng = lng.substr(0, lng.lastIndexOf(".") + 7);
-                    var url = 'waze://?ll=' + lat + ',' + lng;// + '&navigate=yes';
+                    var url = 'waze://?ll=' + lat + ',' + lng;// + '&navigate=yes';  
+                    //var url = 'http://waze.to/?ll=9.935474,-84.095561&navigate=yes'; //, '_system', 'location=yes' ;
                     console.log(lat);
                     console.log(lng);
                     /*var isIOS = ionic.Platform.isIOS();
@@ -551,10 +553,8 @@ angular.module('starter.controllers', [])
                      
                      
                      }*/
-                    WazeLink.open(url);
-                    //window.location.assign(url);
-
-                } else {
+                    $window.open(url,"_blanl");
+                }else {
                     var alertPopup = $ionicPopup.alert({
                         title: 'Error',
                         template: 'Escoge un lugar, para ir con Waze.'

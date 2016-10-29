@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0" id="cr.encke.WazeLink" version="1.0.1">
+    <name>WazeLink</name>
+    <description>Waze Link</description>
+    <license>Apache 2.0</license>
+    <keywords>cordova,wazelink</keywords>
+    <js-module src="www/WazeLink.js" name="WazeLink">
+        <clobbers target="WazeLink.open" />
+    </js-module>
+	
+    <platform name="android">    
+        <config-file target="config.xml" parent="/*">
+            <feature name="WazeLink">
+                <param name="android-package" value="cr.encke.WazeLink.WazeLink" /> 
+            </feature>
+        </config-file>
+		<source-file src="src/android/cr/encke/WazeLink/WazeLink.java"
+                target-dir="src/cr/encke/WazeLink" />
+    </platform>
+    <!-- ios -->
+    <platform name="ios">    
+        <config-file target="config.xml" parent="/*">
+            <feature name="WazeLink">
+                <param name="ios-package" value="WazeLink" /> 
+            </feature>
+        </config-file>
+        <header-file src="src/ios/WazeLink.h" />
+	    <source-file src="src/ios/WazeLink.m" />
+    </platform>
+
+</plugin>

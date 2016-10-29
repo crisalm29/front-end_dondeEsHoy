@@ -1,0 +1,11 @@
+{
+    "cr.encke.WazeLink": {
+        "source": {
+            "type": "git",
+            "url": "https://github.com/encke/wazelink.git",
+            "subdir": "."
+        },
+        "is_top_level": true,
+        "variables": {}
+    }
+}
