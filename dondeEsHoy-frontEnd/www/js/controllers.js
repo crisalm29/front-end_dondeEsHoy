@@ -151,11 +151,11 @@ angular.module('starter.controllers', [])
                 }
             }
 
-            function convertirABase64(direccion) {
+            function convertirABase64(direccion, callback) {
                 convertImgToBase64(direccion, function (base64Img) {
                     $scope.collection.selectedImage = base64Img;
                     $scope.data.imageBase64 = base64Img;
-
+                    callback();
                 });
             }
 
@@ -223,8 +223,8 @@ angular.module('starter.controllers', [])
             }
             ;
             function servicioActualizar2() {
-                convertirABase64($scope.collection.selectedImage);
-                var p = $http({
+                convertirABase64($scope.collection.selectedImage,function(){
+                    var p = $http({
                     method: 'POST',
                     url: "http://kefon94-001-site1.etempurl.com/Users/modifyUser",
                     //url: "http://localhost:49986/googlePlaces",
@@ -257,8 +257,10 @@ angular.module('starter.controllers', [])
                     }
 
                 });
-            }
-            ;
+                    
+                });
+                
+            };
             $scope.actualizarUsuario = function () {
                 if ($scope.data.Opassword === $scope.data.Oldpassword) {
                     if ($scope.data.Newpassword === $scope.data.Newpassword2) {
