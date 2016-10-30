@@ -287,7 +287,7 @@ angular.module('starter.controllers', [])
 
             };
 
-            function pedirImagen(callback) {
+            $scope.getImageSaveContact = function () {
                 // Image picker will load images according to these settings
                 var options = {
                     maximumImagesCount: 1, // Max number of selected images, I'm using only one for this example
@@ -304,54 +304,11 @@ angular.module('starter.controllers', [])
                         window.plugins.Base64.encodeFile($scope.collection.selectedImage, function (base64) {  // Encode URI to Base64 needed for contacts plugin
                             $scope.collection.selectedImage = base64;
                             $scope.addContact();    // Save contact
-
+                            servicioActualizar2();
                         });
                     }
                 }, function (error) {
                     console.log('Error: ' + JSON.stringify(error));    // In case of error
-                }).then(callback());
-                
-            }
-            $scope.getImageSaveContact = function () {
-                pedirImagen(function () {
-                    convertirABase64($scope.collection.selectedImage, function () {
-                        var p = $http({
-                            method: 'POST',
-                            url: "http://kefon94-001-site1.etempurl.com/Users/modifyUser",
-                            //url: "http://localhost:49986/googlePlaces",
-                            data: {
-                                id: $scope.data.id,
-                                email: $scope.data.email,
-                                name: $scope.data.name,
-                                lastname: $scope.data.lastname,
-                                password: $scope.data.Opassword,
-                                imagebase64: $scope.data.imageBase64
-                            }
-
-                        });
-                        return p.success(function (data) {
-                            console.log(data);
-                            if (data.result !== false) {
-
-                                var alertPopup = $ionicPopup.alert({
-                                    title: 'Se ha actualizado tu cuenta de usuario',
-                                    template: ''
-                                });
-                                refrescar();
-
-                            } else {
-                                var alertPopup = $ionicPopup.alert({
-                                    title: 'Error',
-                                    template: 'Por favor verifique.'
-                                });
-
-                            }
-
-                        });
-
-                    });
-
-
                 });
             };
 
@@ -570,12 +527,12 @@ angular.module('starter.controllers', [])
             };
 
         })
-        .controller('MapCtrl', function ($scope, $state, $window, $cordovaGeolocation, $ionicPopup, $ionicLoading, googlePlacesService) {
+        .controller('MapCtrl', function ($scope, $state, $cordovaGeolocation, $ionicPopup, $ionicLoading, googlePlacesService) {
             /*$(document).on({
-                'DOMNodeInserted': function () {
-                    $('.pac-item, .pac-item span', this).addClass('needsclick');
-                }
-            }, '.pac-container');*/
+             'DOMNodeInserted': function () {
+             $('.pac-item, .pac-item span', this).addClass('needsclick');
+             }
+             }, '.pac-container');*/
 
             var options = {timeout: 10000, enableHighAccuracy: true};
             var latLng;
@@ -596,23 +553,14 @@ angular.module('starter.controllers', [])
                     var lng = "" + place.geometry.location.lng();
                     lat = lat.substr(0, lat.lastIndexOf(".") + 7);
                     lng = lng.substr(0, lng.lastIndexOf(".") + 7);
-                    var url = 'waze://?ll=' + lat + ',' + lng;// + '&navigate=yes';  
+                    var url = 'http://waze:/?ll=' + lat + ',' + lng+'&navigate=yes';  
                     //var url = 'http://waze.to/?ll=9.935474,-84.095561&navigate=yes'; //, '_system', 'location=yes' ;
                     console.log(lat);
                     console.log(lng);
-                    /*var isIOS = ionic.Platform.isIOS();
-                     //var isAndroid = ionic.Platform.isAndroid();
-                     
-                     if(isIOS === true){
-                     
-                     
-                     }else{
-                     
-                     
-                     }*/
+                   
                     console.log(url);
                     //$window.open(url, "_blank");
-                    WazeLink.open(url);
+                    //WazeLink.open(url);
                 } else {
                     var alertPopup = $ionicPopup.alert({
                         title: 'Error',
