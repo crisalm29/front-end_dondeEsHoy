@@ -6,13 +6,13 @@
                 <ion-scroll>
                     <div class="list card" ng-repeat="hoy in today">
                         <div class="item item-avatar item-divider">
-                            <!--img src="img/antik.jpg"-->
+                            <img src="{{hoy.promoEvent.imagebase64}}">
                             <button class="button button-clear  button-dark" ng-click="infoEspecifica({{hoy.establishment.establishmentId}})">{{hoy.establishment.establishmentName}}</button>
                             <p>Fecha valida de: {{hoy.promoEvent.start_date| date}} - {{hoy.promoEvent.due_date| date}}</p>
                         </div>
 
                         <div class="item item-body">
-                            <!--img class="full-image" src="img/promoAntik.jpg"-->
+                            <img class="full-image" src="{{hoy.promoEvent.imagebase64}}">
                             <h3>{{hoy.promoEvent.name}}</h3>
                             <p>
                                 {{hoy.promoEvent.description}}
@@ -29,13 +29,13 @@
                 <ion-scroll>
                     <div class="list card" ng-repeat="semana in week">
                         <div class="item item-avatar item-divider">
-                            <!--img src="img/antik.jpg"-->
+                            <img src="{{semana.promoEvent.imagebase64}}">
                             <button class="button button-clear  button-dark">{{semana.establishment.establishmentName}}</button>
                             <p>Fecha valida de: {{semana.promoEvent.start_date| date}} - {{semana.promoEvent.due_date| date}}</p>
                         </div>
 
                         <div class="item item-body">
-                            <!--img class="full-image" src="img/promoAntik.jpg"-->
+                            <img class="full-image" src="{{semana.promoEvent.imagebase64}}">
                             <h3>{{semana.promoEvent.name}}</h3>
                             <p>
                                 {{semana.promoEvent.description}}
@@ -55,13 +55,13 @@
                 <ion-scroll>
                     <div class="list card" ng-repeat="mes in month">
                         <div class="item item-avatar item-divider ">
-                            <!--img src="img/antik.jpg"-->
+                            <img src="{{mes.promoEvent.imagebase64}}">
                             <button class="button button-clear  button-dark">{{mes.establishment.establishmentName}}</button>
                             <p>Fecha valida de: {{mes.promoEvent.start_date| date}} - {{mes.promoEvent.due_date| date}}</p>
                         </div>
 
                         <div class="item item-body">
-                            <!--img class="full-image" src="img/promoAntik.jpg"-->
+                            <img class="full-image" src="{{mes.promoEvent.imagebase64}}">
                             <h3>{{mes.promoEvent.name}}</h3>
                             <p>
                                 {{mes.promoEvent.description}}

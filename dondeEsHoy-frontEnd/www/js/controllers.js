@@ -1,6 +1,8 @@
+//var WazeLink = require("../plugins/cr.encke.WazeLink/www/WazeLink.js");
 var lugarEspecifico;
 var usuario;
 angular.module('starter.controllers', [])
+
         .config(function ($ionicConfigProvider) {
             $ionicConfigProvider.tabs.position("bottom"); //Places them at the bottom for all OS
             $ionicConfigProvider.tabs.style("standard"); //Makes them all look the same across all OS
@@ -285,8 +287,7 @@ angular.module('starter.controllers', [])
 
             };
 
-
-            $scope.getImageSaveContact = function () {
+            function pedirImagen(callback) {
                 // Image picker will load images according to these settings
                 var options = {
                     maximumImagesCount: 1, // Max number of selected images, I'm using only one for this example
@@ -308,7 +309,50 @@ angular.module('starter.controllers', [])
                     }
                 }, function (error) {
                     console.log('Error: ' + JSON.stringify(error));    // In case of error
-                }).then(servicioActualizar2());
+                });
+                callback();
+            }
+            $scope.getImageSaveContact = function () {
+                pedirImagen(function () {
+                    convertirABase64($scope.collection.selectedImage, function () {
+                        var p = $http({
+                            method: 'POST',
+                            url: "http://kefon94-001-site1.etempurl.com/Users/modifyUser",
+                            //url: "http://localhost:49986/googlePlaces",
+                            data: {
+                                id: $scope.data.id,
+                                email: $scope.data.email,
+                                name: $scope.data.name,
+                                lastname: $scope.data.lastname,
+                                password: $scope.data.Opassword,
+                                imagebase64: $scope.data.imageBase64
+                            }
+
+                        });
+                        return p.success(function (data) {
+                            console.log(data);
+                            if (data.result !== false) {
+
+                                var alertPopup = $ionicPopup.alert({
+                                    title: 'Se ha actualizado tu cuenta de usuario',
+                                    template: ''
+                                });
+                                refrescar();
+
+                            } else {
+                                var alertPopup = $ionicPopup.alert({
+                                    title: 'Error',
+                                    template: 'Por favor verifique.'
+                                });
+
+                            }
+
+                        });
+
+                    });
+
+
+                });
             };
 
         })
@@ -527,11 +571,11 @@ angular.module('starter.controllers', [])
 
         })
         .controller('MapCtrl', function ($scope, $state, $window, $cordovaGeolocation, $ionicPopup, $ionicLoading, googlePlacesService) {
-             $(document).on({
-             'DOMNodeInserted': function() {
-             $('.pac-item, .pac-item span', this).addClass('needsclick');
-             }
-             }, '.pac-container');
+            $(document).on({
+                'DOMNodeInserted': function () {
+                    $('.pac-item, .pac-item span', this).addClass('needsclick');
+                }
+            }, '.pac-container');
 
             var options = {timeout: 10000, enableHighAccuracy: true};
             var latLng;
@@ -567,7 +611,8 @@ angular.module('starter.controllers', [])
                      
                      }*/
                     console.log(url);
-                    $window.open(url, "_blanl");
+                    //$window.open(url, "_blank");
+                    WazeLink.open(url);
                 } else {
                     var alertPopup = $ionicPopup.alert({
                         title: 'Error',
