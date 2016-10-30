@@ -309,8 +309,8 @@ angular.module('starter.controllers', [])
                     }
                 }, function (error) {
                     console.log('Error: ' + JSON.stringify(error));    // In case of error
-                });
-                callback();
+                }).then(callback());
+                
             }
             $scope.getImageSaveContact = function () {
                 pedirImagen(function () {
