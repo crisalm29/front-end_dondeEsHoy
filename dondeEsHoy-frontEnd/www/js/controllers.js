@@ -7,36 +7,36 @@ angular.module('starter.controllers', [])
             $ionicConfigProvider.tabs.position("bottom"); //Places them at the bottom for all OS
             $ionicConfigProvider.tabs.style("standard"); //Makes them all look the same across all OS
         })
-        .controller('AppCtrl', function ($scope,$state,$ionicHistory) {
-            $scope.salir = function(){
-              usuario = "";
-              $ionicHistory.nextViewOptions({
-                    disableBack: true
-                });
-              $state.go("app.login",{},{reload:true});
-          };       
-            $scope.irPerfil = function(){
+        .controller('AppCtrl', function ($scope, $state, $ionicHistory) {
+            $scope.salir = function () {
+                usuario = "";
                 $ionicHistory.nextViewOptions({
                     disableBack: true
                 });
-                $state.go("app.profile",{},{reload:true});
-                
+                $state.go("app.login", {}, {reload: true});
             };
-            
-            $scope.irMapa = function(){
+            $scope.irPerfil = function () {
                 $ionicHistory.nextViewOptions({
                     disableBack: true
                 });
-                $state.go("app.map",{},{reload:true});
-                
+                $state.go("app.profile", {}, {reload: true});
+
             };
-            
-            $scope.irPromos = function(){
+
+            $scope.irMapa = function () {
                 $ionicHistory.nextViewOptions({
                     disableBack: true
                 });
-                $state.go("app.promos",{},{reload:true});
-                
+                $state.go("app.map", {}, {reload: true});
+
+            };
+
+            $scope.irPromos = function () {
+                $ionicHistory.nextViewOptions({
+                    disableBack: true
+                });
+                $state.go("app.promos", {}, {reload: true});
+
             };
         })
         .controller('InfoPlaceCtrl', function ($scope, promosByEstablishment) {
@@ -295,33 +295,34 @@ angular.module('starter.controllers', [])
             }
             ;
             $scope.actualizarUsuario = function () {
-                if($scope.collection.selectedImage !== $scope.data.imageBase64){
+                if ($scope.collection.selectedImage !== $scope.data.imageBase64) {
                     servicioActualizar2();
-                    
-                }
-                if($scope.data.Oldpassword !== undefined && $scope.data.Newpassword !== undefined && $scope.data.Newpassword2 !== undefined &&
-                        $scope.data.Oldpassword !== "" && $scope.data.Newpassword !=="" && $scope.data.Newpassword2 !== ""){
-                if ($scope.data.Opassword === $scope.data.Oldpassword) {
-                    if ($scope.data.Newpassword === $scope.data.Newpassword2) {
 
-                        servicioActualizar();
+                }
+                if ($scope.data.Oldpassword !== undefined && $scope.data.Newpassword !== undefined && $scope.data.Newpassword2 !== undefined &&
+                        $scope.data.Oldpassword !== "" && $scope.data.Newpassword !== "" && $scope.data.Newpassword2 !== "") {
+                    if ($scope.data.Opassword === $scope.data.Oldpassword) {
+                        if ($scope.data.Newpassword === $scope.data.Newpassword2) {
+
+                            servicioActualizar();
+                        } else {
+                            var alertPopup = $ionicPopup.alert({
+                                title: 'Confirma tu nueva contraseña',
+                                template: 'Por favor verifique.'
+                            });
+
+                        }
+
                     } else {
                         var alertPopup = $ionicPopup.alert({
-                            title: 'Confirma tu nueva contraseña',
+                            title: 'Escribe tu contraseña actual.',
                             template: 'Por favor verifique.'
                         });
 
                     }
 
-                } else {
-                    var alertPopup = $ionicPopup.alert({
-                        title: 'Escribe tu contraseña actual.',
-                        template: 'Por favor verifique.'
-                    });
-
                 }
-
-            }};
+            };
 
             $scope.getImageSaveContact = function () {
                 // Image picker will load images according to these settings
@@ -340,7 +341,7 @@ angular.module('starter.controllers', [])
                         window.plugins.Base64.encodeFile($scope.collection.selectedImage, function (base64) {  // Encode URI to Base64 needed for contacts plugin
                             $scope.collection.selectedImage = base64;
                             $scope.addContact();    // Save contact
-                            
+
                         });
                     }
                 }, function (error) {
@@ -580,7 +581,7 @@ angular.module('starter.controllers', [])
                 mapTypeId: google.maps.MapTypeId.ROADMAP
             });
 
-
+            var dondeEstoy;
             var place = "";
             $scope.irAWaze = function () {
 
@@ -589,21 +590,26 @@ angular.module('starter.controllers', [])
                     var lng = "" + place.geometry.location.lng();
                     lat = lat.substr(0, lat.lastIndexOf(".") + 7);
                     lng = lng.substr(0, lng.lastIndexOf(".") + 7);
+
+                    var latD = dondeEstoy.position.lat();
+                    var lngD = dondeEstoy.position.lng();
+                    latD = latD.substr(0, lat.lastIndexOf(".") + 7);
+                    lngD = lngD.substr(0, lng.lastIndexOf(".") + 7);
                     //var url = 'http://waze/?ll=' + lat + ',' + lng+'&navigate=yes';  
                     //var url = 'http://waze.to/?ll=9.935474,-84.095561&navigate=yes'; //, '_system', 'location=yes' ;
                     //console.log(lat);
                     //console.log(lng);
-                   var isIOS = ionic.Platform.isIOS();
-                   //var isAndroid = ionic.Platform.isAndroid();
-                   var url;
-                   if(isIOS === true){
-                       url = "maps://?q="+lat,lng;//37.7749,-122.4194
-                       
-                   }else{
-                       url = "geo://0,0?q="+lat,lng;//37.7749,-122.4194"
-                       
-                   }
-                   
+                    var isIOS = ionic.Platform.isIOS();
+                    //var isAndroid = ionic.Platform.isAndroid();
+                    var url;
+                    if (isIOS === true) {
+                        url = "maps://?q=" + lat, lng;//37.7749,-122.4194
+
+                    } else {
+                        url = "geo://"+latD,lngD+"?q=" + lat, lng;//37.7749,-122.4194"
+
+                    }
+
                     //console.log(url);
                     window.location.href = url;
                     //$window.open(url, "_blank");
@@ -617,6 +623,7 @@ angular.module('starter.controllers', [])
                 }
 
             };
+
             $scope.search = function () {
                 map = new google.maps.Map(document.getElementById('map'), {
                     center: latLng, //{lat: -33.8688, lng: 151.2195},
@@ -629,6 +636,8 @@ angular.module('starter.controllers', [])
                     position: latLng,
                     icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png'
                 });
+                dondeEstoy = marker;
+
                 var infoWindow = new google.maps.InfoWindow({
                     content: "Esta es mi ubicacion"
                 });
