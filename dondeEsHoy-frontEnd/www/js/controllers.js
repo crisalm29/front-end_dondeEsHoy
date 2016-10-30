@@ -7,8 +7,37 @@ angular.module('starter.controllers', [])
             $ionicConfigProvider.tabs.position("bottom"); //Places them at the bottom for all OS
             $ionicConfigProvider.tabs.style("standard"); //Makes them all look the same across all OS
         })
-        .controller('AppCtrl', function ($scope) {
-
+        .controller('AppCtrl', function ($scope,$state,$ionicHistory) {
+            $scope.salir = function(){
+              usuario = "";
+              $ionicHistory.nextViewOptions({
+                    disableBack: true
+                });
+              $state.go("app.login",{},{reload:true});
+          };       
+            $scope.irPerfil = function(){
+                $ionicHistory.nextViewOptions({
+                    disableBack: true
+                });
+                $state.go("app.profile",{},{reload:true});
+                
+            };
+            
+            $scope.irMapa = function(){
+                $ionicHistory.nextViewOptions({
+                    disableBack: true
+                });
+                $state.go("app.map",{},{reload:true});
+                
+            };
+            
+            $scope.irPromos = function(){
+                $ionicHistory.nextViewOptions({
+                    disableBack: true
+                });
+                $state.go("app.promos",{},{reload:true});
+                
+            };
         })
         .controller('InfoPlaceCtrl', function ($scope, promosByEstablishment) {
             $scope.info = lugarEspecifico;
@@ -99,7 +128,7 @@ angular.module('starter.controllers', [])
             $scope.collection = {
                 selectedImage: ''
             };
-            $scope.data.email = usuario;
+            $scope.data.email;// = usuario;
             function convertImgToBase64(url, callback, outputFormat) {
                 var img = new Image();
                 img.crossOrigin = 'Anonymous';
@@ -163,7 +192,7 @@ angular.module('starter.controllers', [])
 
             /*var decodedString = Base64.decode(encodedString);
              console.log(decodedString);*/
-            obtenerInfoPorEmail.obtenerInfo($scope.data.email).then(function (data) {
+            obtenerInfoPorEmail.obtenerInfo($scope.data.email = usuario).then(function (data) {
 
                 $scope.data.id = data.data.result.id;
                 $scope.data.name = data.data.result.name;
@@ -175,6 +204,7 @@ angular.module('starter.controllers', [])
             });
 
             function refrescar() {
+                $scope.data.email = usuario;
                 obtenerInfoPorEmail.obtenerInfo($scope.data.email).then(function (data) {
 
                     $scope.data.id = data.data.result.id;
@@ -269,7 +299,8 @@ angular.module('starter.controllers', [])
                     servicioActualizar2();
                     
                 }
-                if($scope.data.Oldpassword !== "" && $scope.data.Newpassword !=="" && $scope.data.Newpassword2 !== ""){
+                if($scope.data.Oldpassword !== undefined && $scope.data.Newpassword !== undefined && $scope.data.Newpassword2 !== undefined &&
+                        $scope.data.Oldpassword !== "" && $scope.data.Newpassword !=="" && $scope.data.Newpassword2 !== ""){
                 if ($scope.data.Opassword === $scope.data.Oldpassword) {
                     if ($scope.data.Newpassword === $scope.data.Newpassword2) {
 
@@ -318,7 +349,7 @@ angular.module('starter.controllers', [])
             };
 
         })
-        .controller('RegisterCtrl', function ($scope, $ionicHistory, $ionicSideMenuDelegate, $http, $state, $ionicPopup, $ionicPlatform, $cordovaImagePicker) {
+        .controller('RegisterCtrl', function ($scope, $ionicHistory, $ionicSideMenuDelegate, $http, $state, $ionicPopup, $cordovaImagePicker) {
             $scope.data = {};
             $ionicSideMenuDelegate.canDragContent(false);
             $scope.goBack = function () {

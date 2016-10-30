@@ -18,20 +18,20 @@
         </ion-header-bar>
         <ion-content>
             <ion-list>
-                <ion-item menu-close href="#/app/map">
+                <ion-item menu-close ng-click="irMapa()"><!-- href="#/app/map"-->
                     <span  class="icon-left ion-map mapIcon"></span>  Mapa
                 </ion-item>
                 <!--ion-item menu-close href="#/app/lista" >
                     <span  class="icon-left ion-ios-heart heartIcon"></span> Favorites 
                 </ion-item-->
-                <ion-item menu-close href="#/app/promos" >
+                <ion-item menu-close ng-click="irPromos()"><!--href="#/app/promos" -->
                     <span  class="icon-left ion-star starIcon"></span> Promos/Eventos
                 </ion-item>
-                <ion-item menu-close href="#/app/profile" >
+                <ion-item menu-close ng-click="irPerfil()"> <!--href="#/app/profile" -->
                     <span  class="icon-left ion-ios-person personIcon"></span> Perfil 
                 </ion-item>
-                <ion-item menu-close href="#/app/login" >
-                    <span  class="icon-left ion-log-out logoutIcon"></span> Logout 
+                <ion-item menu-close ng-click="salir()"> <!--href="#/app/login" ng-click="salir()"-->
+                    <span  class="icon-left ion-log-out logoutIcon" ></span> Logout 
                 </ion-item>
                 
             </ion-list>
