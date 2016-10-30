@@ -223,44 +223,45 @@ angular.module('starter.controllers', [])
             }
             ;
             function servicioActualizar2() {
-                convertirABase64($scope.collection.selectedImage,function(){
+                convertirABase64($scope.collection.selectedImage, function () {
                     var p = $http({
-                    method: 'POST',
-                    url: "http://kefon94-001-site1.etempurl.com/Users/modifyUser",
-                    //url: "http://localhost:49986/googlePlaces",
-                    data: {
-                        id: $scope.data.id,
-                        email: $scope.data.email,
-                        name: $scope.data.name,
-                        lastname: $scope.data.lastname,
-                        password: $scope.data.Opassword,
-                        imagebase64: $scope.data.imageBase64
-                    }
+                        method: 'POST',
+                        url: "http://kefon94-001-site1.etempurl.com/Users/modifyUser",
+                        //url: "http://localhost:49986/googlePlaces",
+                        data: {
+                            id: $scope.data.id,
+                            email: $scope.data.email,
+                            name: $scope.data.name,
+                            lastname: $scope.data.lastname,
+                            password: $scope.data.Opassword,
+                            imagebase64: $scope.data.imageBase64
+                        }
+
+                    });
+                    return p.success(function (data) {
+                        console.log(data);
+                        if (data.result !== false) {
+
+                            var alertPopup = $ionicPopup.alert({
+                                title: 'Se ha actualizado tu cuenta de usuario',
+                                template: ''
+                            });
+                            refrescar();
+
+                        } else {
+                            var alertPopup = $ionicPopup.alert({
+                                title: 'Error',
+                                template: 'Por favor verifique.'
+                            });
+
+                        }
+
+                    });
 
                 });
-                return p.success(function (data) {
-                    console.log(data);
-                    if (data.result !== false) {
 
-                        var alertPopup = $ionicPopup.alert({
-                            title: 'Se ha actualizado tu cuenta de usuario',
-                            template: ''
-                        });
-                        refrescar();
-
-                    } else {
-                        var alertPopup = $ionicPopup.alert({
-                            title: 'Error',
-                            template: 'Por favor verifique.'
-                        });
-
-                    }
-
-                });
-                    
-                });
-                
-            };
+            }
+            ;
             $scope.actualizarUsuario = function () {
                 if ($scope.data.Opassword === $scope.data.Oldpassword) {
                     if ($scope.data.Newpassword === $scope.data.Newpassword2) {
@@ -307,7 +308,45 @@ angular.module('starter.controllers', [])
                     }
                 }, function (error) {
                     console.log('Error: ' + JSON.stringify(error));    // In case of error
-                }).then(servicioActualizar2());
+                }).then(function () {
+                    convertirABase64($scope.collection.selectedImage, function () {
+                        var p = $http({
+                            method: 'POST',
+                            url: "http://kefon94-001-site1.etempurl.com/Users/modifyUser",
+                            //url: "http://localhost:49986/googlePlaces",
+                            data: {
+                                id: $scope.data.id,
+                                email: $scope.data.email,
+                                name: $scope.data.name,
+                                lastname: $scope.data.lastname,
+                                password: $scope.data.Opassword,
+                                imagebase64: $scope.data.imageBase64
+                            }
+
+                        });
+                        return p.success(function (data) {
+                            console.log(data);
+                            if (data.result !== false) {
+
+                                var alertPopup = $ionicPopup.alert({
+                                    title: 'Se ha actualizado tu cuenta de usuario',
+                                    template: ''
+                                });
+                                refrescar();
+
+                            } else {
+                                var alertPopup = $ionicPopup.alert({
+                                    title: 'Error',
+                                    template: 'Por favor verifique.'
+                                });
+
+                            }
+
+                        });
+
+                    });
+
+                });
             };
 
         })
@@ -390,7 +429,7 @@ angular.module('starter.controllers', [])
 
                 if ($scope.data.password === $scope.data.password2) {
 
-                    convertirABase64($scope.collection.selectedImage, function (){
+                    convertirABase64($scope.collection.selectedImage, function () {
                         var p = $http({
                             method: 'POST',
                             url: "http://kefon94-001-site1.etempurl.com/Users/addUser",
