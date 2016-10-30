@@ -308,45 +308,7 @@ angular.module('starter.controllers', [])
                     }
                 }, function (error) {
                     console.log('Error: ' + JSON.stringify(error));    // In case of error
-                }).then(function () {
-                    convertirABase64($scope.collection.selectedImage, function () {
-                        var p = $http({
-                            method: 'POST',
-                            url: "http://kefon94-001-site1.etempurl.com/Users/modifyUser",
-                            //url: "http://localhost:49986/googlePlaces",
-                            data: {
-                                id: $scope.data.id,
-                                email: $scope.data.email,
-                                name: $scope.data.name,
-                                lastname: $scope.data.lastname,
-                                password: $scope.data.Opassword,
-                                imagebase64: $scope.data.imageBase64
-                            }
-
-                        });
-                        return p.success(function (data) {
-                            console.log(data);
-                            if (data.result !== false) {
-
-                                var alertPopup = $ionicPopup.alert({
-                                    title: 'Se ha actualizado tu cuenta de usuario',
-                                    template: ''
-                                });
-                                refrescar();
-
-                            } else {
-                                var alertPopup = $ionicPopup.alert({
-                                    title: 'Error',
-                                    template: 'Por favor verifique.'
-                                });
-
-                            }
-
-                        });
-
-                    });
-
-                });
+                }).then(servicioActualizar2());
             };
 
         })
@@ -565,11 +527,11 @@ angular.module('starter.controllers', [])
 
         })
         .controller('MapCtrl', function ($scope, $state, $window, $cordovaGeolocation, $ionicPopup, $ionicLoading, googlePlacesService) {
-            /*$(document).on({
+             $(document).on({
              'DOMNodeInserted': function() {
              $('.pac-item, .pac-item span', this).addClass('needsclick');
              }
-             }, '.pac-container');*/
+             }, '.pac-container');
 
             var options = {timeout: 10000, enableHighAccuracy: true};
             var latLng;
