@@ -589,12 +589,23 @@ angular.module('starter.controllers', [])
                     var lng = "" + place.geometry.location.lng();
                     lat = lat.substr(0, lat.lastIndexOf(".") + 7);
                     lng = lng.substr(0, lng.lastIndexOf(".") + 7);
-                    var url = 'http://waze/?ll=' + lat + ',' + lng+'&navigate=yes';  
+                    //var url = 'http://waze/?ll=' + lat + ',' + lng+'&navigate=yes';  
                     //var url = 'http://waze.to/?ll=9.935474,-84.095561&navigate=yes'; //, '_system', 'location=yes' ;
-                    console.log(lat);
-                    console.log(lng);
+                    //console.log(lat);
+                    //console.log(lng);
+                   var isIOS = ionic.Platform.isIOS();
+                   //var isAndroid = ionic.Platform.isAndroid();
+                   var url;
+                   if(isIOS === true){
+                       url = "maps://?q="+lat,lng;//37.7749,-122.4194
+                       
+                   }else{
+                       url = "geo://0,0?q="+lat,lng;//37.7749,-122.4194"
+                       
+                   }
                    
-                    console.log(url);
+                    //console.log(url);
+                    window.location.href = url;
                     //$window.open(url, "_blank");
                     //WazeLink.open(url);
                 } else {
