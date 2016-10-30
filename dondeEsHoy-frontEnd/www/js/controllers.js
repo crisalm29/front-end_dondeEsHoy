@@ -208,7 +208,7 @@ angular.module('starter.controllers', [])
                     if (data.result !== false) {
 
                         var alertPopup = $ionicPopup.alert({
-                            title: 'Se ha actualizado tu cuenta de usuario',
+                            title: 'Se ha actualizado tu contraseña de usuario',
                             template: ''
                         });
                         refrescar();
@@ -245,7 +245,7 @@ angular.module('starter.controllers', [])
                         if (data.result !== false) {
 
                             var alertPopup = $ionicPopup.alert({
-                                title: 'Se ha actualizado tu cuenta de usuario',
+                                title: 'Se ha actualizado tu imagen de usuario',
                                 template: ''
                             });
                             refrescar();
@@ -265,6 +265,11 @@ angular.module('starter.controllers', [])
             }
             ;
             $scope.actualizarUsuario = function () {
+                if($scope.collection.selectedImage !== $scope.data.imageBase64){
+                    servicioActualizar2();
+                    
+                }
+                if($scope.data.Oldpassword !== "" && $scope.data.Newpassword !=="" && $scope.data.Newpassword2 !== ""){
                 if ($scope.data.Opassword === $scope.data.Oldpassword) {
                     if ($scope.data.Newpassword === $scope.data.Newpassword2) {
 
@@ -285,7 +290,7 @@ angular.module('starter.controllers', [])
 
                 }
 
-            };
+            }};
 
             $scope.getImageSaveContact = function () {
                 // Image picker will load images according to these settings
@@ -304,7 +309,7 @@ angular.module('starter.controllers', [])
                         window.plugins.Base64.encodeFile($scope.collection.selectedImage, function (base64) {  // Encode URI to Base64 needed for contacts plugin
                             $scope.collection.selectedImage = base64;
                             $scope.addContact();    // Save contact
-                            servicioActualizar2();
+                            
                         });
                     }
                 }, function (error) {
@@ -553,7 +558,7 @@ angular.module('starter.controllers', [])
                     var lng = "" + place.geometry.location.lng();
                     lat = lat.substr(0, lat.lastIndexOf(".") + 7);
                     lng = lng.substr(0, lng.lastIndexOf(".") + 7);
-                    var url = 'http://waze:/?ll=' + lat + ',' + lng+'&navigate=yes';  
+                    var url = 'http://waze/?ll=' + lat + ',' + lng+'&navigate=yes';  
                     //var url = 'http://waze.to/?ll=9.935474,-84.095561&navigate=yes'; //, '_system', 'location=yes' ;
                     console.log(lat);
                     console.log(lng);
