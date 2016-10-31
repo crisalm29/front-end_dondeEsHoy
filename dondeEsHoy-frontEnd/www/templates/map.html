@@ -1,31 +1,33 @@
 <ion-view view-title="Mapa">
     <ion-content class="general">
+
         <div class="bar bar-header item-input-inset">
             <label class="item-input-wrapper">
                 <i class="icon ion-search placeholder-icon"></i>
                 <input class="controls" id="pac-input" type="text" placeholder="Buscar lugar" ng-model="Option" ng-change="search()">
-                
-                    <button class="miCl column button button-assertive" ng-click="limpiar()">
-                        X
-                    </button>
-                    <button class="miCl column button button-balanced" ng-click="irAWaze()">
-                        <span class="ion-ios-redo"></span>
-                    </button>
-                
+
                 <!--input type="text" id="Autocomplete" class="form-control" ng-autocomplete ng-model="result1"-->
             </label>
+            <button class="column button button-assertive" ng-click="limpiar()">
+                X
+            </button>
+            <!--button class="miCl column button button-balanced" ng-click="irAWaze()">
+                <span class="ion-ios-redo"></span>
+            </button-->
 
         </div>
 
+
+
         <div id="map"></div>
-        <!--div class="row">
+        <div class="row">
             <div class="col"><button class="button button-block button-balanced" ng-click="irAWaze()">
                     Ir a destino <!--img src="img/waze.png"  style="width:20px;height:20px;"-->
                 </button></div>
             <!--div class="col"><button class="button button-block button-balanced">
                 Google Maps<!--img src="img/google_maps.png"  style="width:20px;height:20px;"-->
             <!--/button></div-->
-        </div-->
+        </div>
 
     </ion-content>
 
