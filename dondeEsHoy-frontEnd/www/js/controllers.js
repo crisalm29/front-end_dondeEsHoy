@@ -606,7 +606,7 @@ angular.module('starter.controllers', [])
                         url = "maps://?q=" + lat+","+lng;//37.7749,-122.4194
 
                     } else {
-                        url = "geo://"+latD+","+lngD+"?q=" + lat, lng;//37.7749,-122.4194"
+                        url = "geo://"+latD+","+lngD+"?q=" + lat+","+lng;//37.7749,-122.4194"
 
                     }
 
