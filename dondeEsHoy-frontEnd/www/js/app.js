@@ -4,7 +4,7 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','ngCordova'])
+angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'ngCordova'])
 
         .config(['$httpProvider', function ($httpProvider) {
                 $httpProvider.defaults.headers.common = {};
@@ -13,8 +13,17 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
                 $httpProvider.defaults.headers.patch = {};
             }
         ])
-        
-       .run(function ($ionicPlatform) {
+        .directive('disableTap', function ($timeout) {
+            return {
+                link: function () {
+
+                    $timeout(function () {
+                        document.querySelector('.pac-container').setAttribute('data-tap-disabled', 'true');
+                    }, 500);
+                }
+            };
+        })
+        .run(function ($ionicPlatform) {
 
             $ionicPlatform.ready(function () {
                 // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -88,7 +97,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
                             }
                         }
                     })
-                    
+
                     .state('app.login', {
                         url: '/login',
                         views: {
@@ -97,7 +106,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
                                 controller: 'LoginCtrl'
                             }}
                     })
-                  
+
                     .state('app.register', {
                         url: '/register',
                         views: {
@@ -106,7 +115,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
                                 controller: 'RegisterCtrl'
                             }}
                     })
-                    
+
                     .state('app.infoPlace', {
                         url: '/infoPlace',
                         views: {
@@ -115,7 +124,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
                                 controller: 'InfoPlaceCtrl'
                             }}
                     })
-            ;
+                    ;
 
 
 

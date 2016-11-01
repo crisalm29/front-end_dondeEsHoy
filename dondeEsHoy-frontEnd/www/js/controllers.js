@@ -20,23 +20,18 @@ angular.module('starter.controllers', [])
                     disableBack: true
                 });
                 $state.go("app.profile", {}, {reload: true});
-
             };
-
             $scope.irMapa = function () {
                 $ionicHistory.nextViewOptions({
                     disableBack: true
                 });
                 $state.go("app.map", {}, {reload: true});
-
             };
-
             $scope.irPromos = function () {
                 $ionicHistory.nextViewOptions({
                     disableBack: true
                 });
                 $state.go("app.promos", {}, {reload: true});
-
             };
         })
         .controller('InfoPlaceCtrl', function ($scope, promosByEstablishment) {
@@ -102,7 +97,6 @@ angular.module('starter.controllers', [])
                     }
 
                 });
-
                 return p.success(function (data) {
                     if (data.result !== false) {
 
@@ -110,7 +104,6 @@ angular.module('starter.controllers', [])
                         $scope.info.telefono = data.result.telefono;
                         $scope.info.imagebase64 = data.result.imagebase64;
                         $scope.info.establishmentID = id;
-
                         lugarEspecifico = $scope.info;
                         $state.go('app.infoPlace', {}, {reload: true});
                     } else {
@@ -128,7 +121,7 @@ angular.module('starter.controllers', [])
             $scope.collection = {
                 selectedImage: ''
             };
-            $scope.data.email;// = usuario;
+            $scope.data.email; // = usuario;
             function convertImgToBase64(url, callback, outputFormat) {
                 var img = new Image();
                 img.crossOrigin = 'Anonymous';
@@ -159,24 +152,19 @@ angular.module('starter.controllers', [])
                 };
             }
             ;
-
             function encodeImageFileAsURL() {
 
                 var filesSelected = document.getElementById("inputFileToLoad").files;
                 if (filesSelected.length > 0)
                 {
                     var fileToLoad = filesSelected[0];
-
                     var fileReader = new FileReader();
-
                     fileReader.onload = function (fileLoadedEvent) {
                         var srcData = fileLoadedEvent.target.result; // <--- data: base64
 
                         var newImage = document.createElement('img');
                         newImage.src = srcData;
-
                         document.getElementById("imgTest").innerHTML = newImage.outerHTML;
-
                     };
                     fileReader.readAsDataURL(fileToLoad);
                 }
@@ -200,9 +188,7 @@ angular.module('starter.controllers', [])
                 $scope.data.Opassword = data.data.result.password;
                 $scope.data.imageBase64 = data.data.result.imagebase64;
                 $scope.collection.selectedImage = data.data.result.imagebase64;
-
             });
-
             function refrescar() {
                 $scope.data.email = usuario;
                 obtenerInfoPorEmail.obtenerInfo($scope.data.email).then(function (data) {
@@ -214,7 +200,6 @@ angular.module('starter.controllers', [])
                     $scope.data.imageBase64 = data.data.result.imagebase64;
                     $scope.collection.selectedImage = data.data.result.imagebase64;
                 });
-
             }
 
             function servicioActualizar() {
@@ -242,13 +227,11 @@ angular.module('starter.controllers', [])
                             template: ''
                         });
                         refrescar();
-
                     } else {
                         var alertPopup = $ionicPopup.alert({
                             title: 'Error',
                             template: 'Por favor verifique.'
                         });
-
                     }
 
                 });
@@ -279,25 +262,20 @@ angular.module('starter.controllers', [])
                                 template: ''
                             });
                             refrescar();
-
                         } else {
                             var alertPopup = $ionicPopup.alert({
                                 title: 'Error',
                                 template: 'Por favor verifique.'
                             });
-
                         }
 
                     });
-
                 });
-
             }
             ;
             $scope.actualizarUsuario = function () {
                 if ($scope.collection.selectedImage !== $scope.data.imageBase64) {
                     servicioActualizar2();
-
                 }
                 if ($scope.data.Oldpassword !== undefined && $scope.data.Newpassword !== undefined && $scope.data.Newpassword2 !== undefined &&
                         $scope.data.Oldpassword !== "" && $scope.data.Newpassword !== "" && $scope.data.Newpassword2 !== "") {
@@ -310,7 +288,6 @@ angular.module('starter.controllers', [])
                                 title: 'Confirma tu nueva contraseña',
                                 template: 'Por favor verifique.'
                             });
-
                         }
 
                     } else {
@@ -318,12 +295,10 @@ angular.module('starter.controllers', [])
                             title: 'Escribe tu contraseña actual.',
                             template: 'Por favor verifique.'
                         });
-
                     }
 
                 }
             };
-
             $scope.getImageSaveContact = function () {
                 // Image picker will load images according to these settings
                 var options = {
@@ -332,23 +307,21 @@ angular.module('starter.controllers', [])
                     height: 800,
                     quality: 80            // Higher is better
                 };
-
                 $cordovaImagePicker.getPictures(options).then(function (results) {
                     // Loop through acquired images
                     for (var i = 0; i < results.length; i++) {
-                        $scope.collection.selectedImage = results[i];   // We loading only one image so we can use it like this
+                        $scope.collection.selectedImage = results[i]; // We loading only one image so we can use it like this
 
                         window.plugins.Base64.encodeFile($scope.collection.selectedImage, function (base64) {  // Encode URI to Base64 needed for contacts plugin
                             $scope.collection.selectedImage = base64;
-                            $scope.addContact();    // Save contact
+                            $scope.addContact(); // Save contact
 
                         });
                     }
                 }, function (error) {
-                    console.log('Error: ' + JSON.stringify(error));    // In case of error
+                    console.log('Error: ' + JSON.stringify(error)); // In case of error
                 });
             };
-
         })
         .controller('RegisterCtrl', function ($scope, $ionicHistory, $ionicSideMenuDelegate, $http, $state, $ionicPopup, $cordovaImagePicker) {
             $scope.data = {};
@@ -358,9 +331,7 @@ angular.module('starter.controllers', [])
                     disableBack: true
                 });
                 $state.go('app.login', {}, {reload: true});
-
             };
-
             function convertImgToBase64(url, callback, outputFormat) {
                 var img = new Image();
                 img.crossOrigin = 'Anonymous';
@@ -391,22 +362,18 @@ angular.module('starter.controllers', [])
                 };
             }
             ;
-
             function encodeImageFileAsURL() {
 
                 var filesSelected = document.getElementById("inputFileToLoad").files;
                 if (filesSelected.length > 0)
                 {
                     var fileToLoad = filesSelected[0];
-
                     var fileReader = new FileReader();
-
                     fileReader.onload = function (fileLoadedEvent) {
                         var srcData = fileLoadedEvent.target.result; // <--- data: base64
 
                         var newImage = document.createElement('img');
                         newImage.src = srcData;
-
                         document.getElementById("imgTest").innerHTML = newImage.outerHTML;
                     };
                     fileReader.readAsDataURL(fileToLoad);
@@ -417,10 +384,7 @@ angular.module('starter.controllers', [])
                 convertImgToBase64(direccion, function (base64Img) {
                     $scope.data.imageBase64 = base64Img;
                     callback();
-
                 });
-
-
             }
 
 
@@ -457,26 +421,19 @@ angular.module('starter.controllers', [])
                                     title: 'El usuario ya existe, intente con otro email',
                                     template: 'Por favor verifique.'
                                 });
-
                             }
 
                         }).error(function (e) {
                             console.log("Error al registrar");
                         });
-
-
                     });
-
-
                 } else {
                     var alertPopup = $ionicPopup.alert({
                         title: 'Las contraseñas deben ser iguales',
                         template: 'Por favor verifique.'
                     });
-
                 }
             };
-
             $scope.collection = {
                 selectedImage: ''//img/Antik.jpg'
             };
@@ -490,42 +447,32 @@ angular.module('starter.controllers', [])
                     height: 800,
                     quality: 80            // Higher is better
                 };
-
                 $cordovaImagePicker.getPictures(options).then(function (results) {
                     // Loop through acquired images
                     for (var i = 0; i < results.length; i++) {
-                        $scope.collection.selectedImage = results[i];   // We loading only one image so we can use it like this
+                        $scope.collection.selectedImage = results[i]; // We loading only one image so we can use it like this
 
                         window.plugins.Base64.encodeFile($scope.collection.selectedImage, function (base64) {  // Encode URI to Base64 needed for contacts plugin
                             $scope.collection.selectedImage = base64;
-                            $scope.addContact();    // Save contact
+                            $scope.addContact(); // Save contact
 
                         });
                     }
 
                 }, function (error) {
-                    console.log('Error: ' + JSON.stringify(error));    // In case of error
+                    console.log('Error: ' + JSON.stringify(error)); // In case of error
                 });
-
-
             };
-
-
-
         })
         .controller('LoginCtrl', function ($scope, $state, $ionicHistory, $ionicSideMenuDelegate, $http, $ionicPopup) {
 
             $scope.data = {};
-
-
             $ionicSideMenuDelegate.canDragContent(false);
-
             $scope.goRegister = function () {
                 $ionicHistory.nextViewOptions({
                     disableBack: true
                 });
                 $state.go('app.register', {}, {reload: true});
-
             };
             $scope.doLogin = function () {
                 console.log("LOGIN user: " + $scope.data.username + " - PW: " + $scope.data.password);
@@ -539,7 +486,6 @@ angular.module('starter.controllers', [])
                     }
 
                 });
-
                 return p.success(function (data) {
                     if (data.result !== false) {
                         $ionicHistory.nextViewOptions({
@@ -553,16 +499,12 @@ angular.module('starter.controllers', [])
                             title: 'El usuario y la contraseña no coinciden',
                             template: 'Por favor verifique.'
                         });
-
                     }
 
                 }).error(function (e) {
 
                 });
-
-
             };
-
         })
         .controller('MapCtrl', function ($scope, $state, $cordovaGeolocation, $ionicPopup, $ionicLoading, googlePlacesService) {
             /*$(document).on({
@@ -574,13 +516,11 @@ angular.module('starter.controllers', [])
             var options = {timeout: 10000, enableHighAccuracy: true};
             var latLng;
             refrescar();
-
             var map = new google.maps.Map(document.getElementById('map'), {
                 center: latLng, //{lat: -33.8688, lng: 151.2195},
                 zoom: 17,
                 mapTypeId: google.maps.MapTypeId.ROADMAP
             });
-
             var dondeEstoy;
             var place = "";
             $scope.irAWaze = function () {
@@ -590,9 +530,8 @@ angular.module('starter.controllers', [])
                     var lng = "" + place.geometry.location.lng();
                     lat = lat.substr(0, lat.lastIndexOf(".") + 7);
                     lng = lng.substr(0, lng.lastIndexOf(".") + 7);
-
-                    var latD =""+ dondeEstoy.position.lat();
-                    var lngD =""+ dondeEstoy.position.lng();
+                    var latD = "" + dondeEstoy.position.lat();
+                    var lngD = "" + dondeEstoy.position.lng();
                     latD = latD.substr(0, lat.lastIndexOf(".") + 7);
                     lngD = lngD.substr(0, lng.lastIndexOf(".") + 7);
                     //var url = 'http://waze/?ll=' + lat + ',' + lng+'&navigate=yes';  
@@ -603,10 +542,10 @@ angular.module('starter.controllers', [])
                     //var isAndroid = ionic.Platform.isAndroid();
                     var url;
                     if (isIOS === true) {
-                        url = "maps://?q=" + lat+","+lng;//37.7749,-122.4194
+                        url = "maps://?q=" + lat + "," + lng; //37.7749,-122.4194
 
                     } else {
-                        url = "geo://"+latD+","+lngD+"?q=" + lat+","+lng;//37.7749,-122.4194"
+                        url = "geo://" + latD + "," + lngD + "?q=" + lat + "," + lng; //37.7749,-122.4194"
 
                     }
 
@@ -617,13 +556,13 @@ angular.module('starter.controllers', [])
                 } else {
                     var alertPopup = $ionicPopup.alert({
                         title: 'Error',
-                        template: 'Escoge un lugar, para ir con Waze.'
+                        template: 'Escoge un destino.'
                     });
-
                 }
 
             };
 
+           
             $scope.search = function () {
                 map = new google.maps.Map(document.getElementById('map'), {
                     center: latLng, //{lat: -33.8688, lng: 151.2195},
@@ -637,11 +576,9 @@ angular.module('starter.controllers', [])
                     icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png'
                 });
                 dondeEstoy = marker;
-
                 var infoWindow = new google.maps.InfoWindow({
                     content: "Esta es mi ubicacion"
                 });
-
                 if (input.value === "") {
                     refrescar();
                     place = null;
@@ -655,7 +592,6 @@ angular.module('starter.controllers', [])
                 types: ['establishment']
             };
             var searchBox = new google.maps.places.Autocomplete(input, optionTypes);
-
             //map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
             //alert(google.maps.ControlPosition.TOP_LEFT);
 
@@ -663,16 +599,13 @@ angular.module('starter.controllers', [])
             map.addListener('bounds_changed', function () {
 
                 searchBox.setBounds(map.getBounds());
-
             });
-
             var markers = [];
             // Listen for the event fired when the user selects a prediction and retrieve
             // more details for that place.
             searchBox.addListener('place_changed', function () {
                 //searchBox.addListener('place_changed', function () {
                 place = searchBox.getPlace();
-
                 //var places = searchBox.getPlace();
 
                 if (place.length === 0) {
@@ -683,13 +616,10 @@ angular.module('starter.controllers', [])
                 markers.forEach(function (marker) {
 
                     marker.setMap(null);
-
                 });
                 markers = [];
-
                 // For each place, get the icon, name and location.
                 var bounds = new google.maps.LatLngBounds();
-
 //                    places.forEach(function (place) {
 //                        
                 console.log(place);
@@ -700,7 +630,6 @@ angular.module('starter.controllers', [])
                     anchor: new google.maps.Point(17, 34),
                     scaledSize: new google.maps.Size(25, 25)
                 };
-
                 // Create a marker for each place.
                 markers.push(new google.maps.Marker({
                     map: map,
@@ -710,7 +639,19 @@ angular.module('starter.controllers', [])
                     zoom: 13
 
                 }));
+                var temp = {lat: place.geometry.location.lat(), lng: place.geometry.location.lng()};
+                var marker = new google.maps.Marker({
+                    position: temp,
+                    map: map,
+                    icon: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png',
+                    title: 'Ir a destino',
+                    animation: google.maps.Animation.BOUNCE
+                });
 
+                marker.addListener('click', function () {
+
+                    $scope.irAWaze();
+                });
                 if (place.geometry.viewport) {
                     // Only geocodes have viewport.
 
@@ -724,7 +665,6 @@ angular.module('starter.controllers', [])
 
 
             });
-
             $scope.limpiar = function () {
                 input.value = "";
                 map = new google.maps.Map(document.getElementById('map'), {
@@ -741,24 +681,19 @@ angular.module('starter.controllers', [])
                 var infoWindow = new google.maps.InfoWindow({
                     content: "Esta es mi ubicacion"
                 });
-
                 refrescar();
             };
-
             function refrescar() {
                 $cordovaGeolocation.getCurrentPosition(options).then(function (position) {
                     var resultados = {};
                     latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-
                     var mapOptions = {
                         center: latLng,
                         zoom: 15,
                         mapTypeId: google.maps.MapTypeId.ROADMAP
 
                     };
-
                     $scope.map = new google.maps.Map(document.getElementById("map"), mapOptions);
-
                     google.maps.event.addListenerOnce($scope.map, 'idle', function () {
 
                         var marker = new google.maps.Marker({
@@ -768,44 +703,45 @@ angular.module('starter.controllers', [])
                             icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png'
 
                         });
+                        dondeEstoy = marker;
+                        var latD = ""+dondeEstoy.position.lat();
+                        var lngD = ""+dondeEstoy.position.lng();
                         var infoWindow = new google.maps.InfoWindow({
                             content: "Esta es mi ubicacion"
                         });
-
                         googlePlacesService.obtenerLocales(position.coords.latitude, position.coords.longitude).then(function (data) {
                             resultados = data.data.result;
+                            var vecLat = new Array();
+                            var vecLng = new Array();
                             for (var i = 0; i < resultados.length; i++) {
                                 var lat = parseFloat(resultados[i].geometry.location.lat);
                                 var lon = parseFloat(resultados[i].geometry.location.lng);
-
-
                                 var coord = {lat: lat, lng: lon};
                                 var m4 = new google.maps.Marker({
                                     position: coord,
                                     flat: true,
                                     map: $scope.map
                                 });
-
                                 m4.local = resultados[i];
                                 m4.map = $scope.map;
                                 m4.addListener('click', function () {
-                                    var infowindow = new google.maps.InfoWindow({
-                                        content: this.local.name
-                                    });
-                                    infowindow.open(this.map, this);
-//                                var popup = $ionicPopup.alert({
-//                                    //template: this.reporte.descripcion,
-//                                    title: this.local.name,
-//                                    scope: $scope
-//
-//                                });
 
-                                    $ionicLoading.hide();
+                                    var infowindow = new google.maps.InfoWindow({
+                                        content: ""//this.local.name
+                                    });
+                                    //var lat = "" + m4.position.lat();
+                                    //var lng = "" + m4.position.lng();
+                                    vecLat[i] = lat;
+                                    vecLng[i] = lon;
+                                    infowindow.setContent('<h4>' + this.local.name + '</h4>' +
+                                            'p>'+vecLat[i]+"<br/>"+vecLng[i]+'</p>'+
+                                             '<input type="button" onclick="viajar('+vecLat[i]+','+vecLng[i]+','+latD+','+lngD+');" value="Ir a destino"></input>');
+                                    infowindow.open(this.map, this);
+
+//                                
                                     $state.go($state.current, {}, {reload: true});
                                 });
-
                                 m4.setMap($scope.map);
-
                             }
 
 
@@ -814,19 +750,15 @@ angular.module('starter.controllers', [])
                                 title: 'Error al conectar!',
                                 template: 'Por favor veirifica tu conexion.'
                             });
-
                         });
                         ;
                         google.maps.event.addListener(marker, 'click', function () {
                             infoWindow.open($scope.map, marker);
                         });
-
                     });
-
                 }, function (error) {
                     console.log("Could not get location");
                 });
-
             }
 
         })
@@ -862,7 +794,6 @@ angular.module('starter.controllers', [])
                 {title: 'Ozzys', id: 10, descripcion: '', img: ''},
                 {title: 'El Octavo', id: 11, descripcion: '', img: ''}
             ];
-
             //$httpBackend.whenGET("http://miservicio").respond({minombre: "Cris"});
             $scope.specificInfo = $stateParams.specificInfo;
             $scope.specificImg;
@@ -873,7 +804,6 @@ angular.module('starter.controllers', [])
                     $scope.specificImg = $scope.lista[i].img;
                     $scope.specificDescription = $scope.lista[i].descripcion;
                     ;
-
                 }
 
             }
