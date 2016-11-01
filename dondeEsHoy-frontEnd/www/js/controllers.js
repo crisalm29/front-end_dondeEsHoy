@@ -711,8 +711,8 @@ angular.module('starter.controllers', [])
                         });
                         googlePlacesService.obtenerLocales(position.coords.latitude, position.coords.longitude).then(function (data) {
                             resultados = data.data.result;
-                            var vecLat = new Array();
-                            var vecLng = new Array();
+                            //var vecLat = new Array();
+                            //var vecLng = new Array();
                             for (var i = 0; i < resultados.length; i++) {
                                 var lat = parseFloat(resultados[i].geometry.location.lat);
                                 var lon = parseFloat(resultados[i].geometry.location.lng);
@@ -729,13 +729,9 @@ angular.module('starter.controllers', [])
                                     var infowindow = new google.maps.InfoWindow({
                                         content: ""//this.local.name
                                     });
-                                    //var lat = "" + m4.position.lat();
-                                    //var lng = "" + m4.position.lng();
-                                    vecLat[i] = lat;
-                                    vecLng[i] = lon;
+                                                                        
                                     infowindow.setContent('<h4>' + this.local.name + '</h4>' +
-                                            'p>'+vecLat[i]+"<br/>"+vecLng[i]+'</p>'+
-                                             '<input type="button" onclick="viajar('+vecLat[i]+','+vecLng[i]+','+latD+','+lngD+');" value="Ir a destino"></input>');
+                                            '<input type="button" onclick="viajar('+this.local.geometry.location.lat+','+this.local.geometry.location.lng+','+latD+','+lngD+');" value="Ir a destino"></input>');
                                     infowindow.open(this.map, this);
 
 //                                
