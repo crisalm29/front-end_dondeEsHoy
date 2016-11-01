@@ -542,14 +542,14 @@ angular.module('starter.controllers', [])
                     //var isAndroid = ionic.Platform.isAndroid();
                     var url;
                     if (isIOS === true) {
-                        //url = "maps://?q=" + lat + "," + lng; //37.7749,-122.4194
-                        url = "geo:"+latD+","+lngD+"?q=" + lat + "," + lng;
+                        url = "maps://?q=" + lat + "," + lng; //37.7749,-122.4194
+
                     } else {
                         url = "geo://" + latD + "," + lngD + "?q=" + lat + "," + lng; //37.7749,-122.4194"
 
                     }
 
-                    console.log(url);
+
                     window.location.href = url;
                     //$window.open(url, "_blank");
                     //WazeLink.open(url);
@@ -562,7 +562,7 @@ angular.module('starter.controllers', [])
 
             };
 
-           
+
             $scope.search = function () {
                 map = new google.maps.Map(document.getElementById('map'), {
                     center: latLng, //{lat: -33.8688, lng: 151.2195},
@@ -704,8 +704,8 @@ angular.module('starter.controllers', [])
 
                         });
                         dondeEstoy = marker;
-                        var latD = ""+dondeEstoy.position.lat();
-                        var lngD = ""+dondeEstoy.position.lng();
+                        var latD = "" + dondeEstoy.position.lat();
+                        var lngD = "" + dondeEstoy.position.lng();
                         var infoWindow = new google.maps.InfoWindow({
                             content: "Esta es mi ubicacion"
                         });
@@ -729,9 +729,9 @@ angular.module('starter.controllers', [])
                                     var infowindow = new google.maps.InfoWindow({
                                         content: ""//this.local.name
                                     });
-                                                                        
+
                                     infowindow.setContent('<h4>' + this.local.name + '</h4>' +
-                                            '<input type="button" onclick="viajar('+this.local.geometry.location.lat+','+this.local.geometry.location.lng+','+latD+','+lngD+');" value="Ir a destino"></input>');
+                                            '<input type="button" onclick="viajar(' + this.local.geometry.location.lat + ',' + this.local.geometry.location.lng + ',' + latD + ',' + lngD + ');" value="Ir a destino"></input>');
                                     infowindow.open(this.map, this);
 
 //                                
@@ -756,6 +756,15 @@ angular.module('starter.controllers', [])
                     console.log("Could not get location");
                 });
             }
+            $scope.disableTap = function () {
+               var container = document.getElementsByClassName('pac-container');
+                // disable ionic data tab
+                angular.element(container).attr('data-tap-disabled', 'true');
+                // leave input field if google-address-entry is selected
+                angular.element(container).on("click", function () {
+                    document.getElementById('pac-input').blur();
+                });
+            };
 
         })
         .controller('ListaCtrl', function ($scope) {

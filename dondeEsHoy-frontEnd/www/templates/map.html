@@ -4,7 +4,7 @@
         <div class="bar bar-header item-input-inset">
             <label class="item-input-wrapper">
                 <i class="icon ion-search placeholder-icon"></i>
-                <input class="controls" id="pac-input" type="text" placeholder="Buscar lugar" ng-model="Option" ng-change="search()">
+                <input class="controls" id="pac-input" type="text" placeholder="Buscar lugar" ng-model="Option" ng-focus="disableTap()" ng-change="search()">
 
                 <!--input type="text" id="Autocomplete" class="form-control" ng-autocomplete ng-model="result1"-->
             </label>
