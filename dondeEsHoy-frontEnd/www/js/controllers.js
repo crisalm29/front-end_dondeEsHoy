@@ -543,7 +543,7 @@ angular.module('starter.controllers', [])
                     var url;
                     if (isIOS === true) {
                         //url = "maps://?q=" + lat + "," + lng; //37.7749,-122.4194
-                        url = "geo:"+latD+","+lngD+"?q=" + lat + "," + lng;;
+                        url = "geo:"+latD+","+lngD+"?q=" + lat + "," + lng;
                     } else {
                         url = "geo://" + latD + "," + lngD + "?q=" + lat + "," + lng; //37.7749,-122.4194"
 
