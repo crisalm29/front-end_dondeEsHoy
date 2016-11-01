@@ -542,8 +542,8 @@ angular.module('starter.controllers', [])
                     //var isAndroid = ionic.Platform.isAndroid();
                     var url;
                     if (isIOS === true) {
-                        url = "maps://?q=" + lat + "," + lng; //37.7749,-122.4194
-
+                        //url = "maps://?q=" + lat + "," + lng; //37.7749,-122.4194
+                        url = "https://www.google.com/maps?q="+lat + "," + lng;//37.5749,-122.5194"
                     } else {
                         url = "geo://" + latD + "," + lngD + "?q=" + lat + "," + lng; //37.7749,-122.4194"
 
