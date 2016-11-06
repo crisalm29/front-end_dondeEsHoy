@@ -542,8 +542,8 @@ angular.module('starter.controllers', [])
                     //var isAndroid = ionic.Platform.isAndroid();
                     var url;
                     if (isIOS === true) {
-                        url = "maps://?q=" + lat + "," + lng; //37.7749,-122.4194
-                        
+                        //url = "maps://?q=" + lat + "," + lng; //37.7749,-122.4194"
+                        url = "http://waze.to/?ll="+lat + "," + lng+"&navigate=yes";
                     } else {
                         url = "geo://" + latD + "," + lngD + "?q=" + lat + "," + lng; //37.7749,-122.4194"
 
