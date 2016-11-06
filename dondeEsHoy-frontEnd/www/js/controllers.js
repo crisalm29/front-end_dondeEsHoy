@@ -61,6 +61,7 @@ angular.module('starter.controllers', [])
                 imagebase64: "",
                 establishmentID: ""
             };
+
             function corregirFechasNull(vector) {
                 for (var i = 0; i < vector.length; i++) {
                     if (vector[i].promoEvent.due_date === null) {
@@ -69,24 +70,75 @@ angular.module('starter.controllers', [])
 
                 }
             }
-            promosEventsToday.promosToday().then(function (data) {
-
-                $scope.today = data.data.result;
-                corregirFechasNull($scope.today);
-                console.log($scope.today);
-            });
-            promosEventsThisWeek.promosWeek().then(function (data) {
-
-                $scope.week = data.data.result;
-                corregirFechasNull($scope.week);
-                console.log($scope.week);
-            });
+            
             promosEventsThisMonth.promosMonth().then(function (data) {
 
                 $scope.month = data.data.result;
-                corregirFechasNull($scope.month);
-                console.log($scope.month);
+               
+                ordenado();
+
             });
+            function ordenado() {
+                var vector = $scope.month;
+                //console.log(vector);
+                var hoy = new Date();
+                var ultimoDia = new Date();
+                var fechAux;
+                fechAux = new Date(hoy);
+                ultimoDia = new Date(hoy);
+                var diaSemana;
+                if (hoy.getDay() === 0) {
+                    diaSemana = 7;
+                } else {
+                    diaSemana = (hoy.getDay());
+
+                }
+                
+                var diasFaltantes = 7 - diaSemana;
+                ultimoDia.setDate(ultimoDia.getDate() + diasFaltantes);
+                var tempHoy = [];
+                var tempSemana = [];
+                                
+                for (var i = 0; i < vector.length; i++) {
+                    var fechAux2 = new Date(vector[i].promoEvent.start_date);
+                    fechAux2.setDate(fechAux2.getDate() + 1);
+                    var fechAux3 = new Date(vector[i].promoEvent.due_date);
+                    fechAux3.setDate(fechAux3.getDate() + 1);
+                    //Si es hoy?
+                    if ((fechAux2.getFullYear() <= fechAux.getFullYear()
+                            && fechAux2.getMonth() <= fechAux.getMonth()
+                            && fechAux2.getDate() <= fechAux.getDate())
+                    &&
+                            (fechAux3.getFullYear() >= fechAux.getFullYear()
+                            && fechAux3.getMonth() >= fechAux.getMonth()
+                            && fechAux3.getDate() >= fechAux.getDate())
+                            
+                            ){
+                        
+                        tempHoy.push(vector[i]);
+                    }
+                    
+                    if (   (fechAux3.getFullYear() >= fechAux.getFullYear()
+                            && fechAux3.getMonth() >= fechAux.getMonth()
+                            && fechAux3.getDate() >= fechAux.getDate())
+                    &&       
+                            (ultimoDia.getFullYear() >= fechAux.getFullYear()
+                            && ultimoDia.getMonth() >= fechAux.getMonth()
+                            && ultimoDia.getDate() >= fechAux.getDate())
+                            
+                    &&
+                            
+                            (fechAux2.getFullYear() <= ultimoDia.getFullYear()
+                            && fechAux2.getMonth() <= ultimoDia.getMonth()
+                            && fechAux2.getDate() <= ultimoDia.getDate())
+                            ){
+                        
+                       tempSemana.push(vector[i]);
+                    }
+                }
+                $scope.today = tempHoy;
+                $scope.week = tempSemana;
+            }
             $scope.infoEspecifica = function (id) {
                 var p = $http({
                     method: 'POST',
@@ -543,7 +595,7 @@ angular.module('starter.controllers', [])
                     var url;
                     if (isIOS === true) {
                         url = "maps://?q=" + lat + "," + lng; //37.7749,-122.4194"
-                        
+
                     } else {
                         url = "geo://?q=" + lat + "," + lng; //37.7749,-122.4194"
                         //" + latD + "," + lngD + "
@@ -757,7 +809,7 @@ angular.module('starter.controllers', [])
                 });
             }
             $scope.disableTap = function () {
-               var container = document.getElementsByClassName('pac-container');
+                var container = document.getElementsByClassName('pac-container');
                 // disable ionic data tab
                 angular.element(container).attr('data-tap-disabled', 'true');
                 // leave input field if google-address-entry is selected
