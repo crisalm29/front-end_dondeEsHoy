@@ -65,3 +65,12 @@
   border-color: #4d90fe;
 }
 
+.centrado{
+    text-align: center;
+    overflow: hidden;
+    
+}
+.container img {
+    width: 100%;
+    
+}
